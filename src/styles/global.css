@@ -1,0 +1,89 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Tailwind v4 CSS Theme Configuration */
+@theme {
+  /* Primary colors - Update these to match client brand */
+  /* Using OKLCH color space for better color consistency */
+  --color-primary-50: oklch(0.97 0.02 155);
+  --color-primary-100: oklch(0.95 0.04 155);
+  --color-primary-200: oklch(0.91 0.08 155);
+  --color-primary-300: oklch(0.84 0.12 155);
+  --color-primary-400: oklch(0.73 0.16 155);
+  --color-primary-500: oklch(0.62 0.17 155);
+  --color-primary-600: oklch(0.53 0.15 155);
+  --color-primary-700: oklch(0.44 0.12 155);
+  --color-primary-800: oklch(0.37 0.10 155);
+  --color-primary-900: oklch(0.30 0.08 155);
+  --color-primary-950: oklch(0.20 0.05 155);
+  
+  /* Font families */
+  --font-family-sans: Inter, system-ui, sans-serif;
+  --font-family-display: Inter, system-ui, sans-serif;
+  
+  /* Additional theme customizations can go here */
+}
+
+/* Custom utility classes */
+.text-gradient {
+  @apply bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent;
+}
+
+.btn-gradient {
+  @apply bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded bg-gray-400;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+/* Animation utilities */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+/* Blog typography */
+.prose-blog {
+  @apply prose prose-gray max-w-none;
+  @apply prose-headings:font-semibold prose-headings:tracking-tight;
+  @apply prose-h1:mt-8 prose-h1:mb-4 prose-h1:text-3xl;
+  @apply prose-h2:mt-8 prose-h2:mb-4 prose-h2:text-2xl;
+  @apply prose-h3:mt-6 prose-h3:mb-3 prose-h3:text-xl;
+  @apply prose-p:leading-relaxed prose-p:text-gray-600;
+  @apply prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline;
+  @apply prose-strong:text-gray-900;
+  @apply prose-code:rounded prose-code:bg-primary-50 prose-code:px-1 prose-code:py-0.5 prose-code:text-primary-600;
+  @apply prose-pre:bg-gray-900 prose-pre:text-gray-100;
+  @apply prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 prose-blockquote:py-1;
+  @apply prose-img:rounded-lg prose-img:shadow-md;
+}

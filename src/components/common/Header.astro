@@ -1,0 +1,103 @@
+---
+import { Menu, X } from "@lucide/astro";
+import navData from "../../data/navigation.json";
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 bg-white shadow-sm">
+  <nav class="container">
+    <div class="flex h-16 items-center justify-between">
+      <!-- Logo -->
+      <a href={navData.logo.href} class="text-xl font-bold text-gray-900">
+        {navData.logo.text}
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex md:items-center md:gap-8">
+        {
+          navData.mainNav.map((item) => (
+            <a
+              href={item.href}
+              class={`text-sm font-medium transition-colors hover:text-primary-600 ${
+                currentPath === item.href
+                  ? "text-primary-600"
+                  : "text-gray-700"
+              }`}
+              aria-current={currentPath === item.href ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <a href={navData.ctaButton.href} class="btn-primary">
+          {navData.ctaButton.label}
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-button"
+        type="button"
+        class="md:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="sr-only">Toggle menu</span>
+        <Menu class="h-6 w-6 text-gray-700" id="menu-icon" />
+        <X class="hidden h-6 w-6 text-gray-700" id="close-icon" />
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="hidden md:hidden">
+      <div class="space-y-1 pb-4 pt-2">
+        {
+          navData.mainNav.map((item) => (
+            <a
+              href={item.href}
+              class={`block px-3 py-2 text-base font-medium ${
+                currentPath === item.href
+                  ? "text-primary-600"
+                  : "text-gray-700"
+              }`}
+              aria-current={currentPath === item.href ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <a
+          href={navData.ctaButton.href}
+          class="block px-3 py-2 text-base font-medium text-primary-600"
+        >
+          {navData.ctaButton.label}
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Mobile menu toggle
+  const menuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const menuIcon = document.getElementById("menu-icon");
+  const closeIcon = document.getElementById("close-icon");
+
+  menuButton?.addEventListener("click", () => {
+    const isOpen = mobileMenu?.classList.contains("hidden");
+    
+    if (isOpen) {
+      mobileMenu?.classList.remove("hidden");
+      menuIcon?.classList.add("hidden");
+      closeIcon?.classList.remove("hidden");
+      menuButton?.setAttribute("aria-expanded", "true");
+    } else {
+      mobileMenu?.classList.add("hidden");
+      menuIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+      menuButton?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script>

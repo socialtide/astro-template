@@ -1,0 +1,19 @@
+{
+  "siteName": "CLIENT NAME",
+  "siteUrl": "https://CLIENT_NAME.socialtide.ai",
+  "author": "CLIENT NAME",
+  "defaultTitle": "CLIENT NAME | Professional Services",
+  "defaultDescription": "Welcome to CLIENT NAME. We provide exceptional services to help your business grow.",
+  "defaultKeywords": "professional services, business consulting, CLIENT NAME",
+  "socialLinks": {
+    "twitter": "",
+    "linkedin": "",
+    "facebook": "",
+    "instagram": ""
+  },
+  "contact": {
+    "email": "hello@clientdomain.com",
+    "phone": "+1 (555) 123-4567",
+    "address": "123 Business St, Suite 100, City, State 12345"
+  }
+}

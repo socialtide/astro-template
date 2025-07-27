@@ -1,0 +1,28 @@
+{
+  "logo": {
+    "text": "CLIENT NAME",
+    "href": "/"
+  },
+  "mainNav": [
+    {
+      "label": "About",
+      "href": "/about"
+    },
+    {
+      "label": "Services",
+      "href": "/services"
+    },
+    {
+      "label": "Blog",
+      "href": "/blog"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ],
+  "ctaButton": {
+    "label": "Get Started",
+    "href": "/contact"
+  }
+}

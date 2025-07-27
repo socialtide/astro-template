@@ -1,0 +1,79 @@
+---
+interface Service {
+  icon?: string;
+  title: string;
+  description: string;
+  features?: string[];
+}
+
+interface Props {
+  heading: string;
+  subheading?: string;
+  description?: string;
+  services: Service[];
+}
+
+const { heading, subheading, description, services } = Astro.props;
+---
+
+<section class="section-spacing bg-gray-50">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="mx-auto mb-12 max-w-3xl text-center">
+      {subheading && (
+        <p class="mb-2 text-sm font-semibold uppercase tracking-wide text-primary-600">
+          {subheading}
+        </p>
+      )}
+      <h2 class="typography-heading mb-4 text-gray-900">
+        {heading}
+      </h2>
+      {description && (
+        <p class="typography-body-large text-gray-600">
+          {description}
+        </p>
+      )}
+    </div>
+
+    <!-- Services Grid -->
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((service) => (
+        <div class="rounded-lg bg-white p-8 shadow-sm transition-all hover:shadow-lg">
+          {service.icon && (
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary-100">
+              <span class="text-2xl">{service.icon}</span>
+            </div>
+          )}
+          <h3 class="mb-3 text-xl font-semibold text-gray-900">
+            {service.title}
+          </h3>
+          <p class="mb-4 text-gray-600">
+            {service.description}
+          </p>
+          {service.features && (
+            <ul class="space-y-2">
+              {service.features.map((feature) => (
+                <li class="flex items-start">
+                  <svg
+                    class="mr-2 mt-1 h-4 w-4 flex-shrink-0 text-primary-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span class="text-sm text-gray-600">{feature}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
