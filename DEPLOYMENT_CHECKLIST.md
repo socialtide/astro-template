@@ -5,7 +5,7 @@ Use this checklist when deploying a new client website from this template. Check
 ## 🚀 Phase 1: Initial Setup
 
 ### Create Repository from Template
-1. [ ] Go to [github.com/socialtide/client-template](https://github.com/socialtide/client-template)
+1. [ ] Go to [github.com/socialtide/astro-template](https://github.com/socialtide/astro-template)
 2. [ ] Click "Use this template" → "Create a new repository"
 3. [ ] Configure new repository:
    - Owner: `socialtide`
@@ -208,11 +208,11 @@ bun install                      # Reinstall dependencies
 
 ## Support Contacts
 
-- **Template Issues**: [GitHub Issues](https://github.com/socialtide/client-template/issues)
+- **Template Issues**: [GitHub Issues](https://github.com/socialtide/astro-template/issues)
 - **SocialTide Support**: support@socialtide.ai
 - **Technical Lead**: titus@socialtide.ai
 - **Cloudflare Status**: [status.cloudflare.com](https://www.cloudflarestatus.com/)
 
 ---
 
-Last updated: 2024-12-28
+Last updated: 2025-07-28

@@ -27,7 +27,7 @@ A modern, production-ready template for creating client websites with Astro, Tai
 
 ```bash
 # Clone the template
-git clone https://github.com/socialtide/client-template.git client-name
+git clone https://github.com/socialtide/astro-template.git client-name
 cd client-name
 
 # Remove template git history
@@ -356,7 +356,7 @@ This template is designed for:
 
 ## 🆘 Support
 
-- **Template Issues**: [GitHub Issues](https://github.com/socialtide/client-template/issues)
+- **Template Issues**: [GitHub Issues](https://github.com/socialtide/astro-template/issues)
 - **SocialTide Support**: support@socialtide.ai
 - **Technical Questions**: titus@socialtide.ai
 

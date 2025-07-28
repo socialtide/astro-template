@@ -1,5 +1,5 @@
 {
-  "name": "socialtide-client-template",
+  "name": "socialtide-astro-template",
   "type": "module",
   "version": "1.0.0",
   "description": "SocialTide client website template with Astro and Cloudflare deployment",
