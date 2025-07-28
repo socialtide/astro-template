@@ -4,17 +4,21 @@ Use this checklist when deploying a new client website from this template. Check
 
 ## 🚀 Phase 1: Initial Setup
 
-### Repository Setup
-- [ ] Clone template: `git clone https://github.com/socialtide/client-template.git CLIENT_NAME`
-- [ ] Remove template history: `rm -rf .git`
-- [ ] Initialize new repo: `git init`
-- [ ] Install dependencies: `bun install`
+### Create Repository from Template
+1. [ ] Go to [github.com/socialtide/client-template](https://github.com/socialtide/client-template)
+2. [ ] Click "Use this template" → "Create a new repository"
+3. [ ] Configure new repository:
+   - Owner: `socialtide`
+   - Repository name: `CLIENT_NAME` (lowercase, hyphens for spaces)
+   - Description: "Website for CLIENT_NAME"
+   - Visibility: Private
+4. [ ] Click "Create repository"
 
-### GitHub Repository
-- [ ] Create new private repository: `https://github.com/socialtide/CLIENT_NAME`
-- [ ] Add remote: `git remote add origin https://github.com/socialtide/CLIENT_NAME`
-- [ ] Initial commit: `git add . && git commit -m "Initial setup for CLIENT_NAME"`
-- [ ] Push to GitHub: `git push -u origin main`
+### Local Setup
+- [ ] Clone new repository: `git clone https://github.com/socialtide/CLIENT_NAME.git`
+- [ ] Navigate to directory: `cd CLIENT_NAME`
+- [ ] Install dependencies: `bun install`
+- [ ] Start dev server to verify: `bun dev`
 
 ## 📝 Phase 2: Client Configuration
 
