@@ -9,51 +9,64 @@ import Services from "../components/sections/Services.astro";
 const heroData = {
   heading: "Welcome to Your Success Partner",
   subheading: "Professional Services",
-  description: "We help businesses thrive with our comprehensive suite of professional services. From strategy to execution, we're here to support your growth.",
+  description:
+    "We help businesses thrive with our comprehensive suite of professional services. From strategy to execution, we're here to support your growth.",
   primaryCTA: {
     label: "Get Started",
-    href: "/contact"
+    href: "/contact",
   },
   secondaryCTA: {
     label: "Learn More",
-    href: "/about"
-  }
+    href: "/about",
+  },
 };
 
 const servicesData = {
   heading: "How We Can Help",
   subheading: "Our Services",
-  description: "We offer a range of professional services tailored to your business needs.",
+  description:
+    "We offer a range of professional services tailored to your business needs.",
   services: [
     {
       icon: "💡",
       title: "Strategic Consulting",
-      description: "Expert guidance to help you make informed business decisions and achieve your goals.",
-      features: ["Business Strategy", "Market Analysis", "Growth Planning"]
+      description:
+        "Expert guidance to help you make informed business decisions and achieve your goals.",
+      features: ["Business Strategy", "Market Analysis", "Growth Planning"],
     },
     {
       icon: "🚀",
       title: "Digital Transformation",
-      description: "Modernize your business with cutting-edge technology solutions and digital strategies.",
-      features: ["Process Automation", "Digital Strategy", "Technology Integration"]
+      description:
+        "Modernize your business with cutting-edge technology solutions and digital strategies.",
+      features: [
+        "Process Automation",
+        "Digital Strategy",
+        "Technology Integration",
+      ],
     },
     {
       icon: "📈",
       title: "Business Development",
-      description: "Expand your market reach and drive sustainable growth with proven strategies.",
-      features: ["Lead Generation", "Partnership Development", "Market Expansion"]
-    }
-  ]
+      description:
+        "Expand your market reach and drive sustainable growth with proven strategies.",
+      features: [
+        "Lead Generation",
+        "Partnership Development",
+        "Market Expansion",
+      ],
+    },
+  ],
 };
 ---
 
 <BaseLayout>
   <Header />
-  
+
   <main>
     <Hero {...heroData} />
     <Services {...servicesData} />
-    
+
     <!-- Add more sections as needed -->
     <!-- <About /> -->
     <!-- <Testimonials /> -->

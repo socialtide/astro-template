@@ -19,10 +19,8 @@ const currentPath = Astro.url.pathname;
           navData.mainNav.map((item) => (
             <a
               href={item.href}
-              class={`text-sm font-medium transition-colors hover:text-primary-600 ${
-                currentPath === item.href
-                  ? "text-primary-600"
-                  : "text-gray-700"
+              class={`hover:text-primary-600 text-sm font-medium transition-colors ${
+                currentPath === item.href ? "text-primary-600" : "text-gray-700"
               }`}
               aria-current={currentPath === item.href ? "page" : undefined}
             >
@@ -51,15 +49,13 @@ const currentPath = Astro.url.pathname;
 
     <!-- Mobile Navigation -->
     <div id="mobile-menu" class="hidden md:hidden">
-      <div class="space-y-1 pb-4 pt-2">
+      <div class="space-y-1 pt-2 pb-4">
         {
           navData.mainNav.map((item) => (
             <a
               href={item.href}
               class={`block px-3 py-2 text-base font-medium ${
-                currentPath === item.href
-                  ? "text-primary-600"
-                  : "text-gray-700"
+                currentPath === item.href ? "text-primary-600" : "text-gray-700"
               }`}
               aria-current={currentPath === item.href ? "page" : undefined}
             >
@@ -69,7 +65,7 @@ const currentPath = Astro.url.pathname;
         }
         <a
           href={navData.ctaButton.href}
-          class="block px-3 py-2 text-base font-medium text-primary-600"
+          class="text-primary-600 block px-3 py-2 text-base font-medium"
         >
           {navData.ctaButton.label}
         </a>
@@ -87,7 +83,7 @@ const currentPath = Astro.url.pathname;
 
   menuButton?.addEventListener("click", () => {
     const isOpen = mobileMenu?.classList.contains("hidden");
-    
+
     if (isOpen) {
       mobileMenu?.classList.remove("hidden");
       menuIcon?.classList.add("hidden");

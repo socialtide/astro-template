@@ -19,8 +19,8 @@ const { Content } = await post.render();
 // Get related posts (same tags)
 const allPosts = await getCollection("blog");
 const relatedPosts = allPosts
-  .filter(p => p.id !== post.id)
-  .filter(p => p.data.tags.some(tag => post.data.tags.includes(tag)))
+  .filter((p) => p.id !== post.id)
+  .filter((p) => p.data.tags.some((tag) => post.data.tags.includes(tag)))
   .slice(0, 3);
 ---
 
@@ -35,7 +35,7 @@ const relatedPosts = allPosts
   }}
 >
   <Header />
-  
+
   <main>
     <article>
       <!-- Article Header -->
@@ -45,62 +45,72 @@ const relatedPosts = allPosts
             <!-- Back link -->
             <a
               href="/blog"
-              class="mb-6 inline-flex items-center text-sm font-medium text-gray-600 hover:text-primary-600"
+              class="hover:text-primary-600 mb-6 inline-flex items-center text-sm font-medium text-gray-600"
             >
               <ArrowLeft class="mr-2 h-4 w-4" />
               Back to Blog
             </a>
-            
+
             <!-- Post meta -->
-            <div class="mb-6 flex flex-wrap items-center gap-4 text-sm text-gray-500">
+            <div
+              class="mb-6 flex flex-wrap items-center gap-4 text-sm text-gray-500"
+            >
               <time datetime={post.data.date.toISOString()}>
-                {post.data.date.toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+                {
+                  post.data.date.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                }
               </time>
-              {post.data.readingTime && (
-                <>
-                  <span>•</span>
-                  <span>{post.data.readingTime} min read</span>
-                </>
-              )}
+              {
+                post.data.readingTime && (
+                  <>
+                    <span>•</span>
+                    <span>{post.data.readingTime} min read</span>
+                  </>
+                )
+              }
               <span>•</span>
               <span>By {post.data.author}</span>
             </div>
-            
+
             <!-- Title -->
             <h1 class="typography-display mb-6 text-gray-900">
               {post.data.title}
             </h1>
-            
+
             <!-- Tags -->
             <div class="flex flex-wrap gap-2">
-              {post.data.tags.map((tag) => (
-                <span class="rounded-full bg-primary-100 px-3 py-1 text-sm font-medium text-primary-700">
-                  {tag}
-                </span>
-              ))}
+              {
+                post.data.tags.map((tag) => (
+                  <span class="bg-primary-100 text-primary-700 rounded-full px-3 py-1 text-sm font-medium">
+                    {tag}
+                  </span>
+                ))
+              }
             </div>
           </div>
         </div>
       </section>
 
       <!-- Featured Image -->
-      {post.data.featuredImage && (
-        <section class="py-8">
-          <div class="container">
-            <div class="mx-auto max-w-4xl">
-              <img
-                src={post.data.featuredImage}
-                alt={post.data.featuredImageAlt || post.data.title}
-                class="w-full rounded-lg shadow-lg"
-              />
+      {
+        post.data.featuredImage && (
+          <section class="py-8">
+            <div class="container">
+              <div class="mx-auto max-w-4xl">
+                <img
+                  src={post.data.featuredImage}
+                  alt={post.data.featuredImageAlt || post.data.title}
+                  class="w-full rounded-lg shadow-lg"
+                />
+              </div>
             </div>
-          </div>
-        </section>
-      )}
+          </section>
+        )
+      }
 
       <!-- Article Content -->
       <section class="section-spacing">
@@ -113,47 +123,54 @@ const relatedPosts = allPosts
     </article>
 
     <!-- Related Posts -->
-    {relatedPosts.length > 0 && (
-      <section class="section-spacing bg-gray-50">
-        <div class="container">
-          <div class="mx-auto max-w-6xl">
-            <h2 class="mb-8 text-2xl font-semibold text-gray-900">Related Posts</h2>
-            <div class="grid gap-8 md:grid-cols-3">
-              {relatedPosts.map((relatedPost) => (
-                <article class="group overflow-hidden rounded-lg bg-white shadow-sm transition-all hover:shadow-lg">
-                  {relatedPost.data.featuredImage && (
-                    <div class="aspect-video overflow-hidden">
-                      <img
-                        src={relatedPost.data.featuredImage}
-                        alt={relatedPost.data.featuredImageAlt || relatedPost.data.title}
-                        class="h-full w-full object-cover transition-transform group-hover:scale-105"
-                      />
+    {
+      relatedPosts.length > 0 && (
+        <section class="section-spacing bg-gray-50">
+          <div class="container">
+            <div class="mx-auto max-w-6xl">
+              <h2 class="mb-8 text-2xl font-semibold text-gray-900">
+                Related Posts
+              </h2>
+              <div class="grid gap-8 md:grid-cols-3">
+                {relatedPosts.map((relatedPost) => (
+                  <article class="group overflow-hidden rounded-lg bg-white shadow-sm transition-all hover:shadow-lg">
+                    {relatedPost.data.featuredImage && (
+                      <div class="aspect-video overflow-hidden">
+                        <img
+                          src={relatedPost.data.featuredImage}
+                          alt={
+                            relatedPost.data.featuredImageAlt ||
+                            relatedPost.data.title
+                          }
+                          class="h-full w-full object-cover transition-transform group-hover:scale-105"
+                        />
+                      </div>
+                    )}
+                    <div class="p-6">
+                      <time class="text-sm text-gray-500">
+                        {relatedPost.data.date.toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </time>
+                      <h3 class="group-hover:text-primary-600 mt-2 mb-2 text-lg font-semibold text-gray-900">
+                        <a href={`/blog/${relatedPost.slug}`}>
+                          {relatedPost.data.title}
+                        </a>
+                      </h3>
+                      <p class="line-clamp-2 text-gray-600">
+                        {relatedPost.data.description}
+                      </p>
                     </div>
-                  )}
-                  <div class="p-6">
-                    <time class="text-sm text-gray-500">
-                      {relatedPost.data.date.toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </time>
-                    <h3 class="mb-2 mt-2 text-lg font-semibold text-gray-900 group-hover:text-primary-600">
-                      <a href={`/blog/${relatedPost.slug}`}>
-                        {relatedPost.data.title}
-                      </a>
-                    </h3>
-                    <p class="line-clamp-2 text-gray-600">
-                      {relatedPost.data.description}
-                    </p>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    )}
+        </section>
+      )
+    }
   </main>
 
   <Footer />

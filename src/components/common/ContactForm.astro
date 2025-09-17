@@ -10,7 +10,10 @@ const { formId = "contact-form", className = "" } = Astro.props;
 <form id={formId} class={`space-y-6 ${className}`}>
   <div class="grid gap-6 md:grid-cols-2">
     <div>
-      <label for="firstName" class="mb-2 block text-sm font-medium text-gray-700">
+      <label
+        for="firstName"
+        class="mb-2 block text-sm font-medium text-gray-700"
+      >
         First Name
       </label>
       <input
@@ -18,11 +21,14 @@ const { formId = "contact-form", className = "" } = Astro.props;
         id="firstName"
         name="firstName"
         required
-        class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:border-primary-500 focus:ring-2 focus:ring-primary-500"
+        class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
       />
     </div>
     <div>
-      <label for="lastName" class="mb-2 block text-sm font-medium text-gray-700">
+      <label
+        for="lastName"
+        class="mb-2 block text-sm font-medium text-gray-700"
+      >
         Last Name
       </label>
       <input
@@ -30,7 +36,7 @@ const { formId = "contact-form", className = "" } = Astro.props;
         id="lastName"
         name="lastName"
         required
-        class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:border-primary-500 focus:ring-2 focus:ring-primary-500"
+        class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
       />
     </div>
   </div>
@@ -44,7 +50,7 @@ const { formId = "contact-form", className = "" } = Astro.props;
       id="email"
       name="email"
       required
-      class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:border-primary-500 focus:ring-2 focus:ring-primary-500"
+      class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
     />
   </div>
 
@@ -56,7 +62,7 @@ const { formId = "contact-form", className = "" } = Astro.props;
       type="tel"
       id="phone"
       name="phone"
-      class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:border-primary-500 focus:ring-2 focus:ring-primary-500"
+      class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
     />
   </div>
 
@@ -67,7 +73,7 @@ const { formId = "contact-form", className = "" } = Astro.props;
     <select
       id="service"
       name="service"
-      class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:border-primary-500 focus:ring-2 focus:ring-primary-500"
+      class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
     >
       <option value="">Select a service</option>
       <option value="consulting">Consulting</option>
@@ -86,62 +92,63 @@ const { formId = "contact-form", className = "" } = Astro.props;
       name="message"
       rows="4"
       required
-      class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:border-primary-500 focus:ring-2 focus:ring-primary-500"
+      class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
     ></textarea>
   </div>
 
   <!-- Turnstile placeholder -->
   <div id="turnstile-container" class="mb-4"></div>
 
-  <button type="submit" class="btn-primary w-full">
-    Send Message
-  </button>
+  <button type="submit" class="btn-primary w-full"> Send Message </button>
 
   <div id="form-message" class="hidden rounded-lg p-4 text-center"></div>
 </form>
 
 <script>
   // Form handling
-  const form = document.getElementById('contact-form') as HTMLFormElement;
-  const formMessage = document.getElementById('form-message');
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const formMessage = document.getElementById("form-message");
 
-  form?.addEventListener('submit', async (e) => {
+  form?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    
+
     // Show loading state
-    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const submitButton = form.querySelector(
+      'button[type="submit"]',
+    ) as HTMLButtonElement;
     const originalText = submitButton.textContent;
-    submitButton.textContent = 'Sending...';
+    submitButton.textContent = "Sending...";
     submitButton.disabled = true;
-    
+
     try {
       // TODO: Replace with your form handling logic
       // Option 1: Google Sheets
       // Option 2: API endpoint
       // Option 3: Email service
-      
+
       // For now, just simulate success
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // Show success message
       if (formMessage) {
-        formMessage.textContent = 'Thank you for your message! We\'ll be in touch soon.';
-        formMessage.classList.add('bg-green-100', 'text-green-700');
-        formMessage.classList.remove('hidden');
+        formMessage.textContent =
+          "Thank you for your message! We'll be in touch soon.";
+        formMessage.classList.add("bg-green-100", "text-green-700");
+        formMessage.classList.remove("hidden");
       }
-      
+
       // Reset form
       form.reset();
-      
     } catch (error) {
       // Show error message
       if (formMessage) {
-        formMessage.textContent = 'Something went wrong. Please try again or email us directly.';
-        formMessage.classList.add('bg-red-100', 'text-red-700');
-        formMessage.classList.remove('hidden');
+        formMessage.textContent =
+          "Something went wrong. Please try again or email us directly.";
+        formMessage.classList.add("bg-red-100", "text-red-700");
+        formMessage.classList.remove("hidden");
       }
     } finally {
       // Restore button state
@@ -152,13 +159,14 @@ const { formId = "contact-form", className = "" } = Astro.props;
 
   // Load Turnstile if configured
   if (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY) {
-    const script = document.createElement('script');
-    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    const script = document.createElement("script");
+    script.src =
+      "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
     script.async = true;
     script.defer = true;
     script.onload = () => {
       // @ts-ignore
-      window.turnstile?.render('#turnstile-container', {
+      window.turnstile?.render("#turnstile-container", {
         sitekey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
       });
     };

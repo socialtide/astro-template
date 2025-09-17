@@ -5,6 +5,7 @@ Use this checklist when deploying a new client website from this template. Check
 ## 🚀 Phase 1: Initial Setup
 
 ### Create Repository from Template
+
 1. [ ] Go to [github.com/socialtide/astro-template](https://github.com/socialtide/astro-template)
 2. [ ] Click "Use this template" → "Create a new repository"
 3. [ ] Configure new repository:
@@ -15,6 +16,7 @@ Use this checklist when deploying a new client website from this template. Check
 4. [ ] Click "Create repository"
 
 ### Local Setup
+
 - [ ] Clone new repository: `git clone https://github.com/socialtide/CLIENT_NAME.git`
 - [ ] Navigate to directory: `cd CLIENT_NAME`
 - [ ] Install dependencies: `bun install`
@@ -23,6 +25,7 @@ Use this checklist when deploying a new client website from this template. Check
 ## 📝 Phase 2: Client Configuration
 
 ### Replace CLIENT_NAME Placeholders
+
 Update all instances of `CLIENT_NAME` in the following files:
 
 - [ ] `package.json` - Update `name` field
@@ -35,6 +38,7 @@ Update all instances of `CLIENT_NAME` in the following files:
 ### Update Site Content
 
 #### Site Information (`src/data/site.json`)
+
 - [ ] `siteName` - Official client name
 - [ ] `siteUrl` - Preview URL (https://CLIENT_NAME.socialtide.ai)
 - [ ] `author` - Client business name
@@ -47,10 +51,12 @@ Update all instances of `CLIENT_NAME` in the following files:
 - [ ] `socialLinks` - All social media URLs
 
 #### Navigation (`src/data/navigation.json`)
+
 - [ ] Review and update navigation items
 - [ ] Ensure all links match actual pages
 
 #### CLAUDE.md Client Details
+
 - [ ] Client industry
 - [ ] Primary services
 - [ ] Target audience
@@ -60,16 +66,19 @@ Update all instances of `CLIENT_NAME` in the following files:
 ## 🎨 Phase 3: Brand Customization
 
 ### Colors (`src/styles/global.css`)
+
 - [ ] Update primary color scale in `@theme` block
 - [ ] Use [oklch.com](https://oklch.com) to generate values
 - [ ] Test color contrast for accessibility
 
 ### Fonts (if custom)
+
 - [ ] Add font files to `public/fonts/`
 - [ ] Update font imports in `BaseLayout.astro`
 - [ ] Update font family in CSS
 
 ### Images & Assets
+
 - [ ] Add logo to `public/images/`
 - [ ] Add favicon to `public/`
 - [ ] Optimize all images (WebP format preferred)
@@ -78,12 +87,14 @@ Update all instances of `CLIENT_NAME` in the following files:
 ## 🔧 Phase 4: Environment Setup
 
 ### Create `.env` file (if needed)
+
 - [ ] `PUBLIC_GOOGLE_SHEETS_URL` - For form submissions
 - [ ] `PUBLIC_API_ENDPOINT` - For custom API
 - [ ] `PUBLIC_TURNSTILE_SITE_KEY` - For spam protection
 - [ ] Add `.env` to `.gitignore`
 
 ### Test Forms Locally
+
 - [ ] Verify contact form submission
 - [ ] Test error handling
 - [ ] Check success messages
@@ -91,6 +102,7 @@ Update all instances of `CLIENT_NAME` in the following files:
 ## ☁️ Phase 5: Cloudflare Setup
 
 ### Cloudflare Pages
+
 1. [ ] Login to [Cloudflare Dashboard](https://dash.cloudflare.com)
 2. [ ] Navigate to Workers & Pages
 3. [ ] Create Application > Pages > Connect to Git
@@ -103,6 +115,7 @@ Update all instances of `CLIENT_NAME` in the following files:
 7. [ ] Deploy
 
 ### Preview Domain
+
 - [ ] Verify deployment at `https://CLIENT_NAME.socialtide.ai`
 - [ ] Check that trailing slashes work correctly
 - [ ] Test all pages and navigation
@@ -110,6 +123,7 @@ Update all instances of `CLIENT_NAME` in the following files:
 ## ✅ Phase 6: Pre-Launch Testing
 
 ### Functionality Testing
+
 - [ ] All pages load without errors
 - [ ] Navigation works on desktop and mobile
 - [ ] Contact form submits successfully
@@ -117,6 +131,7 @@ Update all instances of `CLIENT_NAME` in the following files:
 - [ ] 404 page works
 
 ### SEO & Performance
+
 - [ ] Run Lighthouse audit
 - [ ] Check meta tags on all pages
 - [ ] Verify sitemap generation
@@ -124,12 +139,14 @@ Update all instances of `CLIENT_NAME` in the following files:
 - [ ] Check robots.txt is accessible
 
 ### Cross-Browser Testing
+
 - [ ] Chrome/Edge
 - [ ] Firefox
 - [ ] Safari
 - [ ] Mobile browsers
 
 ### Security Headers
+
 - [ ] Verify `_headers` file is working
 - [ ] Check CSP in browser console
 - [ ] Test HTTPS redirect
@@ -137,6 +154,7 @@ Update all instances of `CLIENT_NAME` in the following files:
 ## 🌐 Phase 7: Production Domain Setup
 
 ### When Ready for Production
+
 1. [ ] Add custom domain in Cloudflare Pages settings
 2. [ ] Update `wrangler.toml`:
    ```toml
@@ -154,6 +172,7 @@ Update all instances of `CLIENT_NAME` in the following files:
 ## 📊 Phase 8: Post-Deployment
 
 ### Verification
+
 - [ ] Production domain loads correctly
 - [ ] SSL certificate is valid
 - [ ] www redirects to non-www (or vice versa)
@@ -161,12 +180,14 @@ Update all instances of `CLIENT_NAME` in the following files:
 - [ ] Analytics tracking (if configured)
 
 ### Documentation
+
 - [ ] Update CLAUDE.md with production URLs
 - [ ] Document any custom features
 - [ ] Note any special deployment considerations
 - [ ] Share credentials with team
 
 ### Client Handoff
+
 - [ ] Provide CMS access (if applicable)
 - [ ] Share style guide
 - [ ] Document content update process
@@ -175,6 +196,7 @@ Update all instances of `CLIENT_NAME` in the following files:
 ## 🔄 Ongoing Maintenance
 
 ### Regular Tasks
+
 - [ ] Monitor site performance
 - [ ] Check for framework updates
 - [ ] Review analytics
@@ -182,6 +204,7 @@ Update all instances of `CLIENT_NAME` in the following files:
 - [ ] Backup important changes
 
 ### SocialTide Integration
+
 - [ ] Configure git sync with SocialTide CMS
 - [ ] Set up automated content updates
 - [ ] Enable performance monitoring

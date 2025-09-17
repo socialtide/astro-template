@@ -12,17 +12,16 @@ import siteData from "../data/site.json";
   description="Ready to get started? Contact us today to discuss how we can help your business grow."
 >
   <Header />
-  
+
   <main>
     <!-- Contact Header -->
     <section class="bg-gray-50 py-12">
       <div class="container">
         <div class="mx-auto max-w-3xl text-center">
-          <h1 class="typography-heading mb-4 text-gray-900">
-            Get in Touch
-          </h1>
+          <h1 class="typography-heading mb-4 text-gray-900">Get in Touch</h1>
           <p class="typography-body-large text-gray-600">
-            We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            We'd love to hear from you. Send us a message and we'll respond as
+            soon as possible.
           </p>
         </div>
       </div>
@@ -37,41 +36,47 @@ import siteData from "../data/site.json";
             <h2 class="mb-6 text-2xl font-semibold text-gray-900">
               Contact Information
             </h2>
-            
+
             <div class="space-y-6">
               <div class="flex items-start">
-                <div class="mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100">
-                  <Mail class="h-5 w-5 text-primary-600" />
+                <div
+                  class="bg-primary-100 mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg"
+                >
+                  <Mail class="text-primary-600 h-5 w-5" />
                 </div>
                 <div>
                   <h3 class="mb-1 font-medium text-gray-900">Email</h3>
                   <a
                     href={`mailto:${siteData.contact.email}`}
-                    class="text-gray-600 hover:text-primary-600"
+                    class="hover:text-primary-600 text-gray-600"
                   >
                     {siteData.contact.email}
                   </a>
                 </div>
               </div>
-              
+
               <div class="flex items-start">
-                <div class="mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100">
-                  <Phone class="h-5 w-5 text-primary-600" />
+                <div
+                  class="bg-primary-100 mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg"
+                >
+                  <Phone class="text-primary-600 h-5 w-5" />
                 </div>
                 <div>
                   <h3 class="mb-1 font-medium text-gray-900">Phone</h3>
                   <a
-                    href={`tel:${siteData.contact.phone.replace(/\D/g, '')}`}
-                    class="text-gray-600 hover:text-primary-600"
+                    href={`tel:${siteData.contact.phone.replace(/\D/g, "")}`}
+                    class="hover:text-primary-600 text-gray-600"
                   >
                     {siteData.contact.phone}
                   </a>
                 </div>
               </div>
-              
+
               <div class="flex items-start">
-                <div class="mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100">
-                  <MapPin class="h-5 w-5 text-primary-600" />
+                <div
+                  class="bg-primary-100 mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg"
+                >
+                  <MapPin class="text-primary-600 h-5 w-5" />
                 </div>
                 <div>
                   <h3 class="mb-1 font-medium text-gray-900">Address</h3>

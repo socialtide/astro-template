@@ -43,6 +43,7 @@ bun install
 Update these files with client information:
 
 **`package.json`**
+
 ```json
 {
   "name": "client-name",
@@ -51,6 +52,7 @@ Update these files with client information:
 ```
 
 **`wrangler.toml`**
+
 ```toml
 name = "client-name"
 routes = [
@@ -59,6 +61,7 @@ routes = [
 ```
 
 **`astro.config.mjs`**
+
 ```js
 export default defineConfig({
   site: "https://client-name.socialtide.ai",
@@ -67,6 +70,7 @@ export default defineConfig({
 ```
 
 **`src/data/site.json`**
+
 ```json
 {
   "siteName": "Client Name",
@@ -102,9 +106,9 @@ Edit `src/styles/global.css` to update brand colors using OKLCH color space:
   --color-primary-500: oklch(0.62 0.17 155);
   --color-primary-600: oklch(0.53 0.15 155);
   --color-primary-700: oklch(0.44 0.12 155);
-  --color-primary-800: oklch(0.37 0.10 155);
-  --color-primary-900: oklch(0.30 0.08 155);
-  --color-primary-950: oklch(0.20 0.05 155);
+  --color-primary-800: oklch(0.37 0.1 155);
+  --color-primary-900: oklch(0.3 0.08 155);
+  --color-primary-950: oklch(0.2 0.05 155);
 }
 ```
 
@@ -127,7 +131,7 @@ Or use the custom `.prose-blog` class for blog posts.
 All components accept props for easy customization:
 
 ```astro
-<Hero 
+<Hero
   heading="Welcome to Success"
   description="We help businesses thrive"
   primaryCTA={{ label: "Get Started", href: "/contact" }}
@@ -139,7 +143,7 @@ All components accept props for easy customization:
 ```
 ├── public/              # Static assets (images, fonts)
 ├── src/
-│   ├── components/     
+│   ├── components/
 │   │   ├── common/      # Header, Footer, ContactForm
 │   │   └── sections/    # Hero, Services, About, etc.
 │   ├── content/
@@ -159,6 +163,7 @@ All components accept props for easy customization:
 ### Page Content
 
 Edit JSON files in `src/data/`:
+
 - `site.json` - Global site information
 - `navigation.json` - Header/footer navigation
 - Component-specific data files
@@ -259,16 +264,19 @@ bunx astro check
 ### Build Errors
 
 **"Cannot apply unknown utility class"**
+
 - Ensure `@reference` directive is in component styles
 - Check that colors are defined in `@theme` block
 
 **"Can't resolve '@tailwindcss/typography'"**
+
 - Run `bun add -D @tailwindcss/typography`
 - Ensure `@plugin` directive in global.css
 
 ### Tailwind v4 Notes
 
 This template uses Tailwind CSS v4 with CSS-based configuration:
+
 - No `tailwind.config.js` file needed
 - Colors defined in `@theme` block in CSS
 - Plugins imported with `@plugin` directive
@@ -277,6 +285,7 @@ This template uses Tailwind CSS v4 with CSS-based configuration:
 ### URL Structure
 
 The template uses trailing slashes (`/about/` instead of `/about`) to:
+
 - Match Astro's build output structure
 - Avoid unnecessary redirects on Cloudflare
 - Improve performance and SEO
@@ -284,6 +293,7 @@ The template uses trailing slashes (`/about/` instead of `/about`) to:
 ### Security Headers
 
 The `public/_headers` file configures:
+
 - Security headers (CSP, X-Frame-Options, etc.)
 - Caching rules for optimal performance
 - Protection against common web vulnerabilities
@@ -291,6 +301,7 @@ The `public/_headers` file configures:
 ### AI-Friendly SEO
 
 The `robots.txt` explicitly allows:
+
 - GPTBot (OpenAI)
 - Claude-Web (Anthropic)
 - PerplexityBot
@@ -301,12 +312,14 @@ This ensures your client's content is discoverable by modern AI search engines.
 ### Development Issues
 
 **Port already in use**
+
 ```bash
 # Kill process on port 4321
 lsof -ti:4321 | xargs kill -9
 ```
 
 **Dependency issues**
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules .astro
@@ -324,13 +337,14 @@ bun install
 ### SEO Optimization
 
 The template includes:
+
 - Meta tags (title, description, keywords)
 - Open Graph tags
 - Twitter Card tags
 - Canonical URLs with trailing slashes
 - Sitemap generation
 - AI-friendly robots.txt
-- Security headers via _headers file
+- Security headers via \_headers file
 
 ### Performance
 
@@ -342,6 +356,7 @@ The template includes:
 ## 🤝 SocialTide Integration
 
 This template is designed for:
+
 - Git-based content management
 - One-click publishing via git push
 - Integration with SocialTide CMS

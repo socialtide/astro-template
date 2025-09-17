@@ -4,7 +4,7 @@ import siteData from "../data/site.json";
 
 export async function GET(context) {
   const posts = await getCollection("blog");
-  
+
   return rss({
     title: `${siteData.siteName} Blog`,
     description: siteData.defaultDescription,

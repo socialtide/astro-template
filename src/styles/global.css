@@ -13,24 +13,24 @@
   --color-primary-500: oklch(0.62 0.17 155);
   --color-primary-600: oklch(0.53 0.15 155);
   --color-primary-700: oklch(0.44 0.12 155);
-  --color-primary-800: oklch(0.37 0.10 155);
-  --color-primary-900: oklch(0.30 0.08 155);
-  --color-primary-950: oklch(0.20 0.05 155);
-  
+  --color-primary-800: oklch(0.37 0.1 155);
+  --color-primary-900: oklch(0.3 0.08 155);
+  --color-primary-950: oklch(0.2 0.05 155);
+
   /* Font families */
   --font-family-sans: Inter, system-ui, sans-serif;
   --font-family-display: Inter, system-ui, sans-serif;
-  
+
   /* Additional theme customizations can go here */
 }
 
 /* Custom utility classes */
 .text-gradient {
-  @apply bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent;
+  @apply from-primary-600 to-primary-700 bg-gradient-to-r bg-clip-text text-transparent;
 }
 
 .btn-gradient {
-  @apply bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800;
+  @apply from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 bg-gradient-to-r text-white;
 }
 
 /* Smooth scroll behavior */
