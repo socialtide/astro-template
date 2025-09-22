@@ -249,7 +249,8 @@ function trackContentEngagement() {
   );
 
   // Observe any current elements
-  document.querySelectorAll(selector).forEach((el) => {
+  const elements = document.querySelectorAll(selector);
+  elements.forEach((el) => {
     if (!observed.has(el)) {
       observer.observe(el);
       observed.add(el);

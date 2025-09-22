@@ -1,7 +1,9 @@
 // PostHog initialization script
+import { initializeTracking } from "../lib/posthog-tracking.js";
+
 function waitForPosthog() {
   if (window.posthog && window.posthog.__loaded) {
-    console.log("PostHog loaded successfully");
+    initializeTracking();
   } else {
     setTimeout(waitForPosthog, 100);
   }
