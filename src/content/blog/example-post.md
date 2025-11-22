@@ -2,7 +2,7 @@
 title: "Welcome to Our New Blog"
 description: "Learn about our journey and what we have in store for you."
 author: "CLIENT NAME"
-date: 2024-01-01
+date: 2025-01-01
 tags: ["announcement", "company news"]
 featured: true
 featuredImage: "/images/blog/welcome.jpg"
