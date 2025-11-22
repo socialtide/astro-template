@@ -48,4 +48,4 @@ The key is starting with clarity: who are you trying to reach, and what do you w
 
 ---
 
-*Thinking about refreshing your web presence? [Get in touch](#contact)—we'd love to help.*
+_Thinking about refreshing your web presence? [Get in touch](#contact)—we'd love to help._

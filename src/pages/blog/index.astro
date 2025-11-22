@@ -39,7 +39,7 @@ const recentPosts = posts.filter((post) => !post.data.featured);
       featuredPosts.length > 0 && (
         <section class="section-sm">
           <div class="container">
-            <h2 class="font-serif text-xl font-medium text-warm-900 mb-8">
+            <h2 class="text-warm-900 mb-8 font-serif text-xl font-medium">
               Featured
             </h2>
             <div class="grid gap-8 md:grid-cols-2">
@@ -54,9 +54,9 @@ const recentPosts = posts.filter((post) => !post.data.featured);
                       />
                     </div>
                   )}
-                  <div class="flex items-center gap-4 text-small">
+                  <div class="text-small flex items-center gap-4">
                     <span class="flex items-center gap-1.5">
-                      <Calendar class="h-4 w-4 text-warm-400" />
+                      <Calendar class="text-warm-400 h-4 w-4" />
                       <time datetime={post.data.date.toISOString()}>
                         {post.data.date.toLocaleDateString("en-US", {
                           year: "numeric",
@@ -67,12 +67,12 @@ const recentPosts = posts.filter((post) => !post.data.featured);
                     </span>
                     {post.data.readingTime && (
                       <span class="flex items-center gap-1.5">
-                        <Clock class="h-4 w-4 text-warm-400" />
+                        <Clock class="text-warm-400 h-4 w-4" />
                         {post.data.readingTime} min read
                       </span>
                     )}
                   </div>
-                  <h3 class="text-title mt-4 group-hover:text-primary-600 transition-colors">
+                  <h3 class="text-title group-hover:text-primary-600 mt-4 transition-colors">
                     <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
                   </h3>
                   <p class="text-body mt-3">{post.data.description}</p>
@@ -92,9 +92,9 @@ const recentPosts = posts.filter((post) => !post.data.featured);
     }
 
     <!-- Recent Posts -->
-    <section class="section border-t border-warm-200">
+    <section class="section border-warm-200 border-t">
       <div class="container">
-        <h2 class="font-serif text-xl font-medium text-warm-900 mb-8">
+        <h2 class="text-warm-900 mb-8 font-serif text-xl font-medium">
           {featuredPosts.length > 0 ? "Recent Posts" : "All Posts"}
         </h2>
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -110,7 +110,7 @@ const recentPosts = posts.filter((post) => !post.data.featured);
                     />
                   </div>
                 )}
-                <div class="flex items-center gap-4 text-small">
+                <div class="text-small flex items-center gap-4">
                   <time datetime={post.data.date.toISOString()}>
                     {post.data.date.toLocaleDateString("en-US", {
                       year: "numeric",
@@ -122,14 +122,13 @@ const recentPosts = posts.filter((post) => !post.data.featured);
                     <span>{post.data.readingTime} min</span>
                   )}
                 </div>
-                <h3 class="text-title mt-3 group-hover:text-primary-600 transition-colors">
+                <h3 class="text-title group-hover:text-primary-600 mt-3 transition-colors">
                   <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
                 </h3>
-                <p class="text-body mt-2 line-clamp-2">{post.data.description}</p>
-                <a
-                  href={`/blog/${post.slug}/`}
-                  class="btn-text mt-4 text-sm"
-                >
+                <p class="text-body mt-2 line-clamp-2">
+                  {post.data.description}
+                </p>
+                <a href={`/blog/${post.slug}/`} class="btn-text mt-4 text-sm">
                   Read more
                   <ArrowRight class="h-4 w-4" />
                 </a>

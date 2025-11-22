@@ -86,8 +86,8 @@ Edit `src/styles/global.css` to change the color palette:
   --color-accent-500: oklch(0.55 0.08 145);
 
   /* Warm neutrals - Cream to charcoal */
-  --color-warm-50: oklch(0.985 0.008 85);  /* Background */
-  --color-warm-900: oklch(0.18 0.015 55);  /* Text */
+  --color-warm-50: oklch(0.985 0.008 85); /* Background */
+  --color-warm-900: oklch(0.18 0.015 55); /* Text */
 }
 ```
 
@@ -158,12 +158,12 @@ Your site is live on Cloudflare's global edge network.
 
 ## Commands
 
-| Command           | Description                          |
-| ----------------- | ------------------------------------ |
-| `bun install`     | Install dependencies                 |
-| `bun dev`         | Start dev server at `localhost:4321` |
-| `bun run build`   | Build for production                 |
-| `bun preview`     | Preview production build locally     |
+| Command         | Description                          |
+| --------------- | ------------------------------------ |
+| `bun install`   | Install dependencies                 |
+| `bun dev`       | Start dev server at `localhost:4321` |
+| `bun run build` | Build for production                 |
+| `bun preview`   | Preview production build locally     |
 
 ## Tech Stack
 

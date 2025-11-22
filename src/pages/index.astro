@@ -10,48 +10,48 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
 
   <main>
     <!-- Hero Section -->
-    <section class="relative min-h-[90vh] flex items-center pt-20">
+    <section class="relative flex min-h-[90vh] items-center pt-20">
       <div class="container">
-        <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <!-- Content -->
           <div class="max-w-2xl">
             <div class="animate-fade-up">
               <span class="text-overline">Welcome to Your Brand</span>
             </div>
 
-            <h1 class="text-display mt-6 animate-fade-up delay-100">
+            <h1 class="text-display animate-fade-up mt-6 delay-100">
               Helping businesses grow with clarity and confidence.
             </h1>
 
-            <p class="text-body-lg mt-8 animate-fade-up delay-200">
+            <p class="text-body-lg animate-fade-up mt-8 delay-200">
               We partner with ambitious organizations to create meaningful
               digital experiences that connect, convert, and create lasting
               value.
             </p>
 
             <div
-              class="flex flex-col sm:flex-row gap-4 mt-10 animate-fade-up delay-300"
+              class="animate-fade-up mt-10 flex flex-col gap-4 delay-300 sm:flex-row"
             >
               <a href="#contact" class="btn-primary">
                 Start a Conversation
-                <ArrowRight class="w-4 h-4" />
+                <ArrowRight class="h-4 w-4" />
               </a>
               <a href="#services" class="btn-secondary"> Our Services </a>
             </div>
           </div>
 
           <!-- Hero Image -->
-          <div class="relative animate-fade-in delay-400">
-            <div class="aspect-[4/3] relative overflow-hidden">
+          <div class="animate-fade-in relative delay-400">
+            <div class="relative aspect-[4/3] overflow-hidden">
               <img
                 src="/images/sand-log-ocean.jpg"
                 alt="Serene ocean view with driftwood"
-                class="w-full h-full object-cover"
+                class="h-full w-full object-cover"
               />
             </div>
             <!-- Decorative frame -->
             <div
-              class="absolute -bottom-4 -right-4 w-full h-full border border-warm-300 -z-10"
+              class="border-warm-300 absolute -right-4 -bottom-4 -z-10 h-full w-full border"
             >
             </div>
           </div>
@@ -62,7 +62,7 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
     <!-- Services Section -->
     <section id="services" class="section bg-warm-gradient">
       <div class="container">
-        <div class="max-w-3xl mx-auto text-center mb-16">
+        <div class="mx-auto mb-16 max-w-3xl text-center">
           <span class="text-overline">What We Do</span>
           <h2 class="text-headline mt-4">Services tailored to your goals.</h2>
           <p class="text-body-lg mt-6">
@@ -71,7 +71,7 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
           </p>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {
             [
               {
@@ -124,14 +124,14 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
     <!-- About Section -->
     <section id="about" class="section">
       <div class="container">
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="grid items-center gap-16 lg:grid-cols-2">
           <!-- Image -->
           <div class="order-2 lg:order-1">
-            <div class="aspect-square relative overflow-hidden">
+            <div class="relative aspect-square overflow-hidden">
               <img
                 src="/images/founders.jpg"
                 alt="Our founders"
-                class="w-full h-full object-cover"
+                class="h-full w-full object-cover"
               />
             </div>
           </div>
@@ -143,7 +143,7 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
               We believe in doing meaningful work with good people.
             </h2>
 
-            <div class="space-y-6 mt-8">
+            <div class="mt-8 space-y-6">
               <p class="text-body-lg">
                 We started this business because we believe every organization
                 deserves a digital presence that reflects their true value.
@@ -167,8 +167,8 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
                   "Your success is our success",
                 ].map((value) => (
                   <div class="flex items-center gap-3">
-                    <div class="w-5 h-5 rounded-full bg-accent-100 flex items-center justify-center flex-shrink-0">
-                      <Check class="w-3 h-3 text-accent-600" />
+                    <div class="bg-accent-100 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full">
+                      <Check class="text-accent-600 h-3 w-3" />
                     </div>
                     <span class="text-body">{value}</span>
                   </div>
@@ -183,15 +183,17 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
     <!-- Testimonial / Social Proof Section -->
     <section class="section bg-warm-900 text-warm-100">
       <div class="container">
-        <div class="max-w-4xl mx-auto text-center">
-          <blockquote class="font-serif text-2xl md:text-3xl lg:text-4xl leading-relaxed font-normal italic">
+        <div class="mx-auto max-w-4xl text-center">
+          <blockquote
+            class="font-serif text-2xl leading-relaxed font-normal italic md:text-3xl lg:text-4xl"
+          >
             "Working with this team transformed how we think about our digital
             presence. They didn't just build us a website—they helped us
             understand our customers better."
           </blockquote>
           <div class="mt-10">
             <p class="text-warm-200 font-medium">Sarah Mitchell</p>
-            <p class="text-warm-400 text-sm mt-1">Founder, Example Company</p>
+            <p class="text-warm-400 mt-1 text-sm">Founder, Example Company</p>
           </div>
         </div>
       </div>
@@ -200,12 +202,12 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
     <!-- Process Section -->
     <section class="section">
       <div class="container">
-        <div class="max-w-3xl mx-auto text-center mb-16">
+        <div class="mx-auto mb-16 max-w-3xl text-center">
           <span class="text-overline">Our Process</span>
           <h2 class="text-headline mt-4">Simple, collaborative, effective.</h2>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {
             [
               {
@@ -234,7 +236,7 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
               },
             ].map((phase, i) => (
               <div class="text-center" style={`animation-delay: ${i * 100}ms`}>
-                <span class="font-serif text-5xl text-warm-300 font-medium">
+                <span class="text-warm-300 font-serif text-5xl font-medium">
                   {phase.step}
                 </span>
                 <h3 class="text-title mt-4">{phase.title}</h3>
@@ -249,8 +251,8 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
     <!-- CTA Section -->
     <section id="contact" class="section bg-warm-gradient-reverse">
       <div class="container">
-        <div class="max-w-4xl mx-auto">
-          <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div class="mx-auto max-w-4xl">
+          <div class="grid items-start gap-12 lg:grid-cols-2">
             <!-- Content -->
             <div>
               <span class="text-overline">Get in Touch</span>
@@ -265,33 +267,33 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
               <div class="mt-10 space-y-6">
                 <a
                   href="mailto:hello@yourdomain.com"
-                  class="flex items-center gap-4 text-body hover:text-primary-600 transition-colors"
+                  class="text-body hover:text-primary-600 flex items-center gap-4 transition-colors"
                 >
                   <div
-                    class="w-12 h-12 bg-warm-100 flex items-center justify-center"
+                    class="bg-warm-100 flex h-12 w-12 items-center justify-center"
                   >
-                    <Mail class="w-5 h-5 text-warm-600" />
+                    <Mail class="text-warm-600 h-5 w-5" />
                   </div>
                   <span>hello@yourdomain.com</span>
                 </a>
 
                 <a
                   href="tel:+1234567890"
-                  class="flex items-center gap-4 text-body hover:text-primary-600 transition-colors"
+                  class="text-body hover:text-primary-600 flex items-center gap-4 transition-colors"
                 >
                   <div
-                    class="w-12 h-12 bg-warm-100 flex items-center justify-center"
+                    class="bg-warm-100 flex h-12 w-12 items-center justify-center"
                   >
-                    <Phone class="w-5 h-5 text-warm-600" />
+                    <Phone class="text-warm-600 h-5 w-5" />
                   </div>
                   <span>+1 (234) 567-890</span>
                 </a>
 
-                <div class="flex items-center gap-4 text-body">
+                <div class="text-body flex items-center gap-4">
                   <div
-                    class="w-12 h-12 bg-warm-100 flex items-center justify-center"
+                    class="bg-warm-100 flex h-12 w-12 items-center justify-center"
                   >
-                    <MapPin class="w-5 h-5 text-warm-600" />
+                    <MapPin class="text-warm-600 h-5 w-5" />
                   </div>
                   <span>Your City, Country</span>
                 </div>
@@ -299,7 +301,7 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
             </div>
 
             <!-- Contact Form -->
-            <div class="bg-white p-8 border border-warm-200">
+            <div class="border-warm-200 border bg-white p-8">
               <form class="space-y-6">
                 <div>
                   <label for="name" class="form-label">Name</label>
@@ -338,7 +340,7 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
 
                 <button type="submit" class="btn-primary w-full">
                   Send Message
-                  <ArrowRight class="w-4 h-4" />
+                  <ArrowRight class="h-4 w-4" />
                 </button>
               </form>
             </div>
@@ -348,9 +350,11 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
     </section>
 
     <!-- Simple Footer Banner -->
-    <section class="py-8 border-t border-warm-200">
+    <section class="border-warm-200 border-t py-8">
       <div class="container">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+        <div
+          class="flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left"
+        >
           <p class="text-small">
             Built with the
             <a
@@ -367,7 +371,7 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
             rel="noopener"
           >
             Learn more about SocialTide
-            <ArrowRight class="w-4 h-4" />
+            <ArrowRight class="h-4 w-4" />
           </a>
         </div>
       </div>

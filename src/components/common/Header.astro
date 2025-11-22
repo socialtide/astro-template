@@ -6,14 +6,14 @@ const currentPath = Astro.url.pathname;
 ---
 
 <header
-  class="fixed top-0 z-50 w-full bg-warm-50/90 backdrop-blur-md border-b border-warm-200"
+  class="bg-warm-50/90 border-warm-200 fixed top-0 z-50 w-full border-b backdrop-blur-md"
 >
   <nav class="container">
     <div class="flex h-20 items-center justify-between">
       <!-- Logo -->
       <a
         href={navData.logo.href}
-        class="font-serif text-2xl font-medium text-warm-900 hover:text-primary-600 transition-colors"
+        class="text-warm-900 hover:text-primary-600 font-serif text-2xl font-medium transition-colors"
       >
         {navData.logo.text}
       </a>
@@ -55,7 +55,7 @@ const currentPath = Astro.url.pathname;
     </div>
 
     <!-- Mobile Navigation -->
-    <div id="mobile-menu" class="hidden border-t border-warm-200 md:hidden">
+    <div id="mobile-menu" class="border-warm-200 hidden border-t md:hidden">
       <div class="space-y-1 py-4">
         {
           navData.mainNav.map((item) => (

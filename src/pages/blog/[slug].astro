@@ -48,9 +48,9 @@ const relatedPosts = allPosts
             </a>
 
             <!-- Post meta -->
-            <div class="mt-10 flex flex-wrap items-center gap-4 text-small">
+            <div class="text-small mt-10 flex flex-wrap items-center gap-4">
               <span class="flex items-center gap-1.5">
-                <Calendar class="h-4 w-4 text-warm-400" />
+                <Calendar class="text-warm-400 h-4 w-4" />
                 <time datetime={post.data.date.toISOString()}>
                   {
                     post.data.date.toLocaleDateString("en-US", {
@@ -64,13 +64,13 @@ const relatedPosts = allPosts
               {
                 post.data.readingTime && (
                   <span class="flex items-center gap-1.5">
-                    <Clock class="h-4 w-4 text-warm-400" />
+                    <Clock class="text-warm-400 h-4 w-4" />
                     {post.data.readingTime} min read
                   </span>
                 )
               }
               <span class="flex items-center gap-1.5">
-                <User class="h-4 w-4 text-warm-400" />
+                <User class="text-warm-400 h-4 w-4" />
                 {post.data.author}
               </span>
             </div>
@@ -125,10 +125,10 @@ const relatedPosts = allPosts
     <!-- Related Posts -->
     {
       relatedPosts.length > 0 && (
-        <section class="section border-t border-warm-200 bg-warm-gradient">
+        <section class="section border-warm-200 bg-warm-gradient border-t">
           <div class="container">
             <div class="mx-auto max-w-6xl">
-              <h2 class="font-serif text-xl font-medium text-warm-900 mb-8">
+              <h2 class="text-warm-900 mb-8 font-serif text-xl font-medium">
                 Related Posts
               </h2>
               <div class="grid gap-8 md:grid-cols-3">
@@ -153,7 +153,7 @@ const relatedPosts = allPosts
                         day: "numeric",
                       })}
                     </time>
-                    <h3 class="text-title mt-3 group-hover:text-primary-600 transition-colors">
+                    <h3 class="text-title group-hover:text-primary-600 mt-3 transition-colors">
                       <a href={`/blog/${relatedPost.slug}/`}>
                         {relatedPost.data.title}
                       </a>

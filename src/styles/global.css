@@ -373,10 +373,7 @@ body {
 
 /* Subtle pattern overlay */
 .pattern-dots {
-  background-image: radial-gradient(
-    var(--color-warm-300) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(var(--color-warm-300) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
