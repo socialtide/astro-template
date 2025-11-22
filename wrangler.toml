@@ -1,17 +1,19 @@
-name = "CLIENT_NAME"
+name = "socialtide-astro-template"
 compatibility_date = "2024-03-25"
 
 vars = { 'ENVIRONMENT' = 'dev' }
 
 [env.staging]
-name = "CLIENT-staging"
-routes = [{ pattern = "-preview.yourdomain.com/*", zone_name = "yourzone.com" }]
+name = "socialtide-astro-template-preview"
+routes = [
+  { pattern = "preview-astro-template.socialtide.ai", custom_domain = true },
+]
 vars = { 'ENVIRONMENT' = 'staging' }
 
 # Ends up being what DNS is pointed to
 [env.production]
-name = "CLIENT-production"
-routes = [{ pattern = "yourdomain.com/*", zone_name = "yourzone.com" }]
+name = "socialtide-astro-template-production"
+routes = [{ pattern = "astro-template.socialtide.ai", custom_domain = true }]
 vars = { 'ENVIRONMENT' = 'production' }
 
 [assets]
