@@ -1,5 +1,5 @@
 // PostHog initialization script
-import { initializeTracking } from "../lib/posthog-tracking.js";
+import { initializeTracking } from "../lib/posthog-tracking.ts";
 
 function waitForPosthog() {
   if (window.posthog && window.posthog.__loaded) {

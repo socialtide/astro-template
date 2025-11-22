@@ -86,12 +86,14 @@ Update all instances of `CLIENT_NAME` in the following files:
 
 ## 🔧 Phase 4: Environment Setup
 
-### Create `.env` file (if needed)
+### Configure environment variables
 
-- [ ] `PUBLIC_GOOGLE_SHEETS_URL` - For form submissions
-- [ ] `PUBLIC_API_ENDPOINT` - For custom API
-- [ ] `PUBLIC_TURNSTILE_SITE_KEY` - For spam protection
-- [ ] Add `.env` to `.gitignore`
+- [ ] Copy `.env.example` to `.env`
+- [ ] `PUBLIC_POSTHOG_KEY` - PostHog project key (optional)
+- [ ] `PUBLIC_POSTHOG_HOST` - PostHog API host (defaults to `https://app.posthog.com`)
+- [ ] `PUBLIC_TURNSTILE_SITE_KEY` - Cloudflare Turnstile site key (optional)
+- [ ] `PUBLIC_GOOGLE_SHEETS_URL` - Google Sheets form endpoint (optional)
+- [ ] `PUBLIC_API_ENDPOINT` - Alternate form submission endpoint (optional)
 
 ### Test Forms Locally
 

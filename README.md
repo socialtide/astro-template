@@ -11,6 +11,8 @@ A modern, production-ready template for creating client websites with Astro, Tai
 - **Blog System** - Full-featured blog with tags, RSS feed, and content collections
 - **Responsive Design** - Mobile-first with tested breakpoints
 - **Form Handling** - Multiple integration options (Google Sheets, API, Turnstile)
+- **Newsletter-Ready** - Drop-in subscribe form powered by harbor.socialtide.ai
+- **PostHog Analytics** - Optional PostHog snippet with automatic CTA, form, and content tracking
 - **Cloudflare Ready** - One-click deployment with Wrangler configuration
 - **Component Library** - Pre-built sections for quick assembly
 
@@ -41,6 +43,8 @@ bun install
 ### 2. Configure for Your Client
 
 Update these files with client information:
+
+- Copy `.env.example` to `.env` and configure any required environment variables (PostHog key, Turnstile site key, form endpoints).
 
 **`package.json`**
 
@@ -200,6 +204,41 @@ PUBLIC_API_ENDPOINT=https://api.example.com/contact
 # Option 3: Spam Protection
 PUBLIC_TURNSTILE_SITE_KEY=0x4AAA...
 ```
+
+### Newsletter Subscribe Form
+
+1. Copy `shared/newsletter/SubscribeForm.tsx` from the SocialTide monorepo (or keep a local copy in `shared/` and sync changes regularly).
+2. Place it in `src/components/SubscribeForm.tsx` (or any preferred location).
+3. Configure the Harbor API environment variables:
+
+   ```env
+   PUBLIC_SOCIALTIDE_API_BASE=https://harbor.socialtide.ai
+   PUBLIC_SOCIALTIDE_CLIENT_ID=<client-uuid-from-backend>
+   ```
+
+4. Render the component where you want the newsletter opt-in:
+
+   ```tsx
+   import SubscribeForm from "../components/SubscribeForm";
+
+   export default function NewsletterBlock() {
+     return (
+       <section className="space-y-4">
+         <h2 className="text-2xl font-semibold">Stay in the loop</h2>
+         <SubscribeForm source="blog" />
+       </section>
+     );
+   }
+   ```
+
+5. Override `className`, `inputClassName`, or `buttonClassName` to match the client’s Tailwind tokens—the shared component ships with neutral defaults on purpose.
+
+## 📈 Analytics & Tracking
+
+- Set `PUBLIC_POSTHOG_KEY` (and optional `PUBLIC_POSTHOG_HOST`, defaults to `https://app.posthog.com`) in your `.env`.
+- The template automatically injects the PostHog snippet and initializes enhanced tracking (CTA clicks, form engagement, content engagement) once PostHog finishes loading.
+- Use `data-track-cta`, `data-track-form`, and `data-track-content` attributes on interactive elements to capture additional context—see `src/lib/posthog-tracking.ts` for supported helpers.
+- Leave the env vars blank if you do not want PostHog included in a deployment.
 
 ## 🚀 Deployment
 
@@ -368,6 +407,10 @@ This template is designed for:
 - [Tailwind CSS v4](https://tailwindcss.com/docs)
 - [Cloudflare Pages](https://developers.cloudflare.com/pages)
 - [OKLCH Color Space](https://oklch.com)
+
+## 📄 License
+
+This template is released under the MIT License. See [`LICENSE`](./LICENSE) for details.
 
 ## 🆘 Support
 

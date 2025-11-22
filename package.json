@@ -3,12 +3,12 @@
   "type": "module",
   "version": "1.0.0",
   "description": "SocialTide client website template with Astro and Cloudflare deployment",
+  "license": "MIT",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "setup": "node scripts/setup.js"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.12",
