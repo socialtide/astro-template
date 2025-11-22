@@ -5,15 +5,13 @@ vars = { 'ENVIRONMENT' = 'dev' }
 
 [env.staging]
 name = "CLIENT-staging"
-routes = [
-  { pattern = "CLIENT-preview.socialtide.ai/*", zone_name = "socialtide.ai" },
-]
+routes = [{ pattern = "-preview.yourdomain.com/*", zone_name = "yourzone.com" }]
 vars = { 'ENVIRONMENT' = 'staging' }
 
 # Ends up being what DNS is pointed to
 [env.production]
 name = "CLIENT-production"
-routes = [{ pattern = "CLIENT.socialtide.ai/*", zone_name = "socialtide.ai" }]
+routes = [{ pattern = "yourdomain.com/*", zone_name = "yourzone.com" }]
 vars = { 'ENVIRONMENT' = 'production' }
 
 [assets]

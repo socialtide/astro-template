@@ -22,4 +22,4 @@ User-agent: Applebot-Extended
 Allow: /
 
 # Sitemap location
-Sitemap: https://CLIENT_NAME.socialtide.ai/sitemap-index.xml
+Sitemap: https://yourdomain.com/sitemap-index.xml

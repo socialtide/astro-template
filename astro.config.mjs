@@ -5,7 +5,7 @@ import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   // Update this to your client's domain
-  site: "https://CLIENT_NAME.socialtide.ai",
+  site: "https://your-domain.com",
 
   // Always use trailing slashes to avoid redirects on Cloudflare
   trailingSlash: "always",
