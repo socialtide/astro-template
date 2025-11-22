@@ -1,10 +1,10 @@
 # SocialTide Client Website Template
 
-A modern, production-ready template for creating client websites with Astro, Tailwind CSS v4, and Cloudflare deployment. Built by SocialTide for rapid client onboarding with best practices baked in.
+A modern, production-ready template for creating client websites with Astro, Tailwind CSS v4, and Cloudflare deployment. Built by the team at [SocialTide](https://socialtide.ai) for rapid client onboarding with best practices baked in.
 
 ## 🌟 Features
 
-- **Astro 5.12+** - Lightning-fast static site generation
+- **Astro 5+** - Lightning-fast static site generation
 - **Tailwind CSS v4** - Modern CSS-first configuration with custom theme
 - **Typography Plugin** - Beautiful prose styles out of the box
 - **SEO Optimized** - Comprehensive meta tags, sitemap, and structured data
@@ -12,12 +12,11 @@ A modern, production-ready template for creating client websites with Astro, Tai
 - **Responsive Design** - Mobile-first with tested breakpoints
 - **Form Handling** - Multiple integration options (Google Sheets, API, Turnstile)
 - **PostHog Analytics** - Optional PostHog snippet with automatic CTA, form, and content tracking
-- **Cloudflare Ready** - One-click deployment with Wrangler configuration
-- **Component Library** - Pre-built sections for quick assembly
+- **Cloudflare Ready** - One-click deployment with Wrangler configuration for staging and production
 
 ## 📋 Prerequisites
 
-- **Node.js 18+** (check with `node --version`)
+- **Node.js 20+** (check with `node --version`)
 - **Bun** package manager ([install](https://bun.sh/))
 - **Git** for version control
 - **Cloudflare account** for deployment (free tier works)
@@ -270,74 +269,7 @@ bunx prettier --write .
 bunx astro check
 ```
 
-## 🐛 Troubleshooting
-
-### Build Errors
-
-**"Cannot apply unknown utility class"**
-
-- Ensure `@reference` directive is in component styles
-- Check that colors are defined in `@theme` block
-
-**"Can't resolve '@tailwindcss/typography'"**
-
-- Run `bun add -D @tailwindcss/typography`
-- Ensure `@plugin` directive in global.css
-
-### Tailwind v4 Notes
-
-This template uses Tailwind CSS v4 with CSS-based configuration:
-
-- No `tailwind.config.js` file needed
-- Colors defined in `@theme` block in CSS
-- Plugins imported with `@plugin` directive
-- Component styles need `@reference` for custom utilities
-
-### URL Structure
-
-The template uses trailing slashes (`/about/` instead of `/about`) to:
-
-- Match Astro's build output structure
-- Avoid unnecessary redirects on Cloudflare
-- Improve performance and SEO
-
-### Security Headers
-
-The `public/_headers` file configures:
-
-- Security headers (CSP, X-Frame-Options, etc.)
-- Caching rules for optimal performance
-- Protection against common web vulnerabilities
-
-### AI-Friendly SEO
-
-The `robots.txt` explicitly allows:
-
-- GPTBot (OpenAI)
-- Claude-Web (Anthropic)
-- PerplexityBot
-- Other AI search crawlers
-
-This ensures your client's content is discoverable by modern AI search engines.
-
-### Development Issues
-
-**Port already in use**
-
-```bash
-# Kill process on port 4321
-lsof -ti:4321 | xargs kill -9
-```
-
-**Dependency issues**
-
-```bash
-# Clear cache and reinstall
-rm -rf node_modules .astro
-bun install
-```
-
-## 🔧 Advanced Configuration
+## 🔧 Configuration
 
 ### Adding New Sections
 
@@ -386,10 +318,8 @@ This template is released under the MIT License. See [`LICENSE`](./LICENSE) for 
 
 ## 🆘 Support
 
-- **Template Issues**: [GitHub Issues](https://github.com/socialtide/astro-template/issues)
-- **SocialTide Support**: <support@socialtide.ai>
-- **Technical Questions**: <titus@socialtide.ai>
+- **Questions**: <engineering@socialtide.ai>
 
 ---
 
-Built with ❤️ by [SocialTide](https://socialtide.ai) - Your Complete Digital Team
+Built with ❤️ by the [SocialTide](https://socialtide.ai) team
