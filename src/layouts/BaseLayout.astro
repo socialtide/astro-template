@@ -43,7 +43,7 @@ const fullOgImage = ogImage.startsWith("http")
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="theme-color" content="#16a34a" />
+    <meta name="theme-color" content="#c47a5a" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Primary Meta Tags -->
@@ -117,7 +117,7 @@ const fullOgImage = ogImage.startsWith("http")
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -127,60 +127,4 @@ const fullOgImage = ogImage.startsWith("http")
   </body>
 </html>
 
-<style is:global>
-  @reference "../styles/global.css";
-
-  /* Base styles */
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    @apply antialiased;
-  }
-
-  /* Focus styles */
-  *:focus-visible {
-    @apply outline-primary-600 outline-2 outline-offset-2;
-  }
-
-  /* Typography utilities */
-  .typography-display {
-    @apply text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl;
-  }
-
-  .typography-heading {
-    @apply text-3xl font-bold tracking-tight sm:text-4xl;
-  }
-
-  .typography-subheading {
-    @apply text-2xl font-semibold tracking-tight sm:text-3xl;
-  }
-
-  .typography-body-large {
-    @apply text-lg leading-relaxed sm:text-xl;
-  }
-
-  .typography-body {
-    @apply text-base leading-relaxed;
-  }
-
-  /* Button styles */
-  .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 focus-visible:outline-primary-600 inline-flex items-center justify-center rounded-lg px-6 py-3 text-base font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
-  }
-
-  .btn-secondary {
-    @apply focus-visible:outline-primary-600 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 transition-colors hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
-  }
-
-  /* Container */
-  .container {
-    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
-  }
-
-  /* Section spacing */
-  .section-spacing {
-    @apply py-16 sm:py-20 lg:py-24;
-  }
-</style>
+<!-- Global styles now handled by global.css -->

@@ -2,76 +2,376 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/common/Header.astro";
 import Footer from "../components/common/Footer.astro";
-import Hero from "../components/sections/Hero.astro";
-import Services from "../components/sections/Services.astro";
-
-// Example data - replace with your client's content
-const heroData = {
-  heading: "Welcome to Your Success Partner",
-  subheading: "Professional Services",
-  description:
-    "We help businesses thrive with our comprehensive suite of professional services. From strategy to execution, we're here to support your growth.",
-  primaryCTA: {
-    label: "Get Started",
-    href: "/contact",
-  },
-  secondaryCTA: {
-    label: "Learn More",
-    href: "/about",
-  },
-};
-
-const servicesData = {
-  heading: "How We Can Help",
-  subheading: "Our Services",
-  description:
-    "We offer a range of professional services tailored to your business needs.",
-  services: [
-    {
-      icon: "💡",
-      title: "Strategic Consulting",
-      description:
-        "Expert guidance to help you make informed business decisions and achieve your goals.",
-      features: ["Business Strategy", "Market Analysis", "Growth Planning"],
-    },
-    {
-      icon: "🚀",
-      title: "Digital Transformation",
-      description:
-        "Modernize your business with cutting-edge technology solutions and digital strategies.",
-      features: [
-        "Process Automation",
-        "Digital Strategy",
-        "Technology Integration",
-      ],
-    },
-    {
-      icon: "📈",
-      title: "Business Development",
-      description:
-        "Expand your market reach and drive sustainable growth with proven strategies.",
-      features: [
-        "Lead Generation",
-        "Partnership Development",
-        "Market Expansion",
-      ],
-    },
-  ],
-};
+import { ArrowRight, Check, Mail, Phone, MapPin } from "@lucide/astro";
 ---
 
 <BaseLayout>
   <Header />
 
   <main>
-    <Hero {...heroData} />
-    <Services {...servicesData} />
+    <!-- Hero Section -->
+    <section class="relative min-h-[90vh] flex items-center pt-20">
+      <div class="container">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <!-- Content -->
+          <div class="max-w-2xl">
+            <div class="animate-fade-up">
+              <span class="text-overline">Welcome to Your Brand</span>
+            </div>
 
-    <!-- Add more sections as needed -->
-    <!-- <About /> -->
-    <!-- <Testimonials /> -->
-    <!-- <FAQ /> -->
-    <!-- <CTA /> -->
+            <h1 class="text-display mt-6 animate-fade-up delay-100">
+              Helping businesses grow with clarity and confidence.
+            </h1>
+
+            <p class="text-body-lg mt-8 animate-fade-up delay-200">
+              We partner with ambitious organizations to create meaningful
+              digital experiences that connect, convert, and create lasting
+              value.
+            </p>
+
+            <div
+              class="flex flex-col sm:flex-row gap-4 mt-10 animate-fade-up delay-300"
+            >
+              <a href="#contact" class="btn-primary">
+                Start a Conversation
+                <ArrowRight class="w-4 h-4" />
+              </a>
+              <a href="#services" class="btn-secondary"> Our Services </a>
+            </div>
+          </div>
+
+          <!-- Hero Image -->
+          <div class="relative animate-fade-in delay-400">
+            <div class="aspect-[4/3] relative overflow-hidden">
+              <img
+                src="/images/sand-log-ocean.jpg"
+                alt="Serene ocean view with driftwood"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <!-- Decorative frame -->
+            <div
+              class="absolute -bottom-4 -right-4 w-full h-full border border-warm-300 -z-10"
+            >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section bg-warm-gradient">
+      <div class="container">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+          <span class="text-overline">What We Do</span>
+          <h2 class="text-headline mt-4">Services tailored to your goals.</h2>
+          <p class="text-body-lg mt-6">
+            Every business is unique. We take the time to understand yours
+            before crafting solutions that actually work.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {
+            [
+              {
+                title: "Strategy & Consulting",
+                description:
+                  "Clarity on where you are, where you're going, and how to get there. We help you define the path forward.",
+              },
+              {
+                title: "Brand & Identity",
+                description:
+                  "Your brand is more than a logo. It's the feeling people have when they encounter your business.",
+              },
+              {
+                title: "Web Design & Development",
+                description:
+                  "Beautiful, fast websites that work for your business—not just look good in a portfolio.",
+              },
+              {
+                title: "Content & SEO",
+                description:
+                  "Be found by the people who are looking for exactly what you offer. Content that ranks and resonates.",
+              },
+              {
+                title: "Digital Marketing",
+                description:
+                  "Reach the right audience with campaigns that respect both your budget and your brand.",
+              },
+              {
+                title: "Ongoing Partnership",
+                description:
+                  "Growth isn't a one-time project. We're here for the long haul as your trusted digital partner.",
+              },
+            ].map((service, i) => (
+              <div
+                class="card-hover group"
+                style={`animation-delay: ${i * 100}ms`}
+              >
+                <div class="accent-line mb-6" />
+                <h3 class="text-title group-hover:text-primary-600 transition-colors">
+                  {service.title}
+                </h3>
+                <p class="text-body mt-3">{service.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <!-- Image -->
+          <div class="order-2 lg:order-1">
+            <div class="aspect-square relative overflow-hidden">
+              <img
+                src="/images/founders.jpg"
+                alt="Our founders"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="order-1 lg:order-2">
+            <span class="text-overline">About Us</span>
+            <h2 class="text-headline mt-4">
+              We believe in doing meaningful work with good people.
+            </h2>
+
+            <div class="space-y-6 mt-8">
+              <p class="text-body-lg">
+                We started this business because we believe every organization
+                deserves a digital presence that reflects their true value.
+              </p>
+              <p class="text-body">
+                Too often, we see talented professionals and growing businesses
+                held back by websites that don't do them justice, marketing that
+                misses the mark, or strategies that lead nowhere.
+              </p>
+              <p class="text-body">
+                We're here to change that—one partnership at a time.
+              </p>
+            </div>
+
+            <div class="mt-10 space-y-4">
+              {
+                [
+                  "Honest, transparent communication",
+                  "Results you can actually measure",
+                  "Long-term thinking, not quick fixes",
+                  "Your success is our success",
+                ].map((value) => (
+                  <div class="flex items-center gap-3">
+                    <div class="w-5 h-5 rounded-full bg-accent-100 flex items-center justify-center flex-shrink-0">
+                      <Check class="w-3 h-3 text-accent-600" />
+                    </div>
+                    <span class="text-body">{value}</span>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonial / Social Proof Section -->
+    <section class="section bg-warm-900 text-warm-100">
+      <div class="container">
+        <div class="max-w-4xl mx-auto text-center">
+          <blockquote class="font-serif text-2xl md:text-3xl lg:text-4xl leading-relaxed font-normal italic">
+            "Working with this team transformed how we think about our digital
+            presence. They didn't just build us a website—they helped us
+            understand our customers better."
+          </blockquote>
+          <div class="mt-10">
+            <p class="text-warm-200 font-medium">Sarah Mitchell</p>
+            <p class="text-warm-400 text-sm mt-1">Founder, Example Company</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section">
+      <div class="container">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+          <span class="text-overline">Our Process</span>
+          <h2 class="text-headline mt-4">Simple, collaborative, effective.</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {
+            [
+              {
+                step: "01",
+                title: "Discovery",
+                description:
+                  "We listen. Understanding your business, goals, and challenges comes first.",
+              },
+              {
+                step: "02",
+                title: "Strategy",
+                description:
+                  "Together, we map out a clear plan with realistic milestones and measurable outcomes.",
+              },
+              {
+                step: "03",
+                title: "Creation",
+                description:
+                  "We build, design, and craft—keeping you involved at every step of the journey.",
+              },
+              {
+                step: "04",
+                title: "Growth",
+                description:
+                  "Launch is just the beginning. We continue optimizing and supporting your success.",
+              },
+            ].map((phase, i) => (
+              <div class="text-center" style={`animation-delay: ${i * 100}ms`}>
+                <span class="font-serif text-5xl text-warm-300 font-medium">
+                  {phase.step}
+                </span>
+                <h3 class="text-title mt-4">{phase.title}</h3>
+                <p class="text-body mt-3">{phase.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="section bg-warm-gradient-reverse">
+      <div class="container">
+        <div class="max-w-4xl mx-auto">
+          <div class="grid lg:grid-cols-2 gap-12 items-start">
+            <!-- Content -->
+            <div>
+              <span class="text-overline">Get in Touch</span>
+              <h2 class="text-headline mt-4">
+                Let's talk about what's possible.
+              </h2>
+              <p class="text-body-lg mt-6">
+                Ready to take the next step? We'd love to hear about your
+                project and explore how we can help.
+              </p>
+
+              <div class="mt-10 space-y-6">
+                <a
+                  href="mailto:hello@yourdomain.com"
+                  class="flex items-center gap-4 text-body hover:text-primary-600 transition-colors"
+                >
+                  <div
+                    class="w-12 h-12 bg-warm-100 flex items-center justify-center"
+                  >
+                    <Mail class="w-5 h-5 text-warm-600" />
+                  </div>
+                  <span>hello@yourdomain.com</span>
+                </a>
+
+                <a
+                  href="tel:+1234567890"
+                  class="flex items-center gap-4 text-body hover:text-primary-600 transition-colors"
+                >
+                  <div
+                    class="w-12 h-12 bg-warm-100 flex items-center justify-center"
+                  >
+                    <Phone class="w-5 h-5 text-warm-600" />
+                  </div>
+                  <span>+1 (234) 567-890</span>
+                </a>
+
+                <div class="flex items-center gap-4 text-body">
+                  <div
+                    class="w-12 h-12 bg-warm-100 flex items-center justify-center"
+                  >
+                    <MapPin class="w-5 h-5 text-warm-600" />
+                  </div>
+                  <span>Your City, Country</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="bg-white p-8 border border-warm-200">
+              <form class="space-y-6">
+                <div>
+                  <label for="name" class="form-label">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="form-input"
+                    placeholder="Your name"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-input"
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label for="message" class="form-label">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="4"
+                    class="form-input resize-none"
+                    placeholder="Tell us about your project..."
+                    required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary w-full">
+                  Send Message
+                  <ArrowRight class="w-4 h-4" />
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Simple Footer Banner -->
+    <section class="py-8 border-t border-warm-200">
+      <div class="container">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+          <p class="text-small">
+            Built with the
+            <a
+              href="https://github.com/socialtide/astro-template"
+              class="text-primary-600 hover:underline"
+              target="_blank"
+              rel="noopener">SocialTide Astro Template</a
+            > — free and open source.
+          </p>
+          <a
+            href="https://socialtide.ai"
+            class="btn-text"
+            target="_blank"
+            rel="noopener"
+          >
+            Learn more about SocialTide
+            <ArrowRight class="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <Footer />

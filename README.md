@@ -1,325 +1,186 @@
-# SocialTide Client Website Template
+# Astro Website Template
 
-A modern, production-ready template for creating client websites with Astro, Tailwind CSS v4, and Cloudflare deployment. Built by the team at [SocialTide](https://socialtide.ai) for rapid client onboarding with best practices baked in.
+[![Astro](https://img.shields.io/badge/Astro-5.16-orange?style=flat&logo=astro)](https://astro.build)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-blue?style=flat&logo=tailwindcss)](https://tailwindcss.com)
+[![Cloudflare](https://img.shields.io/badge/Cloudflare-Workers-orange?style=flat&logo=cloudflare)](https://workers.cloudflare.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
-## 🌟 Features
+A refined, production-ready website template for agencies, consultancies, and professional services. Warm, sophisticated design that appeals to real businesses—not just developers.
 
-- **Astro 5+** - Lightning-fast static site generation
-- **Tailwind CSS v4** - Modern CSS-first configuration with custom theme
-- **Typography Plugin** - Beautiful prose styles out of the box
-- **SEO Optimized** - Comprehensive meta tags, sitemap, and structured data
-- **Blog System** - Full-featured blog with tags, RSS feed, and content collections
-- **Responsive Design** - Mobile-first with tested breakpoints
-- **Form Handling** - Multiple integration options (Google Sheets, API, Turnstile)
-- **PostHog Analytics** - Optional PostHog snippet with automatic CTA, form, and content tracking
-- **Cloudflare Ready** - One-click deployment with Wrangler configuration for staging and production
+**[Live Demo](https://astro-template.socialtide.ai)** | **[SocialTide](https://socialtide.ai)**
 
-## 📋 Prerequisites
+## What You Get
 
-- **Node.js 20+** (check with `node --version`)
-- **Bun** package manager ([install](https://bun.sh/))
-- **Git** for version control
-- **Cloudflare account** for deployment (free tier works)
+- **Beautiful by default** — Warm, elegant design with Cormorant Garamond serif + Source Sans 3
+- **One-pager structure** — Hero, Services, About, Testimonial, Process, and Contact sections
+- **Blog ready** — Content collections with Markdown, RSS feeds, and related posts
+- **SEO optimized** — Meta tags, Open Graph, Twitter cards, sitemaps, and robots.txt
+- **Analytics ready** — Optional PostHog integration with event tracking
+- **Cloudflare native** — Wrangler config for staging and production deployments
+- **Mobile-first** — Responsive design tested across all breakpoints
 
-## 🚀 Quick Start
-
-### 1. Create New Project from Template
+## Quick Start
 
 ```bash
-# Clone the template
-git clone https://github.com/socialtide/astro-template.git client-name
-cd client-name
+# Clone the repository
+git clone https://github.com/socialtide/astro-template my-site
+cd my-site
 
 # Remove template git history
-rm -rf .git
-git init
+rm -rf .git && git init
 
 # Install dependencies
 bun install
-```
 
-### 2. Configure for Your Client
-
-Update these files with client information:
-
-- Copy `.env.example` to `.env` and configure any required environment variables (PostHog key, Turnstile site key, form endpoints).
-
-**`package.json`**
-
-```json
-{
-  "name": "client-name",
-  ...
-}
-```
-
-**`wrangler.toml`**
-
-```toml
-name = "client-name"
-routes = [
-  { pattern = "client-name.socialtide.ai", custom_domain = false },
-]
-```
-
-**`astro.config.mjs`**
-
-```js
-export default defineConfig({
-  site: "https://client-name.socialtide.ai",
-  ...
-});
-```
-
-**`src/data/site.json`**
-
-```json
-{
-  "siteName": "Client Name",
-  "siteUrl": "https://client-name.socialtide.ai",
-  "defaultTitle": "Client Name | Professional Services",
-  ...
-}
-```
-
-### 3. Start Development
-
-```bash
-# Run development server
+# Start development server
 bun dev
-
-# Open http://localhost:4321
 ```
 
-## 🎨 Customization Guide
+Your site is running at `http://localhost:4321`
 
-### Brand Colors (Tailwind v4)
+## Customization
 
-Edit `src/styles/global.css` to update brand colors using OKLCH color space:
+### 1. Update Your Brand
+
+Edit `src/data/site.json`:
+
+```json
+{
+  "siteName": "Your Brand",
+  "siteUrl": "https://yourdomain.com",
+  "defaultTitle": "Your Brand | Growing Businesses with Clarity",
+  "defaultDescription": "Your compelling description...",
+  "contact": {
+    "email": "hello@yourdomain.com",
+    "phone": "+1 (234) 567-890"
+  }
+}
+```
+
+### 2. Update Navigation
+
+Edit `src/data/navigation.json`:
+
+```json
+{
+  "logo": { "text": "Your Brand", "href": "/" },
+  "mainNav": [
+    { "label": "Services", "href": "#services" },
+    { "label": "About", "href": "#about" },
+    { "label": "Blog", "href": "/blog" }
+  ],
+  "ctaButton": { "label": "Get in Touch", "href": "#contact" }
+}
+```
+
+### 3. Customize Colors
+
+Edit `src/styles/global.css` to change the color palette:
 
 ```css
 @theme {
-  /* Primary colors - Update these values */
-  --color-primary-50: oklch(0.97 0.02 155);
-  --color-primary-100: oklch(0.95 0.04 155);
-  --color-primary-200: oklch(0.91 0.08 155);
-  --color-primary-300: oklch(0.84 0.12 155);
-  --color-primary-400: oklch(0.73 0.16 155);
-  --color-primary-500: oklch(0.62 0.17 155);
-  --color-primary-600: oklch(0.53 0.15 155);
-  --color-primary-700: oklch(0.44 0.12 155);
-  --color-primary-800: oklch(0.37 0.1 155);
-  --color-primary-900: oklch(0.3 0.08 155);
-  --color-primary-950: oklch(0.2 0.05 155);
+  /* Primary - Warm terracotta (or your brand color) */
+  --color-primary-500: oklch(0.58 0.14 35);
+
+  /* Accent - Sage green */
+  --color-accent-500: oklch(0.55 0.08 145);
+
+  /* Warm neutrals - Cream to charcoal */
+  --color-warm-50: oklch(0.985 0.008 85);  /* Background */
+  --color-warm-900: oklch(0.18 0.015 55);  /* Text */
 }
 ```
 
-> **Tip**: Use [oklch.com](https://oklch.com) to generate color values
+> Tip: Use [oklch.com](https://oklch.com) to experiment with colors
 
-### Typography
+### 4. Replace Content
 
-The template includes the Tailwind Typography plugin. Use it with:
+- **Homepage sections** — Edit `src/pages/index.astro`
+- **Images** — Replace placeholders with your photography
+- **Blog posts** — Add Markdown files to `src/content/blog/`
 
-```html
-<div class="prose prose-lg">
-  <!-- Your content -->
-</div>
-```
-
-Or use the custom `.prose-blog` class for blog posts.
-
-### Components
-
-All components accept props for easy customization:
-
-```astro
-<Hero
-  heading="Welcome to Success"
-  description="We help businesses thrive"
-  primaryCTA={{ label: "Get Started", href: "/contact" }}
-/>
-```
-
-## 📁 Project Structure
+## Project Structure
 
 ```
-├── public/              # Static assets (images, fonts)
 ├── src/
 │   ├── components/
-│   │   ├── common/      # Header, Footer, ContactForm
-│   │   └── sections/    # Hero, Services, About, etc.
+│   │   └── common/        # Header, Footer
 │   ├── content/
-│   │   └── blog/        # Blog posts (Markdown)
-│   ├── data/            # JSON content files
-│   ├── layouts/         # Page layouts with SEO
-│   ├── pages/           # Routes and pages
-│   ├── styles/          # Global CSS with Tailwind config
-│   └── utils/           # Helper functions
-├── astro.config.mjs     # Astro configuration
-├── wrangler.toml        # Cloudflare deployment config
-└── package.json
+│   │   └── blog/          # Blog posts (Markdown)
+│   ├── data/              # Site & navigation config
+│   ├── layouts/           # Page layouts with SEO
+│   ├── pages/             # Routes
+│   └── styles/            # Global CSS + Tailwind theme
+├── public/                # Static assets
+├── astro.config.mjs       # Astro configuration
+└── wrangler.toml          # Cloudflare deployment config
 ```
 
-## 📝 Content Management
+## Blog Posts
 
-### Page Content
-
-Edit JSON files in `src/data/`:
-
-- `site.json` - Global site information
-- `navigation.json` - Header/footer navigation
-- Component-specific data files
-
-### Blog Posts
-
-Add Markdown files to `src/content/blog/`:
+Create Markdown files in `src/content/blog/`:
 
 ```markdown
 ---
-title: "Post Title"
-description: "Brief description"
-author: "Author Name"
-date: 2024-01-20
-tags: ["business", "technology"]
+title: "Your Post Title"
+description: "Brief description for previews and SEO"
+author: "Your Name"
+date: 2025-01-15
+tags: ["business", "strategy"]
 featured: true
-featuredImage: "/images/blog/hero.jpg"
+readingTime: 5
 ---
 
-Your post content here...
+Your content here...
 ```
 
-### Forms
+## Form Handling
 
-Configure form handling in `.env`:
+The contact form in the template is ready for integration. See [docs/FORM_SETUP.md](./docs/FORM_SETUP.md) for:
+
+- Google Sheets integration via Apps Script
+- Custom API endpoints
+- Cloudflare Turnstile spam protection
+
+## Deployment
+
+### Cloudflare Workers (Recommended)
+
+1. Update `wrangler.toml` with your project name
+2. Deploy:
 
 ```bash
-# Option 1: Google Sheets
-PUBLIC_GOOGLE_SHEETS_URL=https://script.google.com/...
-
-# Option 2: API Endpoint
-PUBLIC_API_ENDPOINT=https://api.example.com/contact
-
-# Option 3: Spam Protection
-PUBLIC_TURNSTILE_SITE_KEY=0x4AAA...
+bunx wrangler login
+bunx wrangler deploy --env production
 ```
 
-## 📈 Analytics & Tracking
+Your site is live on Cloudflare's global edge network.
 
-- Set `PUBLIC_POSTHOG_KEY` (and optional `PUBLIC_POSTHOG_HOST`, defaults to `https://app.posthog.com`) in your `.env`.
-- The template automatically injects the PostHog snippet and initializes enhanced tracking (CTA clicks, form engagement, content engagement) once PostHog finishes loading.
-- Use `data-track-cta`, `data-track-form`, and `data-track-content` attributes on interactive elements to capture additional context—see `src/lib/posthog-tracking.ts` for supported helpers.
-- Leave the env vars blank if you do not want PostHog included in a deployment.
+## Commands
 
-## 🚀 Deployment
+| Command           | Description                          |
+| ----------------- | ------------------------------------ |
+| `bun install`     | Install dependencies                 |
+| `bun dev`         | Start dev server at `localhost:4321` |
+| `bun run build`   | Build for production                 |
+| `bun preview`     | Preview production build locally     |
 
-### 1. Push to GitHub
+## Tech Stack
 
-```bash
-git add .
-git commit -m "Initial client setup"
-git remote add origin https://github.com/youraccount/client-name
-git push -u origin main
-```
+- [Astro](https://astro.build) — Static site framework
+- [Tailwind CSS v4](https://tailwindcss.com) — Utility-first CSS with OKLCH colors
+- [TypeScript](https://www.typescriptlang.org) — Type safety
+- [Cloudflare Workers](https://workers.cloudflare.com) — Edge hosting
+- [PostHog](https://posthog.com) — Analytics (optional)
 
-### 2. Connect to Cloudflare Pages
+## License
 
-1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com) > Workers & Pages
-2. Create Application > Pages > Connect to Git
-3. Select your repository
-4. Configure build settings:
-   - **Framework preset**: Astro
-   - **Build command**: `bun run build`
-   - **Build output directory**: `dist`
+MIT License — see [LICENSE](./LICENSE)
 
-### 3. Environment Variables
+## Credits
 
-Add any environment variables in Cloudflare Pages settings.
-
-### 4. Custom Domain
-
-1. Add custom domain in Pages settings
-2. Update `wrangler.toml`:
-
-   ```toml
-   routes = [
-     { pattern = "clientdomain.com", custom_domain = true },
-     { pattern = "www.clientdomain.com", custom_domain = true },
-   ]
-   ```
-
-## 🛠️ Development Commands
-
-```bash
-# Install dependencies
-bun install
-
-# Start dev server (http://localhost:4321)
-bun dev
-
-# Build for production
-bun build
-
-# Preview production build
-bun preview
-
-# Format code
-bunx prettier --write .
-
-# Check TypeScript
-bunx astro check
-```
-
-## 🔧 Configuration
-
-### Adding New Sections
-
-1. Create component in `src/components/sections/`
-2. Import in page file
-3. Add corresponding data file in `src/data/`
-
-### SEO Optimization
-
-The template includes:
-
-- Meta tags (title, description, keywords)
-- Open Graph tags
-- Twitter Card tags
-- Canonical URLs with trailing slashes
-- Sitemap generation
-- AI-friendly robots.txt
-- Security headers via \_headers file
-
-### Performance
-
-- Images: Use Astro's `<Image>` component
-- Fonts: Loaded with `preconnect`
-- CSS: Tailwind purges unused styles
-- JS: Minimal client-side JavaScript
-
-## 🤝 SocialTide Integration
-
-This template is designed for:
-
-- Git-based content management
-- One-click publishing via git push
-- Integration with SocialTide CMS
-- Automated deployments
-
-## 📚 Resources
-
-- [Astro Documentation](https://docs.astro.build)
-- [Tailwind CSS v4](https://tailwindcss.com/docs)
-- [Cloudflare Pages](https://developers.cloudflare.com/pages)
-- [OKLCH Color Space](https://oklch.com)
-
-## 📄 License
-
-This template is released under the MIT License. See [`LICENSE`](./LICENSE) for details.
-
-## 🆘 Support
-
-- **Questions**: <engineering@socialtide.ai>
+Built by [SocialTide](https://socialtide.ai) — helping businesses build digital presences that work.
 
 ---
 
-Built with ❤️ by the [SocialTide](https://socialtide.ai) team
+**Want us to build your site?** [Get in touch](https://socialtide.ai/free-audit) for a free consultation.

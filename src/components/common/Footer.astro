@@ -1,60 +1,67 @@
 ---
 import siteData from "../../data/site.json";
 import navData from "../../data/navigation.json";
+import { Github, Twitter, Linkedin, Instagram } from "@lucide/astro";
 
 const currentYear = new Date().getFullYear();
+
+const socialIcons = {
+  github: Github,
+  twitter: Twitter,
+  linkedin: Linkedin,
+  instagram: Instagram,
+};
 ---
 
-<footer class="bg-gray-900 text-white">
+<footer class="bg-warm-100 border-t border-warm-200">
   <div class="container">
-    <div class="py-12 md:py-16">
-      <div class="grid gap-8 md:grid-cols-4">
-        <!-- Company Info -->
+    <div class="py-16 md:py-20">
+      <div class="grid gap-12 md:grid-cols-4">
+        <!-- Brand -->
         <div class="md:col-span-2">
-          <h3 class="mb-4 text-xl font-bold">{siteData.siteName}</h3>
-          <p class="mb-4 text-gray-400">
+          <a
+            href="/"
+            class="font-serif text-2xl font-medium text-warm-900 hover:text-primary-600 transition-colors"
+          >
+            {siteData.siteName}
+          </a>
+          <p class="text-body mt-4 max-w-md">
             {siteData.defaultDescription}
           </p>
-          <div class="flex gap-4">
+          <div class="mt-8 flex gap-4">
             {
-              siteData.socialLinks.twitter && (
-                <a
-                  href={siteData.socialLinks.twitter}
-                  class="text-gray-400 transition-colors hover:text-white"
-                  aria-label="Twitter"
-                >
-                  <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
-                </a>
-              )
-            }
-            {
-              siteData.socialLinks.linkedin && (
-                <a
-                  href={siteData.socialLinks.linkedin}
-                  class="text-gray-400 transition-colors hover:text-white"
-                  aria-label="LinkedIn"
-                >
-                  <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                  </svg>
-                </a>
-              )
+              Object.entries(siteData.socialLinks).map(([platform, url]) => {
+                if (!url) return null;
+                const Icon = socialIcons[platform as keyof typeof socialIcons];
+                if (!Icon) return null;
+                return (
+                  <a
+                    href={url}
+                    class="w-10 h-10 flex items-center justify-center bg-warm-200 text-warm-600 hover:bg-warm-900 hover:text-warm-50 transition-all"
+                    aria-label={platform}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <Icon class="h-5 w-5" />
+                  </a>
+                );
+              })
             }
           </div>
         </div>
 
         <!-- Quick Links -->
         <div>
-          <h4 class="mb-4 font-semibold">Quick Links</h4>
-          <ul class="space-y-2">
+          <h4 class="font-serif text-lg font-medium text-warm-900">
+            Quick Links
+          </h4>
+          <ul class="mt-6 space-y-4">
             {
               navData.mainNav.map((item) => (
                 <li>
                   <a
                     href={item.href}
-                    class="text-gray-400 transition-colors hover:text-white"
+                    class="text-warm-600 hover:text-warm-900 transition-colors"
                   >
                     {item.label}
                   </a>
@@ -64,40 +71,58 @@ const currentYear = new Date().getFullYear();
           </ul>
         </div>
 
-        <!-- Contact Info -->
+        <!-- Contact -->
         <div>
-          <h4 class="mb-4 font-semibold">Contact</h4>
-          <ul class="space-y-2 text-gray-400">
-            <li>
-              <a
-                href={`mailto:${siteData.contact.email}`}
-                class="transition-colors hover:text-white"
-              >
-                {siteData.contact.email}
-              </a>
-            </li>
-            <li>{siteData.contact.phone}</li>
-            <li class="text-sm">{siteData.contact.address}</li>
+          <h4 class="font-serif text-lg font-medium text-warm-900">Contact</h4>
+          <ul class="mt-6 space-y-4 text-warm-600">
+            {
+              siteData.contact.email && (
+                <li>
+                  <a
+                    href={`mailto:${siteData.contact.email}`}
+                    class="hover:text-warm-900 transition-colors"
+                  >
+                    {siteData.contact.email}
+                  </a>
+                </li>
+              )
+            }
+            {siteData.contact.phone && <li>{siteData.contact.phone}</li>}
+            {
+              siteData.contact.address && (
+                <li class="text-sm leading-relaxed">
+                  {siteData.contact.address}
+                </li>
+              )
+            }
           </ul>
         </div>
       </div>
     </div>
 
     <!-- Bottom Bar -->
-    <div class="border-t border-gray-800 py-6">
+    <div class="border-t border-warm-200 py-8">
       <div
-        class="flex flex-col items-center justify-between gap-4 text-sm text-gray-400 md:flex-row"
+        class="flex flex-col items-center justify-between gap-4 text-sm text-warm-500 md:flex-row"
       >
         <p>
-          © {currentYear}
+          &copy; {currentYear}
           {siteData.siteName}. All rights reserved.
         </p>
-        <div class="flex gap-6">
-          <a href="/privacy" class="transition-colors hover:text-white">
+        <div class="flex items-center gap-6">
+          <a href="/privacy" class="hover:text-warm-800 transition-colors">
             Privacy Policy
           </a>
-          <a href="/terms" class="transition-colors hover:text-white">
+          <a href="/terms" class="hover:text-warm-800 transition-colors">
             Terms of Service
+          </a>
+          <a
+            href="https://github.com/socialtide/astro-template"
+            class="hover:text-warm-800 transition-colors"
+            target="_blank"
+            rel="noopener"
+          >
+            GitHub
           </a>
         </div>
       </div>

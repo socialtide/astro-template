@@ -3,8 +3,8 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/common/Header.astro";
 import Footer from "../../components/common/Footer.astro";
+import { ArrowRight, Calendar, Clock } from "@lucide/astro";
 
-// Get all blog posts
 const allPosts = await getCollection("blog");
 const posts = allPosts.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -20,15 +20,14 @@ const recentPosts = posts.filter((post) => !post.data.featured);
 >
   <Header />
 
-  <main>
+  <main class="pt-24">
     <!-- Blog Header -->
-    <section class="bg-gray-50 py-12">
+    <section class="section-sm">
       <div class="container">
         <div class="mx-auto max-w-3xl text-center">
-          <h1 class="typography-heading mb-4 text-gray-900">
-            Insights & Updates
-          </h1>
-          <p class="typography-body-large text-gray-600">
+          <span class="text-overline">Blog</span>
+          <h1 class="text-headline mt-4">Insights & Updates</h1>
+          <p class="text-body-lg mt-6">
             Discover the latest trends, tips, and news from our team.
           </p>
         </div>
@@ -38,45 +37,51 @@ const recentPosts = posts.filter((post) => !post.data.featured);
     <!-- Featured Posts -->
     {
       featuredPosts.length > 0 && (
-        <section class="section-spacing">
+        <section class="section-sm">
           <div class="container">
-            <h2 class="mb-8 text-2xl font-semibold text-gray-900">Featured</h2>
+            <h2 class="font-serif text-xl font-medium text-warm-900 mb-8">
+              Featured
+            </h2>
             <div class="grid gap-8 md:grid-cols-2">
               {featuredPosts.slice(0, 2).map((post) => (
-                <article class="group overflow-hidden rounded-lg bg-white shadow-sm transition-all hover:shadow-lg">
+                <article class="card-hover group">
                   {post.data.featuredImage && (
-                    <div class="aspect-video overflow-hidden">
+                    <div class="mb-6 aspect-video overflow-hidden">
                       <img
                         src={post.data.featuredImage}
                         alt={post.data.featuredImageAlt || post.data.title}
-                        class="h-full w-full object-cover transition-transform group-hover:scale-105"
+                        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     </div>
                   )}
-                  <div class="p-6">
-                    <div class="mb-3 flex items-center gap-4 text-sm text-gray-500">
+                  <div class="flex items-center gap-4 text-small">
+                    <span class="flex items-center gap-1.5">
+                      <Calendar class="h-4 w-4 text-warm-400" />
                       <time datetime={post.data.date.toISOString()}>
                         {post.data.date.toLocaleDateString("en-US", {
                           year: "numeric",
-                          month: "long",
+                          month: "short",
                           day: "numeric",
                         })}
                       </time>
-                      {post.data.readingTime && (
-                        <span>{post.data.readingTime} min read</span>
-                      )}
-                    </div>
-                    <h3 class="group-hover:text-primary-600 mb-2 text-xl font-semibold text-gray-900">
-                      <a href={`/blog/${post.slug}`}>{post.data.title}</a>
-                    </h3>
-                    <p class="mb-4 text-gray-600">{post.data.description}</p>
-                    <div class="flex flex-wrap gap-2">
-                      {post.data.tags.map((tag) => (
-                        <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                    </span>
+                    {post.data.readingTime && (
+                      <span class="flex items-center gap-1.5">
+                        <Clock class="h-4 w-4 text-warm-400" />
+                        {post.data.readingTime} min read
+                      </span>
+                    )}
+                  </div>
+                  <h3 class="text-title mt-4 group-hover:text-primary-600 transition-colors">
+                    <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                  </h3>
+                  <p class="text-body mt-3">{post.data.description}</p>
+                  <div class="mt-5 flex flex-wrap gap-2">
+                    {post.data.tags.map((tag) => (
+                      <span class="bg-warm-100 text-warm-600 px-3 py-1 text-xs font-medium">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </article>
               ))}
@@ -87,61 +92,47 @@ const recentPosts = posts.filter((post) => !post.data.featured);
     }
 
     <!-- Recent Posts -->
-    <section class="section-spacing bg-gray-50">
+    <section class="section border-t border-warm-200">
       <div class="container">
-        <h2 class="mb-8 text-2xl font-semibold text-gray-900">Recent Posts</h2>
+        <h2 class="font-serif text-xl font-medium text-warm-900 mb-8">
+          {featuredPosts.length > 0 ? "Recent Posts" : "All Posts"}
+        </h2>
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {
-            recentPosts.map((post) => (
-              <article class="group overflow-hidden rounded-lg bg-white shadow-sm transition-all hover:shadow-lg">
+            (featuredPosts.length > 0 ? recentPosts : posts).map((post) => (
+              <article class="card-hover group">
                 {post.data.featuredImage && (
-                  <div class="aspect-video overflow-hidden">
+                  <div class="mb-5 aspect-video overflow-hidden">
                     <img
                       src={post.data.featuredImage}
                       alt={post.data.featuredImageAlt || post.data.title}
-                      class="h-full w-full object-cover transition-transform group-hover:scale-105"
+                      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                 )}
-                <div class="p-6">
-                  <div class="mb-3 flex items-center gap-4 text-sm text-gray-500">
-                    <time datetime={post.data.date.toISOString()}>
-                      {post.data.date.toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </time>
-                    {post.data.readingTime && (
-                      <span>{post.data.readingTime} min read</span>
-                    )}
-                  </div>
-                  <h3 class="group-hover:text-primary-600 mb-2 text-lg font-semibold text-gray-900">
-                    <a href={`/blog/${post.slug}`}>{post.data.title}</a>
-                  </h3>
-                  <p class="mb-4 line-clamp-2 text-gray-600">
-                    {post.data.description}
-                  </p>
-                  <a
-                    href={`/blog/${post.slug}`}
-                    class="text-primary-600 hover:text-primary-700 inline-flex items-center text-sm font-medium"
-                  >
-                    Read more
-                    <svg
-                      class="ml-1 h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </a>
+                <div class="flex items-center gap-4 text-small">
+                  <time datetime={post.data.date.toISOString()}>
+                    {post.data.date.toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </time>
+                  {post.data.readingTime && (
+                    <span>{post.data.readingTime} min</span>
+                  )}
                 </div>
+                <h3 class="text-title mt-3 group-hover:text-primary-600 transition-colors">
+                  <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                </h3>
+                <p class="text-body mt-2 line-clamp-2">{post.data.description}</p>
+                <a
+                  href={`/blog/${post.slug}/`}
+                  class="btn-text mt-4 text-sm"
+                >
+                  Read more
+                  <ArrowRight class="h-4 w-4" />
+                </a>
               </article>
             ))
           }

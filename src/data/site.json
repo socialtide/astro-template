@@ -1,19 +1,19 @@
 {
-  "siteName": "CLIENT NAME",
-  "siteUrl": "https://CLIENT_NAME.socialtide.ai",
-  "author": "CLIENT NAME",
-  "defaultTitle": "CLIENT NAME | Professional Services",
-  "defaultDescription": "Welcome to CLIENT NAME. We provide exceptional services to help your business grow.",
-  "defaultKeywords": "professional services, business consulting, CLIENT NAME",
+  "siteName": "Your Brand",
+  "siteUrl": "https://your-domain.com",
+  "author": "Your Name",
+  "defaultTitle": "Your Brand | Growing Businesses with Clarity",
+  "defaultDescription": "We partner with ambitious organizations to create meaningful digital experiences that connect, convert, and create lasting value.",
+  "defaultKeywords": "digital agency, web design, brand strategy, consulting, marketing",
   "socialLinks": {
     "twitter": "",
     "linkedin": "",
-    "facebook": "",
-    "instagram": ""
+    "instagram": "",
+    "github": ""
   },
   "contact": {
-    "email": "hello@clientdomain.com",
-    "phone": "+1 (555) 123-4567",
-    "address": "123 Business St, Suite 100, City, State 12345"
+    "email": "hello@yourdomain.com",
+    "phone": "+1 (234) 567-890",
+    "address": "Your City, Country"
   }
 }

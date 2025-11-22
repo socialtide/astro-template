@@ -1,28 +1,24 @@
 {
   "logo": {
-    "text": "CLIENT NAME",
+    "text": "Your Brand",
     "href": "/"
   },
   "mainNav": [
     {
-      "label": "About",
-      "href": "/about"
+      "label": "Services",
+      "href": "#services"
     },
     {
-      "label": "Services",
-      "href": "/services"
+      "label": "About",
+      "href": "#about"
     },
     {
       "label": "Blog",
-      "href": "/blog"
-    },
-    {
-      "label": "Contact",
-      "href": "/contact"
+      "href": "/blog/"
     }
   ],
   "ctaButton": {
-    "label": "Get Started",
-    "href": "/contact"
+    "label": "Get in Touch",
+    "href": "#contact"
   }
 }

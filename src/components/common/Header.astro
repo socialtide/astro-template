@@ -5,22 +5,29 @@ import navData from "../../data/navigation.json";
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 bg-white shadow-sm">
+<header
+  class="fixed top-0 z-50 w-full bg-warm-50/90 backdrop-blur-md border-b border-warm-200"
+>
   <nav class="container">
-    <div class="flex h-16 items-center justify-between">
+    <div class="flex h-20 items-center justify-between">
       <!-- Logo -->
-      <a href={navData.logo.href} class="text-xl font-bold text-gray-900">
+      <a
+        href={navData.logo.href}
+        class="font-serif text-2xl font-medium text-warm-900 hover:text-primary-600 transition-colors"
+      >
         {navData.logo.text}
       </a>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex md:items-center md:gap-8">
+      <div class="hidden md:flex md:items-center md:gap-10">
         {
           navData.mainNav.map((item) => (
             <a
               href={item.href}
-              class={`hover:text-primary-600 text-sm font-medium transition-colors ${
-                currentPath === item.href ? "text-primary-600" : "text-gray-700"
+              class={`text-sm font-medium transition-colors ${
+                currentPath === item.href
+                  ? "text-primary-600"
+                  : "text-warm-600 hover:text-warm-900"
               }`}
               aria-current={currentPath === item.href ? "page" : undefined}
             >
@@ -28,7 +35,7 @@ const currentPath = Astro.url.pathname;
             </a>
           ))
         }
-        <a href={navData.ctaButton.href} class="btn-primary">
+        <a href={navData.ctaButton.href} class="btn-primary text-sm">
           {navData.ctaButton.label}
         </a>
       </div>
@@ -37,25 +44,27 @@ const currentPath = Astro.url.pathname;
       <button
         id="mobile-menu-button"
         type="button"
-        class="md:hidden"
+        class="text-warm-600 hover:text-warm-900 hover:bg-warm-100 rounded-lg p-2 transition-colors md:hidden"
         aria-expanded="false"
         aria-controls="mobile-menu"
       >
         <span class="sr-only">Toggle menu</span>
-        <Menu class="h-6 w-6 text-gray-700" id="menu-icon" />
-        <X class="hidden h-6 w-6 text-gray-700" id="close-icon" />
+        <Menu class="h-6 w-6" id="menu-icon" />
+        <X class="hidden h-6 w-6" id="close-icon" />
       </button>
     </div>
 
     <!-- Mobile Navigation -->
-    <div id="mobile-menu" class="hidden md:hidden">
-      <div class="space-y-1 pt-2 pb-4">
+    <div id="mobile-menu" class="hidden border-t border-warm-200 md:hidden">
+      <div class="space-y-1 py-4">
         {
           navData.mainNav.map((item) => (
             <a
               href={item.href}
-              class={`block px-3 py-2 text-base font-medium ${
-                currentPath === item.href ? "text-primary-600" : "text-gray-700"
+              class={`block px-4 py-3 text-base font-medium transition-colors ${
+                currentPath === item.href
+                  ? "bg-warm-100 text-primary-600"
+                  : "text-warm-600 hover:bg-warm-100 hover:text-warm-900"
               }`}
               aria-current={currentPath === item.href ? "page" : undefined}
             >
@@ -63,19 +72,20 @@ const currentPath = Astro.url.pathname;
             </a>
           ))
         }
-        <a
-          href={navData.ctaButton.href}
-          class="text-primary-600 block px-3 py-2 text-base font-medium"
-        >
-          {navData.ctaButton.label}
-        </a>
+        <div class="px-4 pt-4">
+          <a
+            href={navData.ctaButton.href}
+            class="btn-primary w-full text-center text-sm"
+          >
+            {navData.ctaButton.label}
+          </a>
+        </div>
       </div>
     </div>
   </nav>
 </header>
 
 <script>
-  // Mobile menu toggle
   const menuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
   const menuIcon = document.getElementById("menu-icon");
