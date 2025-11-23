@@ -1,0 +1,131 @@
+---
+import siteData from "../../data/site.json";
+import navData from "../../data/navigation.json";
+import { Github, Twitter, Linkedin, Instagram } from "@lucide/astro";
+
+const currentYear = new Date().getFullYear();
+
+const socialIcons = {
+  github: Github,
+  twitter: Twitter,
+  linkedin: Linkedin,
+  instagram: Instagram,
+};
+---
+
+<footer class="bg-warm-100 border-warm-200 border-t">
+  <div class="container">
+    <div class="py-16 md:py-20">
+      <div class="grid gap-12 md:grid-cols-4">
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <a
+            href="/"
+            class="text-warm-900 hover:text-primary-600 font-serif text-2xl font-medium transition-colors"
+          >
+            {siteData.siteName}
+          </a>
+          <p class="text-body mt-4 max-w-md">
+            {siteData.defaultDescription}
+          </p>
+          <div class="mt-8 flex gap-4">
+            {
+              Object.entries(siteData.socialLinks).map(([platform, url]) => {
+                if (!url) return null;
+                const Icon = socialIcons[platform as keyof typeof socialIcons];
+                if (!Icon) return null;
+                return (
+                  <a
+                    href={url}
+                    class="bg-warm-200 text-warm-600 hover:bg-warm-900 hover:text-warm-50 flex h-10 w-10 items-center justify-center transition-all"
+                    aria-label={platform}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <Icon class="h-5 w-5" />
+                  </a>
+                );
+              })
+            }
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-warm-900 font-serif text-lg font-medium">
+            Quick Links
+          </h4>
+          <ul class="mt-6 space-y-4">
+            {
+              navData.mainNav.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="text-warm-600 hover:text-warm-900 transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h4 class="text-warm-900 font-serif text-lg font-medium">Contact</h4>
+          <ul class="text-warm-600 mt-6 space-y-4">
+            {
+              siteData.contact.email && (
+                <li>
+                  <a
+                    href={`mailto:${siteData.contact.email}`}
+                    class="hover:text-warm-900 transition-colors"
+                  >
+                    {siteData.contact.email}
+                  </a>
+                </li>
+              )
+            }
+            {siteData.contact.phone && <li>{siteData.contact.phone}</li>}
+            {
+              siteData.contact.address && (
+                <li class="text-sm leading-relaxed">
+                  {siteData.contact.address}
+                </li>
+              )
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-warm-200 border-t py-8">
+      <div
+        class="text-warm-500 flex flex-col items-center justify-between gap-4 text-sm md:flex-row"
+      >
+        <p>
+          &copy; {currentYear}
+          {siteData.siteName}. All rights reserved.
+        </p>
+        <div class="flex items-center gap-6">
+          <a href="/privacy" class="hover:text-warm-800 transition-colors">
+            Privacy Policy
+          </a>
+          <a href="/terms" class="hover:text-warm-800 transition-colors">
+            Terms of Service
+          </a>
+          <a
+            href="https://github.com/socialtide/astro-template"
+            class="hover:text-warm-800 transition-colors"
+            target="_blank"
+            rel="noopener"
+          >
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

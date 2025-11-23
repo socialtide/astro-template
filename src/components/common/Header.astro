@@ -1,0 +1,109 @@
+---
+import { Menu, X } from "@lucide/astro";
+import navData from "../../data/navigation.json";
+
+const currentPath = Astro.url.pathname;
+---
+
+<header
+  class="bg-warm-50/90 border-warm-200 fixed top-0 z-50 w-full border-b backdrop-blur-md"
+>
+  <nav class="container">
+    <div class="flex h-20 items-center justify-between">
+      <!-- Logo -->
+      <a
+        href={navData.logo.href}
+        class="text-warm-900 hover:text-primary-600 font-serif text-2xl font-medium transition-colors"
+      >
+        {navData.logo.text}
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex md:items-center md:gap-10">
+        {
+          navData.mainNav.map((item) => (
+            <a
+              href={item.href}
+              class={`text-sm font-medium transition-colors ${
+                currentPath === item.href
+                  ? "text-primary-600"
+                  : "text-warm-600 hover:text-warm-900"
+              }`}
+              aria-current={currentPath === item.href ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <a href={navData.ctaButton.href} class="btn-primary text-sm">
+          {navData.ctaButton.label}
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-button"
+        type="button"
+        class="text-warm-600 hover:text-warm-900 hover:bg-warm-100 rounded-lg p-2 transition-colors md:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="sr-only">Toggle menu</span>
+        <Menu class="h-6 w-6" id="menu-icon" />
+        <X class="hidden h-6 w-6" id="close-icon" />
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="border-warm-200 hidden border-t md:hidden">
+      <div class="space-y-1 py-4">
+        {
+          navData.mainNav.map((item) => (
+            <a
+              href={item.href}
+              class={`block px-4 py-3 text-base font-medium transition-colors ${
+                currentPath === item.href
+                  ? "bg-warm-100 text-primary-600"
+                  : "text-warm-600 hover:bg-warm-100 hover:text-warm-900"
+              }`}
+              aria-current={currentPath === item.href ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <div class="px-4 pt-4">
+          <a
+            href={navData.ctaButton.href}
+            class="btn-primary w-full text-center text-sm"
+          >
+            {navData.ctaButton.label}
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const menuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const menuIcon = document.getElementById("menu-icon");
+  const closeIcon = document.getElementById("close-icon");
+
+  menuButton?.addEventListener("click", () => {
+    const isOpen = mobileMenu?.classList.contains("hidden");
+
+    if (isOpen) {
+      mobileMenu?.classList.remove("hidden");
+      menuIcon?.classList.add("hidden");
+      closeIcon?.classList.remove("hidden");
+      menuButton?.setAttribute("aria-expanded", "true");
+    } else {
+      mobileMenu?.classList.add("hidden");
+      menuIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+      menuButton?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script>

@@ -1,0 +1,120 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/common/Header.astro";
+import Footer from "../components/common/Footer.astro";
+import siteData from "../data/site.json";
+
+const lastUpdated = new Date().toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="Learn how we collect, use, and protect your personal information."
+>
+  <Header />
+
+  <main>
+    <section class="section-spacing">
+      <div class="container">
+        <div class="mx-auto max-w-4xl">
+          <h1 class="typography-heading mb-4 text-gray-900">Privacy Policy</h1>
+          <p class="mb-8 text-gray-600">Last updated: {lastUpdated}</p>
+
+          <div class="prose-blog">
+            <p>
+              At {siteData.siteName}, we take your privacy seriously. This
+              Privacy Policy explains how we collect, use, disclose, and
+              safeguard your information when you visit our website.
+            </p>
+
+            <h2>Information We Collect</h2>
+            <p>
+              We may collect information about you in a variety of ways,
+              including:
+            </p>
+            <ul>
+              <li>
+                <strong>Personal Data:</strong> Name, email address, phone number,
+                and other contact details you provide via our forms.
+              </li>
+              <li>
+                <strong>Usage Data:</strong> Information about how you interact with
+                our website, including IP address, browser type, and pages visited.
+              </li>
+            </ul>
+
+            <h2>How We Use Your Information</h2>
+            <p>We use the information we collect to:</p>
+            <ul>
+              <li>Respond to your inquiries and provide customer service</li>
+              <li>Send you marketing communications (with your consent)</li>
+              <li>Improve our website and services</li>
+              <li>Comply with legal obligations</li>
+            </ul>
+
+            <h2>Information Sharing</h2>
+            <p>
+              We do not sell, trade, or rent your personal information to third
+              parties. We may share your information only in the following
+              circumstances:
+            </p>
+            <ul>
+              <li>
+                With service providers who assist us in operating our website
+              </li>
+              <li>To comply with legal obligations or protect our rights</li>
+              <li>With your consent</li>
+            </ul>
+
+            <h2>Data Security</h2>
+            <p>
+              We implement appropriate technical and organizational security
+              measures to protect your personal information against unauthorized
+              access, alteration, disclosure, or destruction.
+            </p>
+
+            <h2>Your Rights</h2>
+            <p>You have the right to:</p>
+            <ul>
+              <li>Access the personal information we hold about you</li>
+              <li>Request correction of inaccurate information</li>
+              <li>Request deletion of your information</li>
+              <li>Opt-out of marketing communications</li>
+            </ul>
+
+            <h2>Cookies</h2>
+            <p>
+              Our website may use cookies to enhance your experience. You can
+              choose to disable cookies through your browser settings, but this
+              may affect the functionality of our website.
+            </p>
+
+            <h2>Contact Us</h2>
+            <p>
+              If you have questions about this Privacy Policy or our privacy
+              practices, please contact us at:
+            </p>
+            <p>
+              Email: {siteData.contact.email}<br />
+              Phone: {siteData.contact.phone}<br />
+              Address: {siteData.contact.address}
+            </p>
+
+            <h2>Changes to This Policy</h2>
+            <p>
+              We may update this Privacy Policy from time to time. We will
+              notify you of any changes by posting the new Privacy Policy on
+              this page and updating the "Last updated" date.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,690 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ============================================
+   Refined Agency Theme
+   Warm, sophisticated, approachable
+   ============================================ */
+
+@theme {
+  /* Primary - Warm terracotta */
+  --color-primary-50: oklch(0.97 0.02 35);
+  --color-primary-100: oklch(0.94 0.04 35);
+  --color-primary-200: oklch(0.88 0.06 35);
+  --color-primary-300: oklch(0.78 0.1 35);
+  --color-primary-400: oklch(0.68 0.13 35);
+  --color-primary-500: oklch(0.58 0.14 35);
+  --color-primary-600: oklch(0.5 0.13 35);
+  --color-primary-700: oklch(0.42 0.11 35);
+  --color-primary-800: oklch(0.35 0.09 35);
+  --color-primary-900: oklch(0.28 0.07 35);
+
+  /* Accent - Warm sage green */
+  --color-accent-50: oklch(0.97 0.02 145);
+  --color-accent-100: oklch(0.94 0.03 145);
+  --color-accent-200: oklch(0.88 0.05 145);
+  --color-accent-300: oklch(0.78 0.07 145);
+  --color-accent-400: oklch(0.65 0.08 145);
+  --color-accent-500: oklch(0.55 0.08 145);
+  --color-accent-600: oklch(0.45 0.07 145);
+
+  /* Warm neutrals - Cream to charcoal */
+  --color-warm-50: oklch(0.985 0.008 85);
+  --color-warm-100: oklch(0.97 0.012 85);
+  --color-warm-200: oklch(0.94 0.015 85);
+  --color-warm-300: oklch(0.88 0.015 80);
+  --color-warm-400: oklch(0.7 0.012 80);
+  --color-warm-500: oklch(0.55 0.01 75);
+  --color-warm-600: oklch(0.42 0.012 70);
+  --color-warm-700: oklch(0.32 0.015 65);
+  --color-warm-800: oklch(0.24 0.015 60);
+  --color-warm-900: oklch(0.18 0.015 55);
+
+  /* Typography - Elegant serif + refined sans */
+  --font-family-serif: "Cormorant Garamond", "Times New Roman", serif;
+  --font-family-sans: "Source Sans 3", system-ui, sans-serif;
+  --font-family-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-warm-50);
+  color: var(--color-warm-800);
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: oklch(0.58 0.14 35 / 0.2);
+  color: var(--color-warm-900);
+}
+
+/* Subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--color-warm-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-warm-300);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-warm-400);
+}
+
+/* ============================================
+   Typography System
+   ============================================ */
+
+.font-serif {
+  font-family: var(--font-family-serif);
+}
+
+.font-sans {
+  font-family: var(--font-family-sans);
+}
+
+.font-mono {
+  font-family: var(--font-family-mono);
+}
+
+/* Display - Hero headlines */
+.text-display {
+  font-family: var(--font-family-serif);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--color-warm-900);
+}
+
+/* Headline - Section titles */
+.text-headline {
+  font-family: var(--font-family-serif);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--color-warm-900);
+}
+
+/* Title - Card/feature titles */
+.text-title {
+  font-family: var(--font-family-serif);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--color-warm-800);
+}
+
+/* Body large - Intros and lead text */
+.text-body-lg {
+  font-family: var(--font-family-sans);
+  font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  line-height: 1.7;
+  color: var(--color-warm-600);
+}
+
+/* Body - Standard content */
+.text-body {
+  font-family: var(--font-family-sans);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-warm-600);
+}
+
+/* Small - Captions and meta */
+.text-small {
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-warm-500);
+}
+
+/* Overline - Labels and categories */
+.text-overline {
+  font-family: var(--font-family-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary-600);
+}
+
+/* ============================================
+   Layout Utilities
+   ============================================ */
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 76rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.container-narrow {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 56rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+.section-sm {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 640px) {
+  .section-sm {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+/* ============================================
+   Button Styles
+   ============================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-family-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-family-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-color: var(--color-warm-900);
+  color: var(--color-warm-50);
+  border-radius: 0;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-600);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-family-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--color-warm-800);
+  border: 1px solid var(--color-warm-300);
+  border-radius: 0;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-warm-800);
+  background-color: var(--color-warm-100);
+}
+
+.btn-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-family-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-primary-600);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-text:hover {
+  color: var(--color-primary-700);
+  gap: 0.75rem;
+}
+
+/* ============================================
+   Card Styles
+   ============================================ */
+
+.card {
+  background-color: white;
+  border: 1px solid var(--color-warm-200);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.card-hover {
+  background-color: white;
+  border: 1px solid var(--color-warm-200);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  border-color: var(--color-warm-300);
+  box-shadow: 0 10px 40px -10px oklch(0.18 0.015 55 / 0.1);
+  transform: translateY(-4px);
+}
+
+.card-featured {
+  background-color: var(--color-warm-900);
+  color: var(--color-warm-100);
+  padding: 2.5rem;
+}
+
+.card-featured .text-title,
+.card-featured .text-headline {
+  color: white;
+}
+
+.card-featured .text-body,
+.card-featured .text-body-lg {
+  color: var(--color-warm-300);
+}
+
+/* ============================================
+   Visual Accents
+   ============================================ */
+
+/* Warm gradient backgrounds */
+.bg-warm-gradient {
+  background: linear-gradient(
+    180deg,
+    var(--color-warm-100) 0%,
+    var(--color-warm-50) 100%
+  );
+}
+
+.bg-warm-gradient-reverse {
+  background: linear-gradient(
+    180deg,
+    var(--color-warm-50) 0%,
+    var(--color-warm-100) 100%
+  );
+}
+
+/* Subtle pattern overlay */
+.pattern-dots {
+  background-image: radial-gradient(var(--color-warm-300) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Decorative line */
+.accent-line {
+  width: 3rem;
+  height: 2px;
+  background-color: var(--color-primary-500);
+}
+
+.accent-line-vertical {
+  width: 2px;
+  height: 3rem;
+  background-color: var(--color-primary-500);
+}
+
+/* Image treatment */
+.image-frame {
+  position: relative;
+}
+
+.image-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0.5rem;
+  border: 1px solid var(--color-warm-300);
+  pointer-events: none;
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-slide-in {
+  animation: slide-in-right 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+/* Stagger delays */
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+.delay-600 {
+  animation-delay: 600ms;
+}
+
+/* ============================================
+   Code Blocks (for blog/docs)
+   ============================================ */
+
+.code-block {
+  background-color: var(--color-warm-900);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.code-block pre {
+  padding: 1.5rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.code-block code {
+  font-family: var(--font-family-mono);
+  color: var(--color-warm-200);
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-warm-800);
+  border-bottom: 1px solid oklch(1 0 0 / 0.1);
+}
+
+.code-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+}
+
+.token-comment {
+  color: var(--color-warm-500);
+}
+.token-string {
+  color: var(--color-accent-400);
+}
+.token-function {
+  color: var(--color-primary-400);
+}
+.token-keyword {
+  color: var(--color-primary-300);
+}
+
+/* ============================================
+   Blog Typography
+   ============================================ */
+
+.prose-blog {
+  --tw-prose-body: var(--color-warm-700);
+  --tw-prose-headings: var(--color-warm-900);
+  --tw-prose-links: var(--color-primary-600);
+  --tw-prose-bold: var(--color-warm-900);
+  --tw-prose-code: var(--color-primary-700);
+  --tw-prose-pre-bg: var(--color-warm-900);
+  --tw-prose-quote-borders: var(--color-primary-500);
+}
+
+.prose-blog h1,
+.prose-blog h2,
+.prose-blog h3,
+.prose-blog h4 {
+  font-family: var(--font-family-serif);
+  font-weight: 500;
+  color: var(--color-warm-900);
+}
+
+.prose-blog h1 {
+  font-size: 2.25rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.prose-blog h2 {
+  font-size: 1.75rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose-blog h3 {
+  font-size: 1.375rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-blog p {
+  line-height: 1.8;
+  color: var(--color-warm-700);
+}
+
+.prose-blog a {
+  color: var(--color-primary-600);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose-blog a:hover {
+  color: var(--color-primary-700);
+}
+
+.prose-blog strong {
+  color: var(--color-warm-900);
+  font-weight: 600;
+}
+
+.prose-blog code {
+  background-color: var(--color-warm-100);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  color: var(--color-primary-700);
+  font-size: 0.9em;
+}
+
+.prose-blog code::before,
+.prose-blog code::after {
+  content: none;
+}
+
+.prose-blog pre {
+  background-color: var(--color-warm-900);
+  border-radius: 0.5rem;
+}
+
+.prose-blog blockquote {
+  border-left: 3px solid var(--color-primary-500);
+  padding-left: 1.5rem;
+  font-style: italic;
+  color: var(--color-warm-600);
+}
+
+.prose-blog img {
+  border-radius: 0.5rem;
+}
+
+.prose-blog ul,
+.prose-blog ol {
+  color: var(--color-warm-700);
+}
+
+/* ============================================
+   Form Styles
+   ============================================ */
+
+.form-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-family: var(--font-family-sans);
+  font-size: 1rem;
+  background-color: white;
+  border: 1px solid var(--color-warm-300);
+  color: var(--color-warm-800);
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px oklch(0.58 0.14 35 / 0.1);
+}
+
+.form-input::placeholder {
+  color: var(--color-warm-400);
+}
+
+.form-label {
+  display: block;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-warm-700);
+  margin-bottom: 0.5rem;
+}
+
+/* ============================================
+   Focus & Accessibility
+   ============================================ */
+
+*:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-warm-50),
+    0 0 0 4px var(--color-primary-500);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================
+   Dividers
+   ============================================ */
+
+.divider {
+  height: 1px;
+  background-color: var(--color-warm-200);
+}
+
+.divider-thick {
+  height: 2px;
+  background-color: var(--color-warm-300);
+}

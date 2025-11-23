@@ -1,0 +1,46 @@
+{
+  "name": "astro-starter-template",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A production-ready Astro template with SEO, analytics, blog, and Cloudflare deployment built in.",
+  "license": "MIT",
+  "author": "SocialTide <engineering@socialtide.ai>",
+  "homepage": "https://github.com/socialtide/astro-template",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/socialtide/astro-template.git"
+  },
+  "keywords": [
+    "astro",
+    "template",
+    "starter",
+    "tailwindcss",
+    "cloudflare",
+    "seo",
+    "blog",
+    "analytics",
+    "typescript"
+  ],
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.14",
+    "@astrojs/sitemap": "^3.6.0",
+    "@lucide/astro": "^0.554.0",
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.16.0",
+    "tailwindcss": "^4.1.17"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.7.1",
+    "wrangler": "^4.50.0"
+  }
+}

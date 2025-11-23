@@ -1,0 +1,149 @@
+---
+import "../styles/global.css";
+import Posthog from "../components/Posthog.astro";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  keywords?: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+  article?: {
+    publishedTime?: string;
+    modifiedTime?: string;
+    author?: string;
+    section?: string;
+    tags?: string[];
+  };
+  schema?: Record<string, any>;
+}
+
+import siteData from "../data/site.json";
+
+const {
+  title = siteData.defaultTitle,
+  description = siteData.defaultDescription,
+  ogImage = "/og-image.png",
+  keywords = siteData.defaultKeywords,
+  canonicalUrl,
+  noindex = false,
+  article,
+  schema,
+} = Astro.props;
+
+const resolvedCanonicalUrl = canonicalUrl || Astro.url.href;
+
+// Default Organization schema - override with schema prop for custom structured data
+const defaultSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteData.siteName,
+  url: siteData.siteUrl,
+  description: siteData.defaultDescription,
+};
+
+const structuredData = schema || defaultSchema;
+const siteUrl = Astro.site || siteData.siteUrl;
+const fullOgImage = ogImage.startsWith("http")
+  ? ogImage
+  : `${siteUrl}${ogImage}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#c47a5a" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={siteData.author} />
+    <link rel="canonical" href={resolvedCanonicalUrl} />
+
+    <!-- RSS Feed -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${siteData.siteName} RSS Feed`}
+      href="/rss.xml"
+    />
+
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {
+      !noindex && (
+        <meta
+          name="robots"
+          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        />
+      )
+    }
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={article ? "article" : "website"} />
+    <meta property="og:url" content={resolvedCanonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:site_name" content={siteData.siteName} />
+
+    {
+      article && (
+        <>
+          <meta
+            property="article:published_time"
+            content={article.publishedTime}
+          />
+          {article.modifiedTime && (
+            <meta
+              property="article:modified_time"
+              content={article.modifiedTime}
+            />
+          )}
+          {article.author && (
+            <meta property="article:author" content={article.author} />
+          )}
+          {article.section && (
+            <meta property="article:section" content={article.section} />
+          )}
+          {article.tags?.map((tag) => (
+            <meta property="article:tag" content={tag} />
+          ))}
+        </>
+      )
+    }
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={resolvedCanonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={fullOgImage} />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <Posthog />
+    <slot />
+  </body>
+</html>
+
+<!-- Global styles now handled by global.css -->

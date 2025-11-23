@@ -1,0 +1,95 @@
+---
+import { ArrowRight } from "@lucide/astro";
+
+interface Props {
+  heading: string;
+  subheading?: string;
+  description: string;
+  primaryCTA: {
+    label: string;
+    href: string;
+  };
+  secondaryCTA?: {
+    label: string;
+    href: string;
+  };
+  image?: {
+    src: string;
+    alt: string;
+  };
+}
+
+const { heading, subheading, description, primaryCTA, secondaryCTA, image } =
+  Astro.props;
+---
+
+<section
+  class="from-primary-50 relative overflow-hidden bg-gradient-to-br to-white"
+>
+  <div class="section-spacing container">
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <!-- Content -->
+      <div>
+        {
+          subheading && (
+            <p class="text-primary-600 mb-4 text-sm font-semibold tracking-wide uppercase">
+              {subheading}
+            </p>
+          )
+        }
+        <h1 class="typography-display mb-6 text-gray-900">
+          {heading}
+        </h1>
+        <p class="typography-body-large mb-8 text-gray-600">
+          {description}
+        </p>
+        <div class="flex flex-col gap-4 sm:flex-row">
+          <a href={primaryCTA.href} class="btn-primary group">
+            {primaryCTA.label}
+            <ArrowRight
+              class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+            />
+          </a>
+          {
+            secondaryCTA && (
+              <a href={secondaryCTA.href} class="btn-secondary">
+                {secondaryCTA.label}
+              </a>
+            )
+          }
+        </div>
+      </div>
+
+      <!-- Image or Graphic -->
+      {
+        image ? (
+          <div class="relative">
+            <img
+              src={image.src}
+              alt={image.alt}
+              class="rounded-lg shadow-xl"
+              loading="eager"
+            />
+          </div>
+        ) : (
+          <div class="relative">
+            <div class="from-primary-400 to-primary-600 aspect-square rounded-lg bg-gradient-to-br opacity-10" />
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="bg-primary-500 h-64 w-64 rounded-full opacity-20 blur-3xl" />
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </div>
+
+  <!-- Background decoration -->
+  <div
+    class="bg-primary-200 absolute -top-24 -right-24 h-96 w-96 rounded-full opacity-20 blur-3xl"
+  >
+  </div>
+  <div
+    class="bg-primary-300 absolute -bottom-24 -left-24 h-96 w-96 rounded-full opacity-20 blur-3xl"
+  >
+  </div>
+</section>
