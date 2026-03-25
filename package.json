@@ -29,18 +29,18 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@astrojs/rss": "^4.0.14",
-    "@astrojs/sitemap": "^3.6.0",
-    "@lucide/astro": "^0.554.0",
-    "@tailwindcss/vite": "^4.1.17",
-    "astro": "^5.16.0",
-    "tailwindcss": "^4.1.17"
+    "@astrojs/rss": "^4.0.17",
+    "@astrojs/sitemap": "^3.7.1",
+    "@lucide/astro": "^0.562.0",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "6.0.8",
+    "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.19",
-    "prettier": "^3.6.2",
+    "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.7.1",
-    "wrangler": "^4.50.0"
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "wrangler": "^4.77.0"
   }
 }

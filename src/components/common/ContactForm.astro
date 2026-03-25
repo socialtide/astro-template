@@ -1,44 +1,62 @@
 ---
+interface ServiceOption {
+  label: string;
+  value: string;
+}
+
 interface Props {
   formId?: string;
   className?: string;
+  serviceOptions?: ServiceOption[];
+  serviceLabel?: string;
+  messagePlaceholder?: string;
+  successMessage?: string;
+  errorMessage?: string;
 }
 
-const { formId = "contact-form", className = "" } = Astro.props;
+const {
+  formId = "contact-form",
+  className = "",
+  serviceOptions = [
+    { label: "Consulting", value: "consulting" },
+    { label: "Development", value: "development" },
+    { label: "Marketing", value: "marketing" },
+    { label: "Other", value: "other" },
+  ],
+  serviceLabel = "Service Interested In",
+  messagePlaceholder = "Tell us about your goals, challenges, or timeline...",
+  successMessage = "Thank you for your message! We'll be in touch soon.",
+  errorMessage = "Something went wrong. Please try again or email us directly.",
+} = Astro.props;
+
+const env = import.meta.env;
+const apiBase =
+  env.PUBLIC_SOCIALTIDE_API_BASE ??
+  env.PUBLIC_API_BASE ??
+  (env.DEV ? "http://localhost:8000" : "https://harbor.socialtide.ai");
+const clientId = env.PUBLIC_SOCIALTIDE_CLIENT_ID ?? env.PUBLIC_CLIENT_ID ?? "";
+const turnstileSiteKey = env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+const messageId = `${formId}-message`;
+const turnstileContainerId = `${formId}-turnstile`;
 ---
 
-<form id={formId} class={`space-y-6 ${className}`}>
-  <div class="grid gap-6 md:grid-cols-2">
-    <div>
-      <label
-        for="firstName"
-        class="mb-2 block text-sm font-medium text-gray-700"
-      >
-        First Name
-      </label>
-      <input
-        type="text"
-        id="firstName"
-        name="firstName"
-        required
-        class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
-      />
-    </div>
-    <div>
-      <label
-        for="lastName"
-        class="mb-2 block text-sm font-medium text-gray-700"
-      >
-        Last Name
-      </label>
-      <input
-        type="text"
-        id="lastName"
-        name="lastName"
-        required
-        class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
-      />
-    </div>
+<form
+  id={formId}
+  class={`space-y-6 ${className}`}
+  data-track-form="contact"
+  data-track-form-advanced
+>
+  <div>
+    <label for="name" class="mb-2 block text-sm font-medium text-gray-700">
+      Name
+    </label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
+    />
   </div>
 
   <div>
@@ -55,33 +73,36 @@ const { formId = "contact-form", className = "" } = Astro.props;
   </div>
 
   <div>
-    <label for="phone" class="mb-2 block text-sm font-medium text-gray-700">
-      Phone (optional)
+    <label for="company" class="mb-2 block text-sm font-medium text-gray-700">
+      Company
     </label>
     <input
-      type="tel"
-      id="phone"
-      name="phone"
+      type="text"
+      id="company"
+      name="company"
       class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
     />
   </div>
 
-  <div>
-    <label for="service" class="mb-2 block text-sm font-medium text-gray-700">
-      Service Interested In
-    </label>
-    <select
-      id="service"
-      name="service"
-      class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
-    >
-      <option value="">Select a service</option>
-      <option value="consulting">Consulting</option>
-      <option value="development">Development</option>
-      <option value="marketing">Marketing</option>
-      <option value="other">Other</option>
-    </select>
-  </div>
+  {
+    serviceOptions.length > 0 && (
+      <div>
+        <label for="service" class="mb-2 block text-sm font-medium text-gray-700">
+          {serviceLabel}
+        </label>
+        <select
+          id="service"
+          name="service"
+          class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
+        >
+          <option value="">Select a service</option>
+          {serviceOptions.map((option) => (
+            <option value={option.value}>{option.label}</option>
+          ))}
+        </select>
+      </div>
+    )
+  }
 
   <div>
     <label for="message" class="mb-2 block text-sm font-medium text-gray-700">
@@ -93,83 +114,165 @@ const { formId = "contact-form", className = "" } = Astro.props;
       rows="4"
       required
       class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:ring-2"
+      placeholder={messagePlaceholder}
     ></textarea>
   </div>
 
-  <!-- Turnstile placeholder -->
-  <div id="turnstile-container" class="mb-4"></div>
+  <input type="text" name="website_url" class="hidden" tabindex="-1" autocomplete="off" />
+
+  <div id={turnstileContainerId} class="mb-4"></div>
 
   <button type="submit" class="btn-primary w-full"> Send Message </button>
 
-  <div id="form-message" class="hidden rounded-lg p-4 text-center"></div>
+  <div id={messageId} class="hidden rounded-lg p-4 text-center"></div>
 </form>
 
-<script>
-  // Form handling
-  const form = document.getElementById("contact-form") as HTMLFormElement;
-  const formMessage = document.getElementById("form-message");
+<script
+  define:vars={{
+    formId,
+    successMessage,
+    errorMessage,
+    apiBase,
+    clientId,
+    turnstileSiteKey,
+    messageId,
+    turnstileContainerId,
+  }}
+>
+  const form = document.getElementById(formId);
+  if (!(form instanceof HTMLFormElement)) {
+    console.warn(`[Contact Form] Missing form element for ${formId}.`);
+  } else {
+    const formMessage = document.getElementById(messageId);
+    let turnstileWidgetId = null;
 
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
 
-    // Show loading state
-    const submitButton = form.querySelector(
-      'button[type="submit"]',
-    ) as HTMLButtonElement;
-    const originalText = submitButton.textContent;
-    submitButton.textContent = "Sending...";
-    submitButton.disabled = true;
-
-    try {
-      // TODO: Replace with your form handling logic
-      // Option 1: Google Sheets
-      // Option 2: API endpoint
-      // Option 3: Email service
-
-      // For now, just simulate success
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Show success message
-      if (formMessage) {
-        formMessage.textContent =
-          "Thank you for your message! We'll be in touch soon.";
-        formMessage.classList.add("bg-green-100", "text-green-700");
-        formMessage.classList.remove("hidden");
+      const submitButton = form.querySelector('button[type="submit"]');
+      if (!(submitButton instanceof HTMLButtonElement)) {
+        console.warn("[Contact Form] Submit button not found.");
+        return;
       }
+      const originalText = submitButton.textContent;
+      submitButton.textContent = "Sending...";
+      submitButton.disabled = true;
 
-      // Reset form
-      form.reset();
-    } catch (error) {
-      // Show error message
-      if (formMessage) {
-        formMessage.textContent =
-          "Something went wrong. Please try again or email us directly.";
-        formMessage.classList.add("bg-red-100", "text-red-700");
-        formMessage.classList.remove("hidden");
+      try {
+        if (!clientId) {
+          throw new Error("Missing SocialTide client ID.");
+        }
+
+        const url = new URL(window.location.href);
+        const utmEntries = [
+          "utm_source",
+          "utm_medium",
+          "utm_campaign",
+          "utm_content",
+          "utm_term",
+        ]
+          .map((key) => [key, url.searchParams.get(key) || ""])
+          .filter((entry) => entry[1]);
+
+        const payload = {
+          client_id: clientId,
+          form_id: formId,
+          name: data.name,
+          email: data.email,
+          company: data.company || "",
+          service: data.service || "",
+          message: data.message,
+          website_url: data.website_url || "",
+          context: {
+            page_url: window.location.href,
+            referrer: document.referrer || "",
+            utm: Object.fromEntries(utmEntries),
+          },
+          turnstile_token:
+            window.turnstile?.getResponse?.(turnstileWidgetId) || "",
+        };
+
+        const response = await fetch(
+          `${apiBase.replace(/\/$/, "")}/v1/inquiries/client-contact/`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          },
+        );
+
+        let responseMessage = successMessage;
+        try {
+          const result = await response.json();
+          if (result?.message) {
+            responseMessage = result.message;
+          }
+          if (!response.ok && result?.errors?.general) {
+            responseMessage = result.errors.general;
+          }
+        } catch {
+          if (!response.ok) {
+            responseMessage = errorMessage;
+          }
+        }
+
+        if (response.ok && window.stTrack) {
+          window.stTrack("lead_generated", {
+            source: "contact_form",
+            service: data.service || "general",
+          });
+        }
+
+        if (formMessage) {
+          formMessage.textContent = responseMessage;
+          if (response.ok) {
+            formMessage.classList.add("bg-green-100", "text-green-700");
+            formMessage.classList.remove("hidden", "bg-red-100", "text-red-700");
+          } else {
+            formMessage.classList.add("bg-red-100", "text-red-700");
+            formMessage.classList.remove("hidden", "bg-green-100", "text-green-700");
+          }
+        }
+
+        if (response.ok) {
+          form.reset();
+          window.turnstile?.reset?.(turnstileWidgetId);
+        }
+      } catch (error) {
+        console.error("[Contact Form] Submission error:", error);
+        if (formMessage) {
+          formMessage.textContent = errorMessage;
+          formMessage.classList.add("bg-red-100", "text-red-700");
+          formMessage.classList.remove("hidden", "bg-green-100", "text-green-700");
+        }
+      } finally {
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
       }
-    } finally {
-      // Restore button state
-      submitButton.textContent = originalText;
-      submitButton.disabled = false;
+    });
+
+    if (turnstileSiteKey) {
+      const script = document.createElement("script");
+      script.src =
+        "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        // @ts-ignore
+        turnstileWidgetId = window.turnstile?.render(
+          `#${turnstileContainerId}`,
+          {
+            sitekey: turnstileSiteKey,
+            theme: "light",
+          },
+        );
+      };
+      document.head.appendChild(script);
     }
-  });
-
-  // Load Turnstile if configured
-  if (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY) {
-    const script = document.createElement("script");
-    script.src =
-      "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      // @ts-ignore
-      window.turnstile?.render("#turnstile-container", {
-        sitekey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
-      });
-    };
-    document.head.appendChild(script);
   }
 </script>

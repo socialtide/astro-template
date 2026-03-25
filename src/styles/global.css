@@ -40,10 +40,10 @@
   --color-warm-800: oklch(0.24 0.015 60);
   --color-warm-900: oklch(0.18 0.015 55);
 
-  /* Typography - Elegant serif + refined sans */
-  --font-family-serif: "Cormorant Garamond", "Times New Roman", serif;
-  --font-family-sans: "Source Sans 3", system-ui, sans-serif;
-  --font-family-mono: "JetBrains Mono", ui-monospace, monospace;
+  /* Typography - Fonts loaded via Astro 6 Fonts API (includes optimized fallbacks) */
+  --font-family-serif: var(--font-cormorant-garamond);
+  --font-family-sans: var(--font-source-sans-3);
+  --font-family-mono: var(--font-jetbrains-mono);
 }
 
 /* ============================================

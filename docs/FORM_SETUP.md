@@ -1,8 +1,30 @@
 # Form Setup Guide
 
-This guide explains how to set up form handling for your Astro site. The template includes a contact form component that can be configured to submit data to various backends.
+This guide explains how to set up form handling for your Astro site. The template contact form posts to SocialTide Harbor by default and can be adapted to other providers.
 
-## Option 1: Google Sheets (Recommended for Simple Sites)
+## Option 1: SocialTide Harbor (Default)
+
+The contact form is wired to `https://harbor.socialtide.ai/v1/inquiries/client-contact/` and expects a client ID plus optional Turnstile spam protection.
+
+### Step 1: Configure Environment Variables
+
+Add these to `.env` (or Cloudflare Pages environment variables):
+
+```bash
+PUBLIC_SOCIALTIDE_CLIENT_ID=your-client-uuid
+PUBLIC_SOCIALTIDE_API_BASE=https://harbor.socialtide.ai
+PUBLIC_TURNSTILE_SITE_KEY=0x4AAA... # required if Harbor has TURNSTILE_SECRET_KEY set
+```
+
+### Step 2: Allow Your Domain
+
+Ensure Harbor allows your domain (CORS + origin allowlist). If you use preview domains (e.g., `preview.example.com`), allow those too.
+
+### Step 3: Verify Turnstile
+
+Add your site key in Cloudflare Turnstile and include all production/preview domains. Harbor verifies using `TURNSTILE_SECRET_KEY`.
+
+## Option 2: Google Sheets (Simple Alternative)
 
 The easiest way to collect form submissions is using Google Sheets with Apps Script.
 
@@ -80,7 +102,7 @@ form.addEventListener("submit", async (e) => {
 });
 ```
 
-## Option 2: Custom API Endpoint
+## Option 3: Custom API Endpoint
 
 For more control, you can submit to your own API.
 
@@ -109,7 +131,7 @@ export async function onRequestPost({ request, env }) {
 }
 ```
 
-## Option 3: Third-Party Services
+## Option 4: Third-Party Services
 
 ### Formspree
 

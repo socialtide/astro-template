@@ -73,7 +73,7 @@ const recentPosts = posts.filter((post) => !post.data.featured);
                     )}
                   </div>
                   <h3 class="text-title group-hover:text-primary-600 mt-4 transition-colors">
-                    <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                    <a href={`/blog/${post.id}/`}>{post.data.title}</a>
                   </h3>
                   <p class="text-body mt-3">{post.data.description}</p>
                   <div class="mt-5 flex flex-wrap gap-2">
@@ -123,12 +123,12 @@ const recentPosts = posts.filter((post) => !post.data.featured);
                   )}
                 </div>
                 <h3 class="text-title group-hover:text-primary-600 mt-3 transition-colors">
-                  <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
                 </h3>
                 <p class="text-body mt-2 line-clamp-2">
                   {post.data.description}
                 </p>
-                <a href={`/blog/${post.slug}/`} class="btn-text mt-4 text-sm">
+                <a href={`/blog/${post.id}/`} class="btn-text mt-4 text-sm">
                   Read more
                   <ArrowRight class="h-4 w-4" />
                 </a>

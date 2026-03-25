@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { Font } from "astro:assets";
 import Posthog from "../components/Posthog.astro";
 
 export interface Props {
@@ -132,13 +133,10 @@ const fullOgImage = ogImage.startsWith("http")
       set:html={JSON.stringify(structuredData)}
     />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fonts (self-hosted via Astro 6 Fonts API) -->
+    <Font cssVariable="--font-cormorant-garamond" preload />
+    <Font cssVariable="--font-source-sans-3" preload />
+    <Font cssVariable="--font-jetbrains-mono" preload />
   </head>
   <body>
     <Posthog />

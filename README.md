@@ -1,6 +1,6 @@
 # Astro Website Template
 
-[![Astro](https://img.shields.io/badge/Astro-5.16-orange?style=flat&logo=astro)](https://astro.build)
+[![Astro](https://img.shields.io/badge/Astro-6-orange?style=flat&logo=astro)](https://astro.build)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-blue?style=flat&logo=tailwindcss)](https://tailwindcss.com)
 [![Cloudflare](https://img.shields.io/badge/Cloudflare-Workers-orange?style=flat&logo=cloudflare)](https://workers.cloudflare.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
@@ -12,6 +12,7 @@ Own your foundation. A production-ready template for agencies and professional s
 ## What You Get
 
 - **Beautiful by default** — Warm, elegant design with Cormorant Garamond serif + Source Sans 3
+- **Self-hosted fonts** — Built-in Fonts API downloads and serves fonts from your domain (no Google Fonts requests, better privacy and performance)
 - **One-pager structure** — Hero, Services, About, Testimonial, Process, and Contact sections
 - **Blog ready** — Content collections with Markdown, RSS feeds, and related posts
 - **SEO optimized** — Meta tags, Open Graph, Twitter cards, JSON-LD schema, sitemaps, and robots.txt
@@ -23,7 +24,7 @@ Own your foundation. A production-ready template for agencies and professional s
 ## Prerequisites
 
 - [Bun](https://bun.sh) — JavaScript runtime and package manager
-- [Node.js 18+](https://nodejs.org) — Required by Astro
+- [Node.js 22+](https://nodejs.org) — Required by Astro 6
 
 ## Quick Start
 
@@ -99,7 +100,30 @@ Edit `src/styles/global.css` to change the color palette:
 
 > Tip: Use [oklch.com](https://oklch.com) to experiment with colors
 
-### 4. Replace Content
+### 4. Customize Fonts
+
+Fonts are configured in `astro.config.mjs` using Astro's built-in Fonts API. They're downloaded at build time and served from your domain — no external requests to Google Fonts.
+
+```js
+fonts: [
+  {
+    name: "Your Serif Font",
+    cssVariable: "--font-cormorant-garamond",
+    provider: fontProviders.google(),
+  },
+  // ...
+],
+```
+
+Then update the theme variables in `src/styles/global.css` to reference your new font:
+
+```css
+@theme {
+  --font-family-serif: var(--font-your-serif-font);
+}
+```
+
+### 5. Replace Content
 
 - **Homepage sections** — Edit `src/pages/index.astro`
 - **Images** — Replace placeholders with your photography
@@ -113,12 +137,13 @@ Edit `src/styles/global.css` to change the color palette:
 │   │   └── common/        # Header, Footer
 │   ├── content/
 │   │   └── blog/          # Blog posts (Markdown)
+│   ├── content.config.ts  # Content collection schemas + loaders
 │   ├── data/              # Site & navigation config
 │   ├── layouts/           # Page layouts with SEO
 │   ├── pages/             # Routes
 │   └── styles/            # Global CSS + Tailwind theme
 ├── public/                # Static assets
-├── astro.config.mjs       # Astro configuration
+├── astro.config.mjs       # Astro + fonts configuration
 └── wrangler.toml          # Cloudflare deployment config
 ```
 
@@ -142,8 +167,9 @@ Your content here...
 
 ## Form Handling
 
-The contact form in the template is ready for integration. See [docs/FORM_SETUP.md](./docs/FORM_SETUP.md) for:
+The contact form is wired to SocialTide Harbor by default. Set `PUBLIC_SOCIALTIDE_CLIENT_ID`, `PUBLIC_SOCIALTIDE_API_BASE`, and optionally `PUBLIC_TURNSTILE_SITE_KEY` to enable submissions. See [docs/FORM_SETUP.md](./docs/FORM_SETUP.md) for:
 
+- SocialTide Harbor setup (default)
 - Google Sheets integration via Apps Script
 - Custom API endpoints
 - Cloudflare Turnstile spam protection
@@ -177,7 +203,7 @@ Security headers are configured in `public/_headers` and applied automatically o
 - **Referrer-Policy** — Controls referrer information
 - **Permissions-Policy** — Disables unused browser APIs
 
-The CSP is pre-configured for PostHog, Google Fonts, and Cloudflare analytics. Modify `_headers` if you add other third-party scripts.
+Fonts are self-hosted at build time, so no external font domains are needed in the CSP. The policy is pre-configured for PostHog and Cloudflare analytics. Modify `_headers` if you add other third-party scripts.
 
 ## Deployment
 
@@ -211,7 +237,7 @@ Your site is live on Cloudflare's global edge network (300+ locations).
 
 ## Tech Stack
 
-- [Astro](https://astro.build) — Static site framework
+- [Astro 6](https://astro.build) — Static site framework with built-in Fonts API and CSP
 - [Tailwind CSS v4](https://tailwindcss.com) — Utility-first CSS with OKLCH colors
 - [TypeScript](https://www.typescriptlang.org) — Type safety
 - [Cloudflare Workers](https://workers.cloudflare.com) — Edge hosting

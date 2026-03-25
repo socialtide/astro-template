@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/common/Header.astro";
 import Footer from "../../components/common/Footer.astro";
@@ -8,13 +8,13 @@ import { ArrowLeft, ArrowRight, Calendar, Clock, User } from "@lucide/astro";
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: post,
   }));
 }
 
 const post = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 const allPosts = await getCollection("blog");
 const relatedPosts = allPosts
@@ -154,7 +154,7 @@ const relatedPosts = allPosts
                       })}
                     </time>
                     <h3 class="text-title group-hover:text-primary-600 mt-3 transition-colors">
-                      <a href={`/blog/${relatedPost.slug}/`}>
+                      <a href={`/blog/${relatedPost.id}/`}>
                         {relatedPost.data.title}
                       </a>
                     </h3>
@@ -162,7 +162,7 @@ const relatedPosts = allPosts
                       {relatedPost.data.description}
                     </p>
                     <a
-                      href={`/blog/${relatedPost.slug}/`}
+                      href={`/blog/${relatedPost.id}/`}
                       class="btn-text mt-4 text-sm"
                     >
                       Read more

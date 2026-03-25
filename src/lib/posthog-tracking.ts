@@ -1,15 +1,25 @@
-// Simplified PostHog Tracking Library
+// PostHog Tracking Library
 // Production-only tracking with automatic data-attribute detection
+// Features: forms, CTAs, content engagement, scroll depth, micro-conversions, exit intent, session quality
 
 export interface TrackingProperties {
   [key: string]: string | number | boolean | undefined;
 }
 
+// Session data for quality tracking
+const sessionData = {
+  startTime: Date.now(),
+  formsStarted: 0,
+  ctasClicked: 0,
+  maxScrollDepth: 0,
+};
+
 /**
  * Core tracking function with UTM attribution
- * Only tracks in production environment
  */
 function track(event: string, properties?: TrackingProperties) {
+  if (!window.posthog?.capture) return;
+
   try {
     const enrichedProps = {
       ...getAttributionData(),
@@ -18,17 +28,9 @@ function track(event: string, properties?: TrackingProperties) {
         typeof window !== "undefined" ? window.location.pathname : undefined,
     };
 
-    if (import.meta.env.PROD && window.posthog) {
-      window.posthog.capture(event, enrichedProps);
-    } else {
-      // Dev/logging mode: log what would be captured
-      // eslint-disable-next-line no-console
-      console.log("[PostHog][DEV] capture:", event, enrichedProps);
-    }
-  } catch (error) {
-    if (!import.meta.env.PROD) {
-      console.error(`[PostHog] Failed to track ${event}:`, error);
-    }
+    window.posthog.capture(event, enrichedProps);
+  } catch {
+    // Silent fail
   }
 }
 
@@ -45,27 +47,28 @@ export function initializeTracking() {
   // Expose minimal global for rare custom events (e.g., lead_generated)
   (window as any).stTrack = track;
 
-  // Track forms with data-track-form (delegated)
+  // Core tracking
   trackForms();
-
-  // Track CTAs with data-track-cta (delegated)
   trackCTAs();
-
-  // Track content engagement with data-track-content
   trackContentEngagement();
-
-  // Track page-load events via data attributes
   trackOnLoadEvents();
 
+  // Enhanced conversion tracking
+  initScrollDepthTracking();
+  initMicroConversions();
+  initExitIntent();
+  initSessionQuality();
+
   if (!import.meta.env.PROD) {
-    console.log(`[PostHog] Automatic tracking initialized (dev-log)`);
-    console.log("[PostHog] Global stTrack function available");
+    console.log("[PostHog] Tracking initialized (dev-log)");
+    console.log("[PostHog] Features: forms, CTAs, content, scroll, micro-conversions, exit intent, session quality");
   }
 }
 
-/**
- * Track form interactions
- */
+// =============================================================================
+// FORM TRACKING
+// =============================================================================
+
 function trackForms() {
   const startedForms = new WeakSet<EventTarget & Element>();
   const progressState = new WeakMap<
@@ -87,6 +90,7 @@ function trackForms() {
       startedForms.add(form);
       const formId = form.getAttribute("data-track-form") || "unknown";
       track("form_started", { form_id: formId });
+      sessionData.formsStarted++;
     },
     true,
   );
@@ -177,32 +181,63 @@ function trackForms() {
   });
 }
 
-/**
- * Track CTA clicks
- */
+// =============================================================================
+// CTA TRACKING (with source slug for attribution)
+// =============================================================================
+
 function trackCTAs() {
   document.addEventListener(
     "click",
     (e) => {
       const target = e.target as Element | null;
       if (!target) return;
-      const el = target.closest("[data-track-cta]") as Element | null;
+      const el = target.closest("[data-track-cta]") as HTMLElement | null;
       if (!el) return;
       const ctaText = el.getAttribute("data-track-cta");
       if (!ctaText) return;
       const section = el.getAttribute("data-track-section") || "unknown";
+
+      // Generate source slug for attribution
+      const slug = `${section}__${ctaText.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9_-]/g, "")}`;
+
+      // For internal links, append ?source= parameter for attribution
+      if (el instanceof HTMLAnchorElement) {
+        const href = el.href;
+        try {
+          const url = new URL(href, window.location.origin);
+          const isInternal = url.hostname === window.location.hostname;
+          if (isInternal && !url.searchParams.has("source")) {
+            url.searchParams.set("source", slug);
+            el.href = url.toString();
+          }
+        } catch {
+          // Invalid URL, skip modification
+        }
+      }
+
+      // Store last CTA source in sessionStorage for form attribution
+      try {
+        sessionStorage.setItem("posthog_last_cta_source", slug);
+      } catch {
+        // sessionStorage not available
+      }
+
       track("cta_clicked", {
         cta_text: ctaText,
         section,
+        source_slug: slug,
       });
+
+      sessionData.ctasClicked++;
     },
     true,
   );
 }
 
-/**
- * Track content engagement using intersection observer
- */
+// =============================================================================
+// CONTENT ENGAGEMENT TRACKING
+// =============================================================================
+
 function trackContentEngagement() {
   const selector = "[data-track-content]";
 
@@ -283,10 +318,10 @@ function trackContentEngagement() {
   });
 }
 
-/**
- * Track page-load events via data attributes
- * Usage: <div data-track-event="lead_generated" data-prop-type="audit_confirmation" data-prop-value="3000" />
- */
+// =============================================================================
+// PAGE-LOAD EVENTS
+// =============================================================================
+
 function trackOnLoadEvents() {
   const nodes = document.querySelectorAll("[data-track-event]");
   nodes.forEach((el) => {
@@ -310,6 +345,157 @@ function trackOnLoadEvents() {
   });
 }
 
+// =============================================================================
+// SCROLL DEPTH TRACKING
+// =============================================================================
+
+function getScrollDepth(): number {
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  if (scrollHeight <= 0) return 100;
+  return Math.round((window.scrollY / scrollHeight) * 100);
+}
+
+function initScrollDepthTracking() {
+  const depths = [25, 50, 75, 100];
+  const trackedDepths = new Set<number>();
+  const startTime = Date.now();
+
+  function checkDepth() {
+    const currentDepth = getScrollDepth();
+
+    // Update max scroll depth for session tracking
+    if (currentDepth > sessionData.maxScrollDepth) {
+      sessionData.maxScrollDepth = currentDepth;
+    }
+
+    depths.forEach((depth) => {
+      if (currentDepth >= depth && !trackedDepths.has(depth)) {
+        trackedDepths.add(depth);
+        track("scroll_depth", {
+          depth,
+          time_to_depth_ms: Date.now() - startTime,
+        });
+      }
+    });
+  }
+
+  window.addEventListener("scroll", throttle(checkDepth, 200), { passive: true });
+}
+
+// =============================================================================
+// MICRO-CONVERSIONS (phone, email, external links)
+// =============================================================================
+
+function initMicroConversions() {
+  document.addEventListener(
+    "click",
+    (e) => {
+      const link = (e.target as Element).closest("a") as HTMLAnchorElement | null;
+      if (!link) return;
+
+      const href = link.href;
+      if (!href) return;
+
+      // Phone clicks
+      if (href.startsWith("tel:")) {
+        track("phone_click", {});
+        return;
+      }
+
+      // Email clicks
+      if (href.startsWith("mailto:")) {
+        track("email_click", {});
+        return;
+      }
+
+      // External link clicks
+      try {
+        const url = new URL(href, window.location.origin);
+        if (url.hostname !== window.location.hostname) {
+          track("external_link_click", {
+            url: href,
+            domain: url.hostname,
+            link_text: link.textContent?.trim().slice(0, 100) || "",
+          });
+        }
+      } catch {
+        // Invalid URL, skip
+      }
+    },
+    true,
+  );
+}
+
+// =============================================================================
+// EXIT INTENT DETECTION
+// =============================================================================
+
+function initExitIntent() {
+  let exitIntentFired = false;
+
+  document.addEventListener("mouseout", (e) => {
+    // Only fire once per page
+    if (exitIntentFired) return;
+
+    // Check if mouse left viewport at the top
+    if (e.clientY <= 0) {
+      exitIntentFired = true;
+
+      // Check if user is in a form
+      const formInProgress = !!document.querySelector(
+        "form[data-track-form]:focus-within"
+      );
+
+      track("exit_intent", {
+        time_on_page_ms: Math.round(performance.now()),
+        scroll_depth: getScrollDepth(),
+        form_in_progress: formInProgress,
+      });
+    }
+  });
+}
+
+// =============================================================================
+// SESSION QUALITY TRACKING
+// =============================================================================
+
+function initSessionQuality() {
+  // Track session end on page unload
+  window.addEventListener("beforeunload", () => {
+    const timeOnPage = Date.now() - sessionData.startTime;
+    const isBounce = timeOnPage < 30000;
+
+    track("session_ended", {
+      total_time_ms: timeOnPage,
+      forms_started: sessionData.formsStarted,
+      ctas_clicked: sessionData.ctasClicked,
+      max_scroll_depth: sessionData.maxScrollDepth,
+      is_bounce: isBounce,
+    });
+  });
+}
+
+// =============================================================================
+// UTILITIES
+// =============================================================================
+
+/**
+ * Simple throttle function for scroll events
+ */
+function throttle<T extends (...args: any[]) => void>(
+  func: T,
+  limit: number
+): (...args: Parameters<T>) => void {
+  let inThrottle = false;
+  return function (this: any, ...args: Parameters<T>) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+}
+
 /**
  * Get UTM and attribution data for all events
  */
@@ -324,6 +510,14 @@ function getAttributionData(): TrackingProperties {
   // Get persisted UTM data from session storage
   const persistedUTM = getPersistedUTMParams();
 
+  // Get last CTA source for form attribution
+  let lastCtaSource: string | undefined;
+  try {
+    lastCtaSource = sessionStorage.getItem("posthog_last_cta_source") || undefined;
+  } catch {
+    // sessionStorage not available
+  }
+
   // Current UTM parameters (override persisted ones)
   const utm = {
     utm_source: urlParams.get("utm_source") || persistedUTM.utm_source,
@@ -331,7 +525,7 @@ function getAttributionData(): TrackingProperties {
     utm_campaign: urlParams.get("utm_campaign") || persistedUTM.utm_campaign,
     utm_content: urlParams.get("utm_content") || persistedUTM.utm_content,
     utm_term: urlParams.get("utm_term") || persistedUTM.utm_term,
-    source: urlParams.get("source"), // ForX page source tracking
+    source: urlParams.get("source") || lastCtaSource, // CTA source or ForX page source
     referrer: document.referrer || "direct",
   };
 
@@ -368,7 +562,6 @@ function persistUTMParams(utmParams: Record<string, string | undefined>): void {
   }
 
   try {
-    // Only store if we have UTM parameters
     const hasUTM = Object.values(utmParams).some(
       (value) => value !== undefined,
     );
