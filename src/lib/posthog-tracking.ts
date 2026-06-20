@@ -479,6 +479,19 @@ function initSessionQuality() {
 // UTILITIES
 // =============================================================================
 
+/** Bucket a monetary amount into a PII-safe band (v1 defaults; tune to real tiers). */
+export function valueBand(amount: number): string {
+  if (!Number.isFinite(amount) || amount < 0) return "unknown";
+  if (amount === 0) return "0";
+  if (amount < 100) return "1-99";
+  if (amount < 250) return "100-249";
+  if (amount < 500) return "250-499";
+  if (amount < 1000) return "500-999";
+  if (amount < 2500) return "1000-2499";
+  if (amount < 5000) return "2500-4999";
+  return "5000+";
+}
+
 /**
  * Simple throttle function for scroll events
  */
