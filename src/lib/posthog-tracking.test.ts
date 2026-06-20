@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { valueBand, leadProps, sectionOf } from "./posthog-tracking";
+import { valueBand, leadProps, sectionOf, bookingProvider } from "./posthog-tracking";
 
 describe("valueBand", () => {
   it("buckets typical amounts", () => {
@@ -42,5 +42,16 @@ describe("sectionOf", () => {
   it("returns unknown when none", () => {
     document.body.innerHTML = `<a id="y" href="tel:1">call</a>`;
     expect(sectionOf(document.getElementById("y"))).toBe("unknown");
+  });
+});
+
+describe("bookingProvider", () => {
+  it("detects calendly and skedda", () => {
+    expect(bookingProvider("https://calendly.com/acme/intro")).toBe("calendly");
+    expect(bookingProvider("https://acme.skedda.com/booking")).toBe("skedda");
+  });
+  it("returns null for others", () => {
+    expect(bookingProvider("https://example.com")).toBeNull();
+    expect(bookingProvider("not a url")).toBeNull();
   });
 });

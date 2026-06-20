@@ -428,6 +428,24 @@ function initMicroConversions() {
 }
 
 // =============================================================================
+// BOOKING CLICK TRACKING (Calendly / Skedda)
+// =============================================================================
+
+function initBookingTracking() {
+  document.addEventListener(
+    "click",
+    (e) => {
+      const link = (e.target as Element).closest("a") as HTMLAnchorElement | null;
+      if (!link?.href) return;
+      const provider = bookingProvider(link.href);
+      if (!provider) return;
+      track("booking_click", { provider, placement: sectionOf(link) });
+    },
+    true,
+  );
+}
+
+// =============================================================================
 // EXIT INTENT DETECTION
 // =============================================================================
 
@@ -484,6 +502,18 @@ function initSessionQuality() {
 export function sectionOf(el: Element | null): string {
   const node = el?.closest("[data-track-section]");
   return node?.getAttribute("data-track-section") || "unknown";
+}
+
+/** Identify a booking-platform link by hostname; returns "calendly", "skedda", or null. */
+export function bookingProvider(href: string): string | null {
+  try {
+    const host = new URL(href, window.location.origin).hostname;
+    if (host === "calendly.com" || host.endsWith(".calendly.com")) return "calendly";
+    if (host.endsWith(".skedda.com") || host === "skedda.com") return "skedda";
+    return null;
+  } catch {
+    return null;
+  }
 }
 
 /** Bucket a monetary amount into a PII-safe band (v1 defaults; tune to real tiers). */
