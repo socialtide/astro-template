@@ -33,6 +33,13 @@ describe("initializeTracking wiring", () => {
       "booking_click",
       expect.objectContaining({ provider: "calendly", placement: "hero" }),
     );
+
+    // Booking links must NOT also fire external_link_click (double-fire guard)
+    expect(
+      (window as any).posthog.capture.mock.calls.some(
+        (c: any[]) => c[0] === "external_link_click",
+      ),
+    ).toBe(false);
   });
 
   it("click-declarative: fires via initClickEvents when data-track-click-event element is clicked", () => {

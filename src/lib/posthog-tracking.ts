@@ -396,6 +396,9 @@ function initMicroConversions() {
         return;
       }
 
+      // Booking links are classified as booking_click by initBookingTracking; skip here
+      if (bookingProvider(href)) return;
+
       // External link clicks
       try {
         const url = new URL(href, window.location.origin);
