@@ -398,13 +398,13 @@ function initMicroConversions() {
 
       // Phone clicks
       if (href.startsWith("tel:")) {
-        track("phone_click", {});
+        track("phone_click", { section: sectionOf(link) });
         return;
       }
 
       // Email clicks
       if (href.startsWith("mailto:")) {
-        track("email_click", {});
+        track("email_click", { section: sectionOf(link) });
         return;
       }
 
@@ -416,6 +416,7 @@ function initMicroConversions() {
             url: href,
             domain: url.hostname,
             link_text: link.textContent?.trim().slice(0, 100) || "",
+            section: sectionOf(link),
           });
         }
       } catch {
@@ -478,6 +479,12 @@ function initSessionQuality() {
 // =============================================================================
 // UTILITIES
 // =============================================================================
+
+/** Return the value of the nearest ancestor [data-track-section], else "unknown". */
+export function sectionOf(el: Element | null): string {
+  const node = el?.closest("[data-track-section]");
+  return node?.getAttribute("data-track-section") || "unknown";
+}
 
 /** Bucket a monetary amount into a PII-safe band (v1 defaults; tune to real tiers). */
 export function valueBand(amount: number): string {

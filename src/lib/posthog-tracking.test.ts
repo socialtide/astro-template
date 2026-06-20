@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { valueBand, leadProps } from "./posthog-tracking";
+import { valueBand, leadProps, sectionOf } from "./posthog-tracking";
 
 describe("valueBand", () => {
   it("buckets typical amounts", () => {
@@ -31,5 +31,16 @@ describe("leadProps", () => {
     sessionStorage.setItem("posthog_last_cta_source", "footer__book");
     expect(leadProps({ lead_type: "contact", lead_source: "contact_form" }).entry_point).toBe("footer__book");
     sessionStorage.clear();
+  });
+});
+
+describe("sectionOf", () => {
+  it("returns the nearest section attribute", () => {
+    document.body.innerHTML = `<div data-track-section="hero"><a id="x" href="tel:1">call</a></div>`;
+    expect(sectionOf(document.getElementById("x"))).toBe("hero");
+  });
+  it("returns unknown when none", () => {
+    document.body.innerHTML = `<a id="y" href="tel:1">call</a>`;
+    expect(sectionOf(document.getElementById("y"))).toBe("unknown");
   });
 });
