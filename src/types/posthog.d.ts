@@ -43,6 +43,9 @@ declare global {
     // Global tracking function from posthog-tracking.ts
     stTrack?: (event: string, properties?: TrackingProperties) => void;
 
+    // Standardized lead_generated helper from posthog-tracking.ts
+    stTrackLead?: (input: Record<string, string | undefined>) => void;
+
     // Legacy tracking functions (deprecated, use stTrack instead)
     trackCtaClicked?: (
       ctaText: string,

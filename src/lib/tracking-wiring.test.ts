@@ -57,4 +57,15 @@ describe("initializeTracking wiring", () => {
       expect.objectContaining({ tier: "pro" }),
     );
   });
+
+  it("exposes window.stTrackLead, which fires a standardized lead_generated", () => {
+    (window as any).posthog.capture.mockClear?.();
+    expect(typeof (window as any).stTrackLead).toBe("function");
+    (window as any).stTrackLead({ lead_type: "assessment", lead_source: "readiness_assessment" });
+    const call = (window as any).posthog.capture.mock.calls.find(
+      (c: any[]) => c[0] === "lead_generated",
+    );
+    expect(call).toBeTruthy();
+    expect(call[1]).toMatchObject({ lead_type: "assessment", lead_source: "readiness_assessment" });
+  });
 });

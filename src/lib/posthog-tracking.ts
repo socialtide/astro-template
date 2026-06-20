@@ -46,6 +46,7 @@ export function initializeTracking() {
 
   // Expose minimal global for rare custom events (e.g., lead_generated)
   (window as any).stTrack = track;
+  (window as any).stTrackLead = trackLead;
 
   // Core tracking
   trackForms();
@@ -708,5 +709,6 @@ declare global {
       __loaded?: boolean;
     };
     stTrack?: (event: string, properties?: TrackingProperties) => void;
+    stTrackLead?: (input: LeadInput) => void;
   }
 }
