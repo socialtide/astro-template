@@ -327,21 +327,7 @@ function trackOnLoadEvents() {
   nodes.forEach((el) => {
     const event = el.getAttribute("data-track-event");
     if (!event) return;
-    const props: Record<string, any> = {};
-    for (const attr of Array.from(el.attributes)) {
-      if (attr.name.startsWith("data-prop-")) {
-        const key = attr.name.replace("data-prop-", "");
-        const val = attr.value;
-        if (val === "true" || val === "false") {
-          props[key] = val === "true";
-        } else if (!Number.isNaN(Number(val)) && val.trim() !== "") {
-          props[key] = Number(val);
-        } else {
-          props[key] = val;
-        }
-      }
-    }
-    track(event, props);
+    track(event, propsFromAttributes(el));
   });
 }
 
@@ -495,8 +481,40 @@ function initSessionQuality() {
 }
 
 // =============================================================================
+// CLICK EVENTS
+// =============================================================================
+
+function initClickEvents() {
+  document.addEventListener(
+    "click",
+    (e) => {
+      const el = (e.target as Element)?.closest("[data-track-click-event]") as HTMLElement | null;
+      if (!el) return;
+      const event = el.getAttribute("data-track-click-event");
+      if (!event) return;
+      track(event, propsFromAttributes(el));
+    },
+    true,
+  );
+}
+
+// =============================================================================
 // UTILITIES
 // =============================================================================
+
+/** Read data-prop-* attributes from an element, coercing booleans and numbers. */
+export function propsFromAttributes(el: Element): Record<string, string | number | boolean> {
+  const props: Record<string, string | number | boolean> = {};
+  for (const attr of Array.from(el.attributes)) {
+    if (!attr.name.startsWith("data-prop-")) continue;
+    const key = attr.name.replace("data-prop-", "");
+    const val = attr.value;
+    if (val === "true" || val === "false") props[key] = val === "true";
+    else if (val.trim() !== "" && !Number.isNaN(Number(val))) props[key] = Number(val);
+    else props[key] = val;
+  }
+  return props;
+}
 
 /** Return the value of the nearest ancestor [data-track-section], else "unknown". */
 export function sectionOf(el: Element | null): string {

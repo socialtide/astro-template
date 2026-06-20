@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { valueBand, leadProps, sectionOf, bookingProvider } from "./posthog-tracking";
+import { valueBand, leadProps, sectionOf, bookingProvider, propsFromAttributes } from "./posthog-tracking";
 
 describe("valueBand", () => {
   it("buckets typical amounts", () => {
@@ -53,5 +53,15 @@ describe("bookingProvider", () => {
   it("returns null for others", () => {
     expect(bookingProvider("https://example.com")).toBeNull();
     expect(bookingProvider("not a url")).toBeNull();
+  });
+});
+
+describe("propsFromAttributes", () => {
+  it("coerces booleans and numbers", () => {
+    document.body.innerHTML =
+      `<button id="b" data-prop-tier="pro" data-prop-count="3" data-prop-featured="true"></button>`;
+    expect(propsFromAttributes(document.getElementById("b")!)).toEqual({
+      tier: "pro", count: 3, featured: true,
+    });
   });
 });
