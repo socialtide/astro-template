@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { valueBand } from "./posthog-tracking";
+import { valueBand, leadProps } from "./posthog-tracking";
 
 describe("valueBand", () => {
   it("buckets typical amounts", () => {
@@ -13,5 +13,23 @@ describe("valueBand", () => {
   it("handles invalid input", () => {
     expect(valueBand(NaN)).toBe("unknown");
     expect(valueBand(-5)).toBe("unknown");
+  });
+});
+
+describe("leadProps", () => {
+  it("applies required-field defaults", () => {
+    const p = leadProps({});
+    expect(p.lead_type).toBe("contact");
+    expect(p.lead_source).toBe("unknown");
+  });
+  it("passes through provided fields and omits undefined optionals", () => {
+    const p = leadProps({ lead_type: "assessment", lead_source: "readiness", entry_point: "hero", tier: "pro" });
+    expect(p).toMatchObject({ lead_type: "assessment", lead_source: "readiness", entry_point: "hero", tier: "pro" });
+    expect("value_band" in p).toBe(false);
+  });
+  it("falls back to last CTA source for entry_point", () => {
+    sessionStorage.setItem("posthog_last_cta_source", "footer__book");
+    expect(leadProps({ lead_type: "contact", lead_source: "contact_form" }).entry_point).toBe("footer__book");
+    sessionStorage.clear();
   });
 });

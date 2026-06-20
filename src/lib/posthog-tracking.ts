@@ -492,6 +492,40 @@ export function valueBand(amount: number): string {
   return "5000+";
 }
 
+export interface LeadInput {
+  lead_type?: string;
+  lead_source?: string;
+  entry_point?: string;
+  service_line?: string;
+  value_band?: string;
+  tier?: string;
+  flow_id?: string;
+}
+
+export function leadProps(input: LeadInput): TrackingProperties {
+  let entry = input.entry_point;
+  if (!entry) {
+    try {
+      entry = sessionStorage.getItem("posthog_last_cta_source") || undefined;
+    } catch {
+      /* sessionStorage unavailable */
+    }
+  }
+  const out: TrackingProperties = {
+    lead_type: input.lead_type || "contact",
+    lead_source: input.lead_source || "unknown",
+  };
+  if (entry) out.entry_point = entry;
+  for (const k of ["service_line", "value_band", "tier", "flow_id"] as const) {
+    if (input[k] !== undefined) out[k] = input[k];
+  }
+  return out;
+}
+
+export function trackLead(input: LeadInput): void {
+  track("lead_generated", leadProps(input));
+}
+
 /**
  * Simple throttle function for scroll events
  */
