@@ -58,6 +58,8 @@ export function initializeTracking() {
   initMicroConversions();
   initExitIntent();
   initSessionQuality();
+  initBookingTracking();
+  initClickEvents();
 
   if (!import.meta.env.PROD) {
     console.log("[PostHog] Tracking initialized (dev-log)");

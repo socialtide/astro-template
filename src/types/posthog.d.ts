@@ -140,17 +140,18 @@ export interface ScrollDepthProperties extends CommonEventProperties {
 // =============================================================================
 
 export interface PhoneClickProperties extends CommonEventProperties {
-  phone: string;
+  section: string;
 }
 
 export interface EmailClickProperties extends CommonEventProperties {
-  email: string;
+  section: string;
 }
 
 export interface ExternalLinkClickProperties extends CommonEventProperties {
   url: string;
   domain: string;
   link_text: string;
+  section: string;
 }
 
 // =============================================================================
@@ -177,12 +178,73 @@ export interface SessionEndedProperties extends CommonEventProperties {
 }
 
 // =============================================================================
+// BOOKING EVENTS
+// =============================================================================
+
+export interface BookingClickProperties extends CommonEventProperties {
+  provider: string;
+  placement: string;
+}
+
+// =============================================================================
+// NEWSLETTER EVENTS
+// =============================================================================
+
+export interface NewsletterSubscribedProperties extends CommonEventProperties {
+  placement: string;
+  email_domain: string; // domain only — never raw email
+}
+
+// =============================================================================
+// FLOW EVENTS (high-alpha — createFlowTracker)
+// =============================================================================
+
+export interface FlowStartedProperties extends CommonEventProperties {
+  flow_id: string;
+  flow_type: string;
+}
+
+export interface FlowStepViewedProperties extends CommonEventProperties {
+  flow_id: string;
+  flow_type: string;
+  step_index: number;
+  step_id: string;
+  total_steps: number;
+}
+
+export interface FlowOptionSelectedProperties extends CommonEventProperties {
+  flow_id: string;
+  step_id: string;
+  field: string;
+  value: string | number | boolean;
+}
+
+export interface FlowAbandonedProperties extends CommonEventProperties {
+  flow_id: string;
+  last_step_index: number;
+  progress_pct: number;
+}
+
+export interface FlowResultViewedProperties extends CommonEventProperties {
+  flow_id: string;
+  flow_type: string;
+  result_tier?: string;
+  score_band?: string;
+  value_band?: string;
+}
+
+// =============================================================================
 // CUSTOM BUSINESS EVENTS
 // =============================================================================
 
 export interface LeadGeneratedProperties extends CommonEventProperties {
-  source: string;
-  service?: string;
+  lead_type: string;
+  lead_source: string;
+  entry_point?: string;
+  service_line?: string;
+  value_band?: string;
+  tier?: string;
+  flow_id?: string;
 }
 
 // =============================================================================
@@ -215,6 +277,19 @@ export interface EventMap {
 
   // Session quality
   session_ended: SessionEndedProperties;
+
+  // Booking events
+  booking_click: BookingClickProperties;
+
+  // Newsletter events
+  newsletter_subscribed: NewsletterSubscribedProperties;
+
+  // Flow events (high-alpha — createFlowTracker)
+  flow_started: FlowStartedProperties;
+  flow_step_viewed: FlowStepViewedProperties;
+  flow_option_selected: FlowOptionSelectedProperties;
+  flow_abandoned: FlowAbandonedProperties;
+  flow_result_viewed: FlowResultViewedProperties;
 
   // Business events
   lead_generated: LeadGeneratedProperties;
