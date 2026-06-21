@@ -68,4 +68,18 @@ describe("initializeTracking wiring", () => {
     expect(call).toBeTruthy();
     expect(call[1]).toMatchObject({ lead_type: "assessment", lead_source: "readiness_assessment" });
   });
+
+  it("exposes window.stFlow factory, which builds a tracker that emits flow_started", () => {
+    (window as any).posthog.capture.mockClear?.();
+    expect(typeof (window as any).stFlow).toBe("function");
+    const flow = (window as any).stFlow({ flowId: "t", flowType: "assessment", totalSteps: 3 });
+    flow.started();
+    expect((window as any).posthog.capture).toHaveBeenCalledWith(
+      "flow_started",
+      expect.objectContaining({
+        flow_id: "t",
+        flow_type: "assessment",
+      }),
+    );
+  });
 });

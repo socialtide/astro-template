@@ -46,6 +46,15 @@ declare global {
     // Standardized lead_generated helper from posthog-tracking.ts
     stTrackLead?: (input: Record<string, string | undefined>) => void;
 
+    // Flow-tracker factory from flow-tracking.ts (see createFlowTracker)
+    stFlow?: (opts: { flowId: string; flowType: "assessment" | "quiz" | "configurator"; totalSteps: number }) => {
+      started(): void;
+      stepViewed(stepIndex: number, stepId: string): void;
+      optionSelected(stepId: string, field: string, value: string | number | boolean): void;
+      abandoned(): void;
+      resultViewed(result: { result_tier?: string; score_band?: string; value_band?: string }): void;
+    };
+
     // Legacy tracking functions (deprecated, use stTrack instead)
     trackCtaClicked?: (
       ctaText: string,

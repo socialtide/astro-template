@@ -2,6 +2,8 @@
 // Production-only tracking with automatic data-attribute detection
 // Features: forms, CTAs, content engagement, scroll depth, micro-conversions, exit intent, session quality
 
+import { createFlowTracker } from "./flow-tracking";
+
 export interface TrackingProperties {
   [key: string]: string | number | boolean | undefined;
 }
@@ -47,6 +49,7 @@ export function initializeTracking() {
   // Expose minimal global for rare custom events (e.g., lead_generated)
   (window as any).stTrack = track;
   (window as any).stTrackLead = trackLead;
+  (window as any).stFlow = createFlowTracker;
 
   // Core tracking
   trackForms();
@@ -710,5 +713,6 @@ declare global {
     };
     stTrack?: (event: string, properties?: TrackingProperties) => void;
     stTrackLead?: (input: LeadInput) => void;
+    stFlow?: typeof import("./flow-tracking").createFlowTracker;
   }
 }
