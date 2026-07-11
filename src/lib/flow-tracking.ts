@@ -18,7 +18,18 @@ type Emit = (event: string, props: Record<string, unknown>) => void;
 
 const defaultEmit: Emit = (event, props) => {
   try {
-    (window as unknown as { stTrack?: Emit }).stTrack?.(event, props);
+    const w = window as unknown as {
+      stTrack?: Emit;
+      posthog?: { capture?: Emit };
+    };
+    if (w.stTrack) {
+      w.stTrack(event, props);
+    } else {
+      // stTrack isn't set until initializeTracking runs; the PostHog snippet
+      // stub exists from the head script and queues captures, so events fired
+      // by early-hydrating islands aren't lost (they just skip UTM enrichment).
+      w.posthog?.capture?.(event, props);
+    }
   } catch {
     /* tracking unavailable */
   }
@@ -35,8 +46,9 @@ export function createFlowTracker(opts: {
   let lastStep = 0;
   let didStart = false;
   let didResult = false;
+  let didAbandon = false;
 
-  return {
+  const tracker: FlowTracker = {
     started() {
       if (didStart) return;
       didStart = true;
@@ -56,7 +68,8 @@ export function createFlowTracker(opts: {
       emit("flow_option_selected", { flow_id: flowId, step_id: stepId, field, value });
     },
     abandoned() {
-      if (didResult) return;
+      if (!didStart || didResult || didAbandon) return;
+      didAbandon = true;
       const progress_pct = totalSteps > 0 ? Math.round((lastStep / totalSteps) * 100) : 0;
       emit("flow_abandoned", { flow_id: flowId, last_step_index: lastStep, progress_pct });
     },
@@ -70,4 +83,12 @@ export function createFlowTracker(opts: {
       emit("flow_result_viewed", props);
     },
   };
+
+  // On static sites navigation is a full page unload — component-level cleanup
+  // (e.g. a React unmount effect) never runs, so hook abandonment to pagehide.
+  if (typeof window !== "undefined") {
+    window.addEventListener("pagehide", () => tracker.abandoned());
+  }
+
+  return tracker;
 }

@@ -21,8 +21,11 @@ const posthogEnabled =
     <script>
       import { initializeTracking } from "../lib/posthog-tracking.ts";
 
+      // Initialize against the snippet stub (it queues capture calls until
+      // array.js loads). Waiting for __loaded drops events fired by early
+      // client:load islands, e.g. a wizard's flow_started.
       function waitForPosthog() {
-        if (window.posthog && window.posthog.__loaded) {
+        if (window.posthog && window.posthog.capture) {
           initializeTracking();
         } else {
           setTimeout(waitForPosthog, 100);
