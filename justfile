@@ -28,7 +28,8 @@ preview-local:
 # once you are done looking at it.
 preview: check-analytics-env
     PUBLIC_SITE_ENV=preview bun run build
-    printf '\n/*\n  X-Robots-Tag: noindex, nofollow\n' >> dist/_headers
+    awk '!d && /^\/\*$/ {print; print "  X-Robots-Tag: noindex, nofollow"; d=1; next} 1' dist/_headers > dist/_headers.tmp && mv dist/_headers.tmp dist/_headers
+    @grep -q 'X-Robots-Tag: noindex' dist/_headers || { echo "failed to stamp X-Robots-Tag into dist/_headers"; exit 1; }
     printf '# Preview deploy. Every response carries X-Robots-Tag: noindex, nofollow.\n# Crawling stays allowed so crawlers can actually read that directive, and the\n# production sitemap is deliberately not advertised here.\nUser-agent: *\nAllow: /\n' > dist/robots.txt
     bunx wrangler deploy --env staging
 
