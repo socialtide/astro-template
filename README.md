@@ -25,6 +25,7 @@ Own your foundation. A production-ready template for agencies and professional s
 
 - [Bun](https://bun.sh) — JavaScript runtime and package manager
 - [Node.js 22+](https://nodejs.org) — Required by Astro 6
+- [just](https://just.systems) — Command runner; required for the deploy recipes, which apply safeguards a bare `wrangler deploy` skips
 
 ## Quick Start
 
@@ -209,7 +210,7 @@ Fonts are self-hosted at build time, so no external font domains are needed in t
 
 ### Cloudflare Workers (Recommended)
 
-The template includes staging and production environments out of the box.
+The template includes preview and production environments out of the box. Deploys are manual — pushing to your default branch does not ship anything.
 
 1. Update `wrangler.toml` with your project name and domains
 2. Deploy:
@@ -217,23 +218,34 @@ The template includes staging and production environments out of the box.
 ```bash
 bunx wrangler login
 
-# Deploy to staging (preview.yourdomain.com)
-bunx wrangler deploy --env staging
-
-# Deploy to production (yourdomain.com)
-bunx wrangler deploy --env production
+just preview       # deploy a preview build
+just preview-down  # delete the preview when you are finished with it
+just deploy        # deploy to production
 ```
 
 Your site is live on Cloudflare's global edge network (300+ locations).
+
+Use the `just` recipes rather than calling `wrangler deploy` directly. They apply two safeguards that a bare deploy skips.
+
+**Previews are built unindexable.** A preview is a complete public copy of your site, so `just preview` builds it with `PUBLIC_SITE_ENV=preview`, which emits `noindex, nofollow` in the page head, adds an `X-Robots-Tag` header covering every response, and drops the production sitemap from `robots.txt`. Crawling itself stays allowed, deliberately — a blanket `Disallow: /` would stop crawlers ever reading the noindex directive. Production never sets that variable and keeps its normal index directives.
+
+Take previews down with `just preview-down` once you are done. A preview left running is a second copy of your site competing with it in search.
+
+**Deploys refuse to run without an analytics key.** If `PUBLIC_POSTHOG_KEY` is missing, both `just preview` and `just deploy` stop before building, and a production build throws rather than shipping a site that silently records nothing. This matters most in a git worktree, which does not carry your `.env`.
 
 ## Commands
 
 | Command         | Description                          |
 | --------------- | ------------------------------------ |
-| `bun install`   | Install dependencies                 |
-| `bun dev`       | Start dev server at `localhost:4321` |
-| `bun run build` | Build for production                 |
-| `bun preview`   | Preview production build locally     |
+| `just install`      | Install dependencies                       |
+| `just dev`          | Start dev server at `localhost:4321`       |
+| `just build`        | Build for production                       |
+| `just preview-local`| Serve the production build locally         |
+| `just preview`      | Deploy an unindexable preview              |
+| `just preview-down` | Delete the preview                         |
+| `just deploy`       | Deploy to production                       |
+
+Run `just` with no arguments to list every recipe. Each one wraps the equivalent `bun` or `wrangler` command.
 
 ## Tech Stack
 
