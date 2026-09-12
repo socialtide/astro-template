@@ -62,9 +62,13 @@ astro-template/
 - `wrangler.toml` defines the `[env.staging]` and `[env.production]` routes. Update `name`, `routes`, and environment bindings for each client.
 - Deploys are MANUAL via wrangler — pushing to `main` does not deploy. Always deploy staging first, verify the site loads and the changed pages render, then deploy production and verify again:
   ```bash
-  just preview   # bun build + wrangler deploy --env staging
-  just deploy    # bun build + wrangler deploy --env production
+  just preview      # build as preview + wrangler deploy --env staging
+  just preview-down # delete the staging Worker and its custom domain
+  just deploy        # bun build + wrangler deploy --env production
   ```
+- A preview serves a full copy of the site on a public host, so `just preview` builds with `PUBLIC_SITE_ENV=preview` and stamps the output unindexable: `noindex, nofollow` in the page head, an `X-Robots-Tag` header on every response, and a robots.txt that does not advertise the production sitemap. Production never sets that variable and keeps its normal index directives.
+- Tear the preview down with `just preview-down` once you are done looking at it. A preview left running is a second copy of the client's site competing with theirs in search.
+- `just preview` and `just deploy` both refuse to run without `PUBLIC_POSTHOG_KEY`. A build from a git worktree does not carry `.env`, and a site shipped without the key records nothing until someone notices the empty dashboard.
 - Ensure any required secrets (PostHog key, Harbor API token, Turnstile keys) are set as Cloudflare environment variables before deploying changes that depend on them.
 
 ## Quality Checklist

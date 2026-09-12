@@ -6,6 +6,15 @@ const posthogEnabled =
   posthogKey &&
   (import.meta.env.PROD ||
     import.meta.env.PUBLIC_POSTHOG_DEV_ENABLED === "true");
+
+// A production build without the key silently ships a site with no analytics,
+// and nothing surfaces the gap until someone checks the dashboard weeks later.
+// Fail the build instead. Note that git worktrees do not carry .env.
+if (import.meta.env.PROD && !posthogKey) {
+  throw new Error(
+    "PUBLIC_POSTHOG_KEY is not set. Refusing to build a production site without analytics. Add it to .env (git worktrees do not carry .env)."
+  );
+}
 ---
 
 {posthogEnabled && (

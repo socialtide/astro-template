@@ -35,6 +35,11 @@ const {
 
 const resolvedCanonicalUrl = canonicalUrl || Astro.url.href;
 
+// `just preview` builds with PUBLIC_SITE_ENV=preview. A preview deploy serves a
+// full copy of the site on a public host, so it must never be indexable —
+// otherwise it competes with production for the client's own search queries.
+const isPreview = import.meta.env.PUBLIC_SITE_ENV === "preview";
+
 // Default Organization schema - override with schema prop for custom structured data
 const defaultSchema = {
   "@context": "https://schema.org",
@@ -76,9 +81,9 @@ const fullOgImage = ogImage.startsWith("http")
       href="/rss.xml"
     />
 
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {(noindex || isPreview) && <meta name="robots" content="noindex, nofollow" />}
     {
-      !noindex && (
+      !noindex && !isPreview && (
         <meta
           name="robots"
           content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
