@@ -34,6 +34,7 @@ describe("createFlowTracker", () => {
 
   it("abandoned reports last step + progress", () => {
     const { t, emit } = makeTracker();
+    t.started();
     t.stepViewed(2, "needs");
     emit.mockClear();
     t.abandoned();

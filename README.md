@@ -1,6 +1,6 @@
 # Astro Website Template
 
-[![Astro](https://img.shields.io/badge/Astro-6-orange?style=flat&logo=astro)](https://astro.build)
+[![Astro](https://img.shields.io/badge/Astro-7-orange?style=flat&logo=astro)](https://astro.build)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-blue?style=flat&logo=tailwindcss)](https://tailwindcss.com)
 [![Cloudflare](https://img.shields.io/badge/Cloudflare-Workers-orange?style=flat&logo=cloudflare)](https://workers.cloudflare.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
@@ -24,7 +24,7 @@ Own your foundation. A production-ready template for agencies and professional s
 ## Prerequisites
 
 - [Bun](https://bun.sh) — JavaScript runtime and package manager
-- [Node.js 22+](https://nodejs.org) — Required by Astro 6
+- [Node.js 22+](https://nodejs.org) — Required by Astro 7
 - [just](https://just.systems) — Command runner; required for the deploy recipes, which apply safeguards a bare `wrangler deploy` skips
 
 ## Quick Start
@@ -240,6 +240,7 @@ Take previews down with `just preview-down` once you are done. A preview left ru
 | `just install`      | Install dependencies                       |
 | `just dev`          | Start dev server at `localhost:4321`       |
 | `just build`        | Build for production                       |
+| `just check`        | Build, then run tests                      |
 | `just preview-local`| Serve the production build locally         |
 | `just preview`      | Deploy an unindexable preview              |
 | `just preview-down` | Delete the preview                         |
@@ -249,7 +250,7 @@ Run `just` with no arguments to list every recipe. Each one wraps the equivalent
 
 ## Tech Stack
 
-- [Astro 6](https://astro.build) — Static site framework with built-in Fonts API and CSP
+- [Astro 7](https://astro.build) — Static site framework with built-in Fonts API and CSP
 - [Tailwind CSS v4](https://tailwindcss.com) — Utility-first CSS with OKLCH colors
 - [TypeScript](https://www.typescriptlang.org) — Type safety
 - [Cloudflare Workers](https://workers.cloudflare.com) — Edge hosting

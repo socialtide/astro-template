@@ -10,7 +10,10 @@ export default defineConfig({
   // Always use trailing slashes to avoid redirects on Cloudflare
   trailingSlash: "always",
 
-  // Astro 6 Fonts API — self-hosts fonts at build time (no runtime Google Fonts requests)
+  // Keep HTML whitespace compression (Astro 7 defaults to JSX rules, which drop spaces between inline elements)
+  compressHTML: true,
+
+  // Astro Fonts API — self-hosts fonts at build time (no runtime Google Fonts requests)
   fonts: [
     {
       name: "Cormorant Garamond",

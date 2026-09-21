@@ -17,6 +17,13 @@ dev:
 build:
     bun run build
 
+# Run unit tests
+test:
+    bun run test
+
+# Build, then test
+check: build test
+
 # Preview production build locally
 preview-local:
     bun run preview

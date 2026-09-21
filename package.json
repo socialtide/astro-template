@@ -31,20 +31,20 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@astrojs/rss": "^4.0.17",
-    "@astrojs/sitemap": "^3.7.1",
-    "@lucide/astro": "^0.562.0",
-    "@tailwindcss/vite": "^4.2.2",
-    "astro": "6.0.8",
-    "tailwindcss": "^4.2.2"
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "@lucide/astro": "^1.45.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.2",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.19",
     "happy-dom": "^20.10.6",
-    "prettier": "^3.8.1",
-    "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "vitest": "^4.1.9",
-    "wrangler": "^4.77.0"
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^1.0.0",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "vitest": "^4.1.11",
+    "wrangler": "^4.131.1"
   }
 }
