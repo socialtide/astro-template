@@ -229,6 +229,8 @@ Use the `just` recipes rather than calling `wrangler deploy` directly. They appl
 
 **Previews are built unindexable.** A preview is a complete public copy of your site, so `just preview` builds it with `PUBLIC_SITE_ENV=preview`, which emits `noindex, nofollow` in the page head, adds an `X-Robots-Tag` header covering every response, and drops the production sitemap from `robots.txt`. Crawling itself stays allowed, deliberately — a blanket `Disallow: /` would stop crawlers ever reading the noindex directive. Production never sets that variable and keeps its normal index directives.
 
+**Previews do not record analytics.** The same `PUBLIC_SITE_ENV=preview` build leaves the PostHog snippet out entirely, so reviewing a preview, or submitting a test form on it, never lands in your production analytics. `just preview` also fails if the built output still contains the snippet. To check tracking end to end, use the production site.
+
 Take previews down with `just preview-down` once you are done. A preview left running is a second copy of your site competing with it in search.
 
 **Deploys refuse to run without an analytics key.** If `PUBLIC_POSTHOG_KEY` is missing, both `just preview` and `just deploy` stop before building, and a production build throws rather than shipping a site that silently records nothing. This matters most in a git worktree, which does not carry your `.env`.
