@@ -35,6 +35,7 @@ preview-local:
 # once you are done looking at it.
 preview: check-analytics-env
     PUBLIC_SITE_ENV=preview bun run build
+    @if grep -rqF 'posthog.init(' dist; then echo "preview build still contains the PostHog snippet; previews must not record analytics"; exit 1; fi
     awk '!d && /^\/\*$/ {print; print "  X-Robots-Tag: noindex, nofollow"; d=1; next} 1' dist/_headers > dist/_headers.tmp && mv dist/_headers.tmp dist/_headers
     @grep -q 'X-Robots-Tag: noindex' dist/_headers || { echo "failed to stamp X-Robots-Tag into dist/_headers"; exit 1; }
     printf '# Preview deploy. Every response carries X-Robots-Tag: noindex, nofollow.\n# Crawling stays allowed so crawlers can actually read that directive, and the\n# production sitemap is deliberately not advertised here.\nUser-agent: *\nAllow: /\n' > dist/robots.txt

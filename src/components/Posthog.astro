@@ -2,8 +2,13 @@
 const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY;
 const posthogHost =
   import.meta.env.PUBLIC_POSTHOG_HOST || "https://d.socialtide.ai";
+// `just preview` is a production build with the key set, published on a public
+// host. Without this check, review visits and test form submissions on a
+// preview are recorded as real traffic in the site's PostHog project.
+const isPreview = import.meta.env.PUBLIC_SITE_ENV === "preview";
 const posthogEnabled =
   posthogKey &&
+  !isPreview &&
   (import.meta.env.PROD ||
     import.meta.env.PUBLIC_POSTHOG_DEV_ENABLED === "true");
 
