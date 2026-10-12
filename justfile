@@ -46,7 +46,7 @@ preview-down:
     bunx wrangler delete --env staging
 
 # Deploy to production
-deploy: check-analytics-env build
+deploy: check-analytics-env build check-analytics-built
     bunx wrangler deploy --env production
 
 # Refuse to build for a live site without the PostHog key. A deploy from a git
@@ -56,3 +56,12 @@ deploy: check-analytics-env build
 check-analytics-env:
     @if [ -z "${PUBLIC_POSTHOG_KEY:-}" ] && ! grep -Eq '^PUBLIC_POSTHOG_KEY=.+' .env 2>/dev/null; then \
         echo "PUBLIC_POSTHOG_KEY is not set and .env has no value for it. Deploy from a checkout with .env."; exit 1; fi
+
+# Refuse to deploy a build that would not record analytics. The built site must
+# contain the PostHog snippet and the key this build was given. That catches
+# what check-analytics-env cannot: a build that succeeds but drops tracking,
+# such as one made with PUBLIC_SITE_ENV=preview left set in the shell or .env.
+check-analytics-built:
+    @key="${PUBLIC_POSTHOG_KEY:-$(grep -E '^PUBLIC_POSTHOG_KEY=' .env 2>/dev/null | head -1 | cut -d= -f2- | tr -d '\042\047')}"; \
+    if [ -z "$key" ] || ! grep -rqF 'posthog.init(' dist || ! grep -rqF -- "$key" dist; then \
+        echo "The built site is missing the PostHog snippet or this build's key. Refusing to deploy without analytics. Check that PUBLIC_SITE_ENV is unset."; exit 1; fi

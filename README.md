@@ -235,6 +235,8 @@ Take previews down with `just preview-down` once you are done. A preview left ru
 
 **Deploys refuse to run without an analytics key.** If `PUBLIC_POSTHOG_KEY` is missing, both `just preview` and `just deploy` stop before building, and a production build throws rather than shipping a site that silently records nothing. This matters most in a git worktree, which does not carry your `.env`.
 
+**Deploys also check the built site.** After building, `just deploy` confirms the output contains the PostHog snippet and the key the build was given, and refuses to deploy otherwise. That catches a build that succeeds but drops tracking, such as one made with `PUBLIC_SITE_ENV=preview` left set in your shell or `.env`.
+
 ## Commands
 
 | Command         | Description                          |
