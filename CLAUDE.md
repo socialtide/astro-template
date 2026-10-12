@@ -69,7 +69,7 @@ astro-template/
 - A preview serves a full copy of the site on a public host, so `just preview` builds with `PUBLIC_SITE_ENV=preview` and stamps the output unindexable: `noindex, nofollow` in the page head, an `X-Robots-Tag` header on every response, and a robots.txt that does not advertise the production sitemap. Production never sets that variable and keeps its normal index directives.
 - A preview also records no analytics: `Posthog.astro` renders nothing when `PUBLIC_SITE_ENV=preview`, and `just preview` fails if the built output still contains the PostHog snippet. QA on a preview never reaches the client's PostHog project; verify tracking on the production site.
 - Tear the preview down with `just preview-down` once you are done looking at it. A preview left running is a second copy of the client's site competing with theirs in search.
-- `just preview` and `just deploy` both refuse to run without `PUBLIC_POSTHOG_KEY`. A build from a git worktree does not carry `.env`, and a site shipped without the key records nothing until someone notices the empty dashboard.
+- `just preview` and `just deploy` both refuse to run without `PUBLIC_POSTHOG_KEY`. A build from a git worktree does not carry `.env`, and a site shipped without the key records nothing until someone notices the empty dashboard. After building, `just deploy` also checks that the output contains the PostHog snippet and the key the build was given, so a build that drops tracking, such as one made with `PUBLIC_SITE_ENV=preview` left set, is refused.
 - Ensure any required secrets (PostHog key, Harbor API token, Turnstile keys) are set as Cloudflare environment variables before deploying changes that depend on them.
 
 ## Quality Checklist
