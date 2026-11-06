@@ -146,8 +146,8 @@ const turnstileContainerId = `${formId}-turnstile`;
     const formMessage = document.getElementById(messageId);
     let turnstileWidgetId = null;
 
-    // Event and categories from the canonical taxonomy (form_submit_failed):
-    // without it "nobody submits" looks the same as "submissions are failing".
+    // Report failed sends: without this, "nobody submits" looks the same in
+    // analytics as "submissions are failing".
     const trackFailure = (status) => {
       const category =
         status === 0 ? "network" : status >= 500 ? "http_5xx" : "http_4xx";
