@@ -146,6 +146,18 @@ const turnstileContainerId = `${formId}-turnstile`;
     const formMessage = document.getElementById(messageId);
     let turnstileWidgetId = null;
 
+    // Event and categories from the canonical taxonomy (form_submit_failed):
+    // without it "nobody submits" looks the same as "submissions are failing".
+    const trackFailure = (status) => {
+      const category =
+        status === 0 ? "network" : status >= 500 ? "http_5xx" : "http_4xx";
+      window.stTrack?.("form_submit_failed", {
+        form_id: form.dataset.trackForm || formId,
+        error_category: category,
+        http_status: status || undefined,
+      });
+    };
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -160,6 +172,7 @@ const turnstileContainerId = `${formId}-turnstile`;
       const originalText = submitButton.textContent;
       submitButton.textContent = "Sending...";
       submitButton.disabled = true;
+      let status = 0;
 
       try {
         if (!clientId) {
@@ -205,6 +218,7 @@ const turnstileContainerId = `${formId}-turnstile`;
             body: JSON.stringify(payload),
           },
         );
+        status = response.status;
 
         let responseMessage = successMessage;
         try {
@@ -241,9 +255,11 @@ const turnstileContainerId = `${formId}-turnstile`;
 
         if (response.ok) {
           form.reset();
-          window.turnstile?.reset?.(turnstileWidgetId);
+        } else {
+          trackFailure(status);
         }
       } catch (error) {
+        trackFailure(status);
         console.error("[Contact Form] Submission error:", error);
         if (formMessage) {
           formMessage.textContent = errorMessage;
@@ -251,6 +267,9 @@ const turnstileContainerId = `${formId}-turnstile`;
           formMessage.classList.remove("hidden", "bg-green-100", "text-green-700");
         }
       } finally {
+        // A token is single use: after any attempt, success or failure, get a
+        // fresh one, or a retry resends a spent token and fails the spam check.
+        window.turnstile?.reset?.(turnstileWidgetId);
         submitButton.textContent = originalText;
         submitButton.disabled = false;
       }
